@@ -17,8 +17,12 @@ public class Calendar implements Serializable {
 
 
 	private static final long serialVersionUID = -2370558377553764986L;
+	
+	// assume 1 month in future is 30 days in future.
+	private static final int TOTAL_NUMBER_OF_AUCTION_ALLOWED = 60;
 	private Collection<Auction> myAuctionList;
 	private int nextAuctionID; 
+	private int maxNumberOfAuction;
 	/**
 	 * constructs a calendar with a auction list and auction ID
 	 * @param theAuction
@@ -26,13 +30,44 @@ public class Calendar implements Serializable {
 	public Calendar(Collection<Auction> theAuction) {
 		myAuctionList = theAuction;
 		nextAuctionID = 1;
+		maxNumberOfAuction = 25;
+		
 	}
 	
 	public Calendar() {
 		myAuctionList = new ArrayList<Auction>();
+		maxNumberOfAuction = 25;
 	}
 	
-	// didn't catch the BR : no more than 2 auctions per day.
+	
+	/**
+	 * set new maximum number of Auction.
+	 * @param theNumber new maximum number of auction
+	 * @return return true if the number is set.
+	 */
+	public boolean isValidMaxNumberOfAuction(int theNumber){		
+		if(theNumber <= 0){
+			return false;
+		}else if (theNumber > TOTAL_NUMBER_OF_AUCTION_ALLOWED){
+			return false;
+		}else if (theNumber <= maxNumberOfAuction){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void setMaxNumberOfAuction(int theNumber){
+		if(isValidMaxNumberOfAuction(theNumber)){
+			maxNumberOfAuction = theNumber;
+		}
+	}
+
+	
+	public int getMaxNumberOfAuction(){
+		return maxNumberOfAuction;
+	}
+	
 	/**
 	 * adds an auction to the calendar if the requested date is valid
 	 * @param theNPO the NPO who request the auction
@@ -49,7 +84,7 @@ public class Calendar implements Serializable {
 				if(a.getAuctionDate().toLocalDate().isEqual(theDate.toLocalDate()))
 					auctions++;
 			}
-			if (auctions < 2)
+			if (auctions < maxNumberOfAuction)
 			{
 				Auction newAuction = new Auction(theNPO, theDate, numItems, theNotes, nextAuctionID);
 				myAuctionList.add(newAuction);

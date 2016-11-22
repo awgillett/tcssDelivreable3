@@ -18,7 +18,8 @@ import model.Calendar;
 import model.NPO;
 
 /**
- * @author Carl
+ * @author Carl,
+ * @author Phuc Tran worked on isValidMaxNumberOfAuction Test
  *
  */
 public class CalendarTest {
@@ -46,13 +47,13 @@ public class CalendarTest {
 	public void tearDown() throws Exception {
 	}
 
-	/**
-	 * Test method for {@link model.Calendar#Calendar()}.
-	 */
-	@Test
-	public void testCalendar() {
-		fail("Not yet implemented");
-	}
+//	/**
+//	 * Test method for {@link model.Calendar#Calendar()}.
+//	 */
+//	@Test
+//	public void testCalendar() {
+//		fail("Not yet implemented");
+//	}
 
 	/**
 	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
@@ -61,7 +62,8 @@ public class CalendarTest {
 	public void testAddAuctionOnAlreadyTwoScheduledThatDay() {	
 		myCalendar.addAuction(a, LocalDateTime.now().plusDays(7), 10, "");
 		myCalendar.addAuction(b, LocalDateTime.now().plusDays(7), 10, "");
-		assertFalse(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
+		//assertFalse(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
+		assertTrue(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
 	}
 	
 	/**
@@ -188,19 +190,37 @@ public class CalendarTest {
 		assertTrue(myCalendar.addAuction(npo25, LocalDateTime.now().plusDays(19), 10, ""));
 	}
 	
-//	Auction theAuction = new Auction(a, 3);
-//	
-//	//expected the size of auction list = 0
-//	// and the NPO hasAuction() = FALSE
-//	assertEquals(0, myCalendar.getAuctions().size(), 0.0);
-//	assertFalse(theAuction.getNPO().hasAuction());
-//	
-//	myCalendar.addAuction(theAuction);
-//	// expected the size of auction list = 1 (after add)
-//	// NPO hasAuction() = TRUE
-//	// Note*: change the expected value in assertEquals method to experience the Unit test
-//	assertEquals(1, myCalendar.getAuctions().size(), 0.0);	
-//	assertTrue(theAuction.getNPO().hasAuction());
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnNegativeValue(){
+		assertFalse(myCalendar.isValidMaxNumberOfAuction(-1));
+	}
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnZero(){
+		assertFalse(myCalendar.isValidMaxNumberOfAuction(0));
+	}
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnLessThanCurrentMaxNumberOfAuction(){
+		assertFalse(myCalendar.isValidMaxNumberOfAuction(20));
+	}
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnEqualToCurrentMaxNumberOfAuction(){
+		assertFalse(myCalendar.isValidMaxNumberOfAuction(myCalendar.getMaxNumberOfAuction()));
+	}
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnMoreThanTotalNumberOfAuctionInOneMonth(){
+		assertFalse(myCalendar.isValidMaxNumberOfAuction(70));
+	}
+	
+	@Test
+	public void testIsValidMaxNumberOfAuctionOnLessThanTotalNumberOfAuctionInOneMonth(){
+		assertTrue(myCalendar.isValidMaxNumberOfAuction(50));
+	}
+	
 
 	/**
 	 * Test method for {@link model.Calendar#getAuctions(java.util.Date)}.
