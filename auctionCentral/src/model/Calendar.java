@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.time.Period;
 
 
 /**
@@ -60,6 +61,39 @@ public class Calendar implements Serializable {
 			}
 
 		} 
+		return false;
+	}
+	
+	/**
+	 * adds an auction to the calendar if the requested date is valid
+	 * 
+	 * @param theNPO
+	 *            the NPO who request the auction
+	 * @param theDate
+	 *            the Date of the auction
+	 * @param numItems
+	 *            Number of Item
+	 * @param theNotes
+	 *            the description.
+	 * @return true is the auction is added.
+	 */
+	public boolean addAuctionNoDateRestriction(NPO theNPO, LocalDateTime theDate, int numItems, String theNotes) {
+		int auctions = 0;
+		if (!theNPO.hasAuction() && myAuctionList.size() < 25) {
+			for (Auction a : myAuctionList) {
+				if (a.getAuctionDate().toLocalDate().isEqual(theDate.toLocalDate()))
+					auctions++;
+			}
+			if (auctions < 2) {
+				Auction newAuction = new Auction(theNPO, theDate, numItems, theNotes, nextAuctionID);
+				myAuctionList.add(newAuction);
+				theNPO.setAuction(true);
+				theNPO.setLastAuctionDate(theDate);
+				nextAuctionID++;
+				return true;
+			}
+
+		}
 		return false;
 	}
 	
@@ -129,20 +163,25 @@ public class Calendar implements Serializable {
 	
 	/**
 	 * deletes an auction
+	 * 
 	 * @param NPO
 	 * @return True if the auction is deleted.
+	 * @author Carl Seiber
 	 */
-	public boolean deleteAuction(String NPO){
-		for (Auction a : myAuctionList)
-		{
-			if (a.getNPO().getMyName() == NPO)
-			{
-				a.getNPO().setAuction(false);
-				myAuctionList.remove(a);
-				return true;
+	public int deleteAuction(String NPO) {
+		for (Auction a : myAuctionList) {
+			if (a.getNPO().getMyName() == NPO) {
+				Period days = Period.between(LocalDateTime.now().toLocalDate(), a.getAuctionDate().toLocalDate());
+				int numOfDays = days.getDays();
+				if (numOfDays >= 2) {
+					a.getNPO().setAuction(false);
+					myAuctionList.remove(a);
+					return 1; //auction found and deleted successfully
+				}
+				return 2; //auction found but is past the deadline for auction deletion
 			}
 		}
-		return false;
+		return 0; //no auction was found
 	}
 	
 	/**
