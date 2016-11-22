@@ -47,6 +47,7 @@ public class CalendarTest {
 	public void tearDown() throws Exception {
 	}
 
+<<<<<<< HEAD
 //	/**
 //	 * Test method for {@link model.Calendar#Calendar()}.
 //	 */
@@ -55,6 +56,8 @@ public class CalendarTest {
 //		fail("Not yet implemented");
 //	}
 
+=======
+>>>>>>> 309b961f2c94a3309aaebb342b066d3936a6b72b
 	/**
 	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
 	 */
@@ -190,6 +193,7 @@ public class CalendarTest {
 		assertTrue(myCalendar.addAuction(npo25, LocalDateTime.now().plusDays(19), 10, ""));
 	}
 	
+<<<<<<< HEAD
 	
 	@Test
 	public void testIsValidMaxNumberOfAuctionOnNegativeValue(){
@@ -221,6 +225,64 @@ public class CalendarTest {
 		assertTrue(myCalendar.isValidMaxNumberOfAuction(50));
 	}
 	
+=======
+	//Carl Seiber Author of delete Auction Tests and method.
+	/**
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 */
+	@Test
+	public void testdeleteAuctionOnNoAuctionFoundWithNPO() {
+		//Note: the addAuctionNoDateRestriction method was strictly created to allow scheduling of auctions earlier
+		//than the one week for purposes of testing the deleteAuction. This was an exact copy of the addAuction
+		//with only the valid date restriction removed and will not be used in implementation.
+		myCalendar.addAuctionNoDateRestriction(a, LocalDateTime.now().plusDays(5), 10, "");
+		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().plusDays(5), 10, "");
+		assertEquals(myCalendar.deleteAuction(c.getMyName()), 0);
+	}
+	
+	/**
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 */
+	@Test
+	public void testdeleteAuctionOnPastAuction() {
+		//Note: the addAuctionNoDateRestriction method was strictly created to allow scheduling of auctions earlier
+		//than the one week for purposes of testing the deleteAuction. This was an exact copy of the addAuction
+		//with only the valid date restriction removed and will not be used in implementation.
+		myCalendar.addAuctionNoDateRestriction(a, LocalDateTime.now().minusDays(5), 10, "");
+		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().minusDays(5), 10, "");
+		assertEquals(myCalendar.deleteAuction(c.getMyName()), 0);
+	}
+	
+	/**
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 */
+	@Test
+	public void testdeleteAuctionOnAuctionScheduledInExactlyTwoDays() {
+		myCalendar.addAuctionNoDateRestriction(a, LocalDateTime.now().plusDays(2), 10, "");
+		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().plusDays(2), 10, "");		
+		assertEquals(myCalendar.deleteAuction(a.getMyName()), 1);
+	}
+	
+	/**
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 */
+	@Test
+	public void testdeleteAuctionOnAuctionScheduledInLessThanTwoDays() {
+		myCalendar.addAuctionNoDateRestriction(a, LocalDateTime.now().plusDays(1), 10, "");
+		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().plusDays(1), 10, "");
+		assertEquals(myCalendar.deleteAuction(a.getMyName()), 2);
+	}
+	
+	/**
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 */
+	@Test
+	public void testdeleteAuctionOnAuctionScheduledInMoreThanTwoDays() {
+		myCalendar.addAuctionNoDateRestriction(a, LocalDateTime.now().plusDays(3), 10, "");
+		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().plusDays(1), 10, "");
+		assertEquals(myCalendar.deleteAuction(a.getMyName()), 1);
+	}
+>>>>>>> 309b961f2c94a3309aaebb342b066d3936a6b72b
 
 	/**
 	 * Test method for {@link model.Calendar#getAuctions(java.util.Date)}.
@@ -251,46 +313,5 @@ public class CalendarTest {
 		
 	}
 
-	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
-	 */
-	@Test
-	public void testDeleteAuction() {
-//		Auction theAuction = new Auction(a, 3);
-//		Auction theNextAuction = new Auction(b, 3);
-//		myCalendar.addAuction(theAuction);
-//		myCalendar.addAuction(theNextAuction);
-//		
-//		assertNotNull(myCalendar.getAuctions());
-//		assertEquals(2, myCalendar.getAuctions().size());
-//		
-//		assertTrue(myCalendar.deleteAuction("a"));
-//		assertFalse(myCalendar.deleteAuction("a"));
-//		
-//		assertEquals(1, myCalendar.getAuctions().size());
-//		
-//		assertTrue(myCalendar.deleteAuction("b"));
-//		assertFalse(myCalendar.deleteAuction("b"));
-//		
-//		assertEquals(0, myCalendar.getAuctions().size());
-		
-	}
-
-/*	*//**
-	 * Test method for {@link model.Calendar#hasAuction(java.lang.String)}.
-	 *//*
-	@Test
-	public void testHasAuction() {
-		
-		fail("Not yet implemented");
-	}*/
-
-/*	*//**
-	 * Test method for {@link model.Calendar#main(java.lang.String[])}.
-	 *//*
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
-	}*/
 
 }
