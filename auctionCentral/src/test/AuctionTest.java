@@ -58,76 +58,52 @@ public class AuctionTest {
 //		assertEquals("Auction param theID not initiated correctly!", 123456, theAuction.getMyID());
 //	}
 	
-	/**
-	 * Test method for {@link model.Auction#addItem(model.Item)}.
-	 */
-	@Test
-	public void testAddItem() {
-
-		// test itemList is empty.
-		assertEquals(0, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
-		// add first item.
-		theAuction.addItem("Painting", "Private Collector", "New", "Large", "None", 
-				"A reprint of Picasso's The Old Guitarist.", 100.00);
-		// test itemList holds 1 item.
-		assertEquals(1, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
-		
-		theAuction.addItem("Vending Machine", "Private Collector", "Like New",
-				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
-		
-		assertEquals(2, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
-		
-		theAuction.addItem("Comic Book", "Private Collector", "Very Good", "Small", "None", 
-				"Amazing Spider-Man 300 first appearance of Venom.", 500.00);
-		
-		assertEquals(3, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
-	}
-
-	/**
-	 * 
-	 */
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testAddItemDuplicate() {
-		Object[] items = theAuction.getItemList().toArray();
-		Item testItem = new Item("Vending Machine", "Like New",
-				"Large", 1000.00);
-		
-		theAuction.addItem("Vending Machine", "Private Collector", "Like New",
-				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
-		
-		assertFalse(theAuction.addItem("Vending Machine", "Private Collector", "Like New",
-				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00));
-		
-		//assertEquals("The fields are not equal.", testItem.getItemName(), ((Item)items[0]).getItemName());
-		//assertEquals("The fields are not equal.", testItem.getMyCondition(), ((Item)items[0]).getMyCondition());
-		//assertEquals("The fields are not equal.", testItem.getMySize(), ((Item)items[0]).getMySize());
-		//assertEquals("The fields are not equal.", testItem.getMyMinBid(), ((Item)items[0]).getMyMinBid());
-						
-		}
-	
-	/**
-	 * 
-	 */
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testAddItemNotDuplicate() {
-		Object[] items = theAuction.getItemList().toArray();
-		Item testItem = new Item("Comic Book", "Very Good",
-				"Small", 500.00);
-		
-		theAuction.addItem("Vending Machine", "Private Collector", "Like New",
-				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
-		
-		assertTrue(theAuction.addItem("Vending", "Private", "Like New",
-				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00));
-		
-		//assertEquals("The fields are not equal.", testItem.getItemName(), ((Item)items[0]).getItemName());
-		//assertEquals("The fields are not equal.", testItem.getMyCondition(), ((Item)items[0]).getMyCondition());
-		//assertEquals("The fields are not equal.", testItem.getMySize(), ((Item)items[0]).getMySize());
-		//assertEquals("The fields are not equal.", testItem.getMyMinBid(), ((Item)items[0]).getMyMinBid());
+	// Patrick Fitzgerald author of addItem tests and method.
+		/**
+		 * Test method for {@link model.Auction#addItem(model.Item)}.
+		 */
+		@Test
+		public void testAddItem() {
+			// test itemList is empty.
+			assertEquals(0, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
+			// add first item.
+			theAuction.addItem("Painting", "Private Collector", "New", "Large", "None", 
+					"A reprint of Picasso's The Old Guitarist.", 100.00);
+			// test itemList holds 1 item.
+			assertEquals(1, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
 			
-	}
+			theAuction.addItem("Vending Machine", "Private Collector", "Like New",
+					"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
+			assertEquals(2, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
+			
+			theAuction.addItem("Comic Book", "Private Collector", "Very Good", "Small", "None", 
+					"Amazing Spider-Man 300 first appearance of Venom.", 500.00);
+			assertEquals(3, ((ArrayList<Item>) theAuction.getItemList()).size(), 0.0);
+		}
+
+		/**
+		 * Test method for {@link model.Auction#addItem(model.Item)}.
+		 */
+		@Test
+		public void testAddItemDuplicate() {		
+			theAuction.addItem("Vending Machine", "Private Collector", "Like New",
+					"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
+			
+			assertFalse(theAuction.addItem("Vending Machine", "Private Collector", "Like New",
+					"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00));		
+			}
+		
+		/**
+		 * Test method for {@link model.Auction#addItem(model.Item)}.
+		 */
+		@Test
+		public void testAddItemNotDuplicate() {	
+			theAuction.addItem("Vending Machine", "Private Collector", "Like New",
+					"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
+			
+			assertTrue(theAuction.addItem("Vending", "Private", "Like New",
+					"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00));		
+		}
 
 	/**
 	 * Test method for {@link model.Auction#getItemList()}.

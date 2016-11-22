@@ -149,25 +149,27 @@ public class Auction implements Serializable {
 	
 	/**
 	 * adds an item to myItemList as long as the item has not already been added
+	 * 
 	 * @param theItemName
 	 * @param theAuctionName
 	 * @param theDonor
 	 * @param theCondition
-	 * @param theSize 
+	 * @param theSize
 	 * @param theNote
 	 * @param theDescription
-	 * @param theMinBid the minimum bid allowed
-	 * @return return true if item is added and false if the item has already been added to this auction
+	 * @param theMinBid
+	 *            the minimum bid allowed
+	 * @return return true if item is added and false if the item has already
+	 *         been added to this auction
+	 * @author Patrick Fitzgerald
 	 */
-	// call isEqual() in item method to implement this method.
-	public boolean addItem(String theItemName, String theDonor,
-			String theCondition, String theSize, String theNote,
-			String theDescription, double theMinBid){
+	public boolean addItem(String theItemName, String theDonor, String theCondition, String theSize, String theNote,
+			String theDescription, double theMinBid) {
 		String id = Integer.toString(myID) + Integer.toString(nextItemID);
 		int theId = Integer.valueOf(id);
-		Item theItem = new Item(theItemName, theDonor, theCondition, theSize, theNote, theDescription, theMinBid, theId);
-		for (Item i : myItemList)
-		{
+		Item theItem = new Item(theItemName, theDonor, theCondition, theSize, theNote, theDescription, theMinBid,
+				theId);
+		for (Item i : myItemList) {
 			if (theItem.isEqual(i))
 				return false;
 		}
@@ -175,6 +177,7 @@ public class Auction implements Serializable {
 		nextItemID++;
 		return true;
 	}
+	
 	/**
 	 * searches through item myItemList to find item that matches the given ID
 	 * @param theItemID
