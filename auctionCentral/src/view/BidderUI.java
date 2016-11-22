@@ -209,12 +209,16 @@ public class BidderUI {
 		
 		Bid myBid = new Bid(currentBidder.getMyUserName(), itemID, bidOffer, a.getMyID());
 		
+		
+//!!!!!!!!!!!!!!!!!!!!put all this logic in the bidder class************************************		
 		if(a.getItem(itemID).isValidBid(bidOffer) && currentBidder.addBid(myBid)){
 			
 			currentBidder.placeBid(myBid);
 			System.out.println("Congratulations! Your bid of $" + bidOffer + " for " + a.getItem(itemID).getItemName() + " has been placed.\n");
 			welcomeScreen(currentBidder, myCalendar);
 		}else{
+			
+//!!!!!!!!!!!!!!!!!!! add a reason for bid denial********************************************************
 			System.out.println("Sorry, invalid bid.");
 			makeBid();
 		}
@@ -236,7 +240,7 @@ public class BidderUI {
 			System.out.println("Please choose one of the following");
 			System.out.println("");
 			System.out.println("1. View all upcoming auctions");
-			System.out.println("2. View your active bids");
+			System.out.println("2. Cancel an active bid");
 			System.out.println("3. Return to main menu.");
 			System.out.println("4. Log out and return to main menu.");
 			System.out.print(">> ");
@@ -248,7 +252,7 @@ public class BidderUI {
 				showAuctions();
 				break;
 			case 2:
-				showBids();
+				cancelBid();
 				break;
 			case 3:
 				welcomeScreen(currentBidder, myCalendar);
@@ -263,6 +267,86 @@ public class BidderUI {
 			}
 		}
 	}
+
+	private static void cancelBid() {
+		
+		// for reference. The possible return values from currentBidder.bidRemovalRequest()
+//		int itemFoundAndRemovable = 1;
+//		int itemFoundButNotRemovable = 2;
+//		int itemNotFound = 3;
+		
+		int itemID;
+		System.out.println("");
+		System.out.println("Enter the item number?");
+		System.out.println(">>");
+		checkInput();
+		itemID = sc.nextInt();
+		
+		switch (currentBidder.bidRemovalRequest(itemID, myCalendar)) {
+		case 1://itemFoundAndRemovable
+			bidCancelConfirmReq(itemID);
+			break;
+		case 2://itemFoundButNotRemovable
+			System.out.println("Your bid for item number " + itemID + " has not been canceled");
+			System.out.println("because the auction is within two days of today.");
+			printBids();
+			break;
+		case 3://itemNotFound
+			System.out.println("You do not have a bid placed for item " + itemID);
+			printBids();
+			break;
+		default:
+			System.out.println("Please choose within the range provided");
+		}
+		welcomeScreen(currentBidder, myCalendar);
+		
+	}
+
+	private static void bidCancelConfirmReq(int itemID) {
+		choice = 0;
+
+
+		while (choice != 1 && choice != 2 && choice != EXIT) {
+
+			System.out.println("");
+			System.out.println("You would like to cancel your bid for item number " + itemID);
+			System.out.println("");
+			System.out.println("Please choose one of the following");
+			System.out.println("1. Confirm bid cancelation.");
+			System.out.println("2. Do not cancel bid. Return to main menu.");
+			System.out.print(">> ");
+			checkInput();
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				confirmedBidCancel(itemID);
+				break;
+			case 2:
+				welcomeScreen(currentBidder, myCalendar);
+				break;
+			default:
+				System.out.println("Please choose within the range provided");
+			}
+		}
+	}
+
+	private static void confirmedBidCancel(int itemID) {
+		
+		if(currentBidder.removaTheBid(itemID)){
+			System.out.println("Your bid for item number " + itemID + " has been canceled.");
+			printBids();
+		}else{
+			// This should never print
+			System.out.println("Your bid for item number " + itemID + " has not been canceled.");
+		}
+		welcomeScreen(currentBidder, myCalendar);
+	}
+
+	private static void printBids() {
+		
+		System.out.println("Your current list of active bids:");
+		System.out.println(currentBidder.printBids());
+	}
+	
+	
 }
-
-

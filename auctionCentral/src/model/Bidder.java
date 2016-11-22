@@ -1,6 +1,7 @@
 package model;
 //match
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 /*
@@ -19,6 +20,7 @@ public class Bidder extends User implements Serializable{
 	private String myEmail;
 	private String myPaymentInfo;
 	private Collection<Bid> myBids;
+	private static int bidCancelBuffer = 2;
 	/**
      * a Bidder has user name, name, address, phone, email, and payment info 
      * @param theUserName
@@ -36,6 +38,22 @@ public class Bidder extends User implements Serializable{
 		myEmail = theEmail;
 		myPaymentInfo = thePaymentInfo;	
 		myBids = new ArrayList<Bid>();
+	}
+	
+	/**
+	 * get the address of the bidder
+	 * @return the myAddress
+	 */
+	public int bidCancelBuffer() {
+		return bidCancelBuffer;
+	}
+
+	/**
+	 * set the address of the bidder
+	 * @param myAddress the myAddress to set
+	 */
+	public void bidCancelBuffer(int newBuffer) {
+		Bidder.bidCancelBuffer = newBuffer;
 	}
 	
 	/**
@@ -116,10 +134,11 @@ public class Bidder extends User implements Serializable{
 	 * @return true if the bid is valid, else false
 	 */
 	public boolean addBid(Bid myBid) {
+		
 		if (myBid.getMyBidAmount() <= 0)
 			return false;
-		for (Bid b : myBids)
-		{
+		for (Bid b : myBids){
+			
 			if (b.getMyItemID() == myBid.getMyItemID())
 				return false;
 		}
@@ -131,11 +150,69 @@ public class Bidder extends User implements Serializable{
 		myBids.add(myBid);
 	}
 	
+	// returns true if bid can be removed, false if not
+//	public boolean bidRemovalRequest(int itemID, Calendar myCalendar){
+	public int bidRemovalRequest(int itemID, Calendar myCalendar){
+		int itemFoundAndRemovable = 1;
+		int itemFoundButNotRemovable = 2;
+		int itemNotFound = 3;
+		
+		Bid myBid = getBid(itemID);
+		
+		if(myBid == null){
+			// there is no bid for the item
+			return itemNotFound;
+		}
+		for(Auction a : myCalendar.getAllAuctions()){
+			
+			if(myBid.getMyAuctionID() == a.getMyID()){
+				
+				if(a.getAuctionDate().isBefore(LocalDateTime.now().plusDays(bidCancelBuffer))){
+					return itemFoundButNotRemovable;
+				}
+				return itemFoundAndRemovable;
+			}
+		}
 
+		return itemFoundAndRemovable;
+
+	}
+	
+	public boolean removaTheBid(int itemID) {
+		
+		Bid myBid = getBid(itemID);
+		if(myBid == null){
+			return false;
+		}
+		myBids.remove(myBid);
+		return true;
+	}	
+	
+	private Bid getBid(int itemID) {
+		
+		Bid myBid = null;
+		
+		for (Bid b : myBids){
+			if (b.getMyItemID() == itemID)
+				myBid = b;
+		}
+		return myBid;
+		
+	}
+
+	public String printBid(int itemID){
+		StringBuilder str = new StringBuilder();
+		
+		Bid b  = getBid(itemID);
+		
+		str.append("\n\tItem Number: \tYour Bid");
+		str.append("\n\t"+ b.getMyItemID() + "\t\t" + b.getMyBidAmount());
+		
+		return str.toString();
+	}
+	
 	public String printBids(){
 		
-		
-	
 		StringBuilder str = new StringBuilder();
 
 		
@@ -150,5 +227,6 @@ public class Bidder extends User implements Serializable{
 		str.append("\n");
 		return str.toString();
 	}
+
 
 }

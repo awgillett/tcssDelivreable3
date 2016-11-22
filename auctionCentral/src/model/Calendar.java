@@ -63,6 +63,11 @@ public class Calendar implements Serializable {
 		return false;
 	}
 	
+	//Strictly for running testing. Allows any auction object to be added to the calendar without safeguards
+	public void addAuction(Auction a) {
+		myAuctionList.add(a);
+	}
+	
 	/**
 	 * places a bid for and item as long as the bid is valid
 	 * @param theBidder the bidder 
