@@ -45,28 +45,24 @@ public class Auction implements Serializable {
 	}
 	
 	/**
-	 * get NPO object of an auction
-	 * @return the nPOname 
+	 * @return the nPOname
 	 */
 	public NPO getNPOname() {
 		return NPOname;
 	}
 	/**
-	 * set the NPO object associated with the auction
 	 * @param nPOname the nPOname to set
 	 */
 	public void setNPOname(NPO nPOname) {
 		NPOname = nPOname;
 	}
 	/**
-	 * get the auction ID number
 	 * @return the myID
 	 */
 	public int getMyID() {
 		return myID;
 	}
 	/**
-	 * set the auction ID number
 	 * @param myID the myID to set
 	 */
 	public void setMyID(int myID) {
@@ -74,7 +70,6 @@ public class Auction implements Serializable {
 	}
 	
 	/**
-	 * give the date that the auction is to be held
 	 * @return the auctionDate
 	 */
 	public LocalDateTime getAuctionDate() {
@@ -82,7 +77,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * set the date for the auction to be held
 	 * @param auctionDate the auctionDate to set
 	 */
 	public void setAuctionDate(LocalDateTime auctionDate) {
@@ -90,7 +84,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * get the estimated number of items in the auction
 	 * @return the expectedItems
 	 */
 	public int getExpectedItems() {
@@ -98,7 +91,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * set the number of items that are estimated to be in the auction
 	 * @param expectedItems the expectedItems to set
 	 */
 	public void setExpectedItems(int expectedItems) {
@@ -106,7 +98,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * get the side notes about the auction
 	 * @return the myNotes
 	 */
 	public String getMyNotes() {
@@ -114,7 +105,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * enter in some side notes about the auction
 	 * @param myNotes the myNotes to set
 	 */
 	public void setMyNotes(String myNotes) {
@@ -122,7 +112,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * get the list of items for an auction
 	 * @return the myItemList
 	 */
 	public Collection<Item> getMyItemList() {
@@ -130,7 +119,6 @@ public class Auction implements Serializable {
 	}
 
 	/**
-	 * set a list of items in the auction
 	 * @param myItemList the myItemList to set
 	 */
 	public void setMyItemList(Collection<Item> myItemList) {
@@ -149,27 +137,25 @@ public class Auction implements Serializable {
 	
 	/**
 	 * adds an item to myItemList as long as the item has not already been added
-	 * 
 	 * @param theItemName
 	 * @param theAuctionName
 	 * @param theDonor
 	 * @param theCondition
-	 * @param theSize
+	 * @param theSize 
 	 * @param theNote
 	 * @param theDescription
-	 * @param theMinBid
-	 *            the minimum bid allowed
-	 * @return return true if item is added and false if the item has already
-	 *         been added to this auction
-	 * @author Patrick Fitzgerald
+	 * @param theMinBid the minimum bid allowed
+	 * @return return true if item is added and false if the item has already been added to this auction
 	 */
-	public boolean addItem(String theItemName, String theDonor, String theCondition, String theSize, String theNote,
-			String theDescription, double theMinBid) {
+	// call isEqual() in item method to implement this method.
+	public boolean addItem(String theItemName, String theDonor,
+			String theCondition, String theSize, String theNote,
+			String theDescription, double theMinBid){
 		String id = Integer.toString(myID) + Integer.toString(nextItemID);
 		int theId = Integer.valueOf(id);
-		Item theItem = new Item(theItemName, theDonor, theCondition, theSize, theNote, theDescription, theMinBid,
-				theId);
-		for (Item i : myItemList) {
+		Item theItem = new Item(theItemName, theDonor, theCondition, theSize, theNote, theDescription, theMinBid, theId);
+		for (Item i : myItemList)
+		{
 			if (theItem.isEqual(i))
 				return false;
 		}
@@ -177,7 +163,6 @@ public class Auction implements Serializable {
 		nextItemID++;
 		return true;
 	}
-	
 	/**
 	 * searches through item myItemList to find item that matches the given ID
 	 * @param theItemID
@@ -194,7 +179,7 @@ public class Auction implements Serializable {
 		return item;
 	}
     /**
-     * get NPO object of an auction
+     * 
      * @return the NPOname
      */
 	public NPO getNPO(){
@@ -212,17 +197,18 @@ public class Auction implements Serializable {
 	
 	@Override
 	public String toString(){
+//		int i = 1;
 		StringBuilder str = new StringBuilder();
-		str.append("Auction Number: " + myID);
-		str.append("\nNPO: " + NPOname.getMyUserName());
+		str.append("NPO: " + NPOname.getMyName());
 		str.append("\nAuction date: " + getAuctionDate().toString());
 		str.append("\nTotal number of items: " + myItemList.size());
 		
-		str.append("\nItem ID: \tName: \t\tMin Bid: \tCondition: \tdescription: ");
+		str.append("\n\tItem Number: \tItem Name");
 		
-		for (Item itm : myItemList){
-
-			str.append(itm.toString());
+		for (Item itm : myItemList)
+		{
+			str.append("\n\t"+ itm.getMyItemID() + "\t\t" + itm.getItemName());
+//			i++;
 		}
 		str.append("\n");
 		return str.toString();

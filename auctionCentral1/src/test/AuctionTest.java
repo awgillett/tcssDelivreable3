@@ -124,6 +124,54 @@ public class AuctionTest {
 		assertEquals("Vending Machine", ((Item)items[1]).getItemName());
 		assertEquals("Comic Book", ((Item)items[2]).getItemName());
 	}
+	/**
+	 * Test method for {@link model.Auction#testRemoveItemBeforeTwoDayDeadline()}.
+	 */
+	@Test
+	public void testRemoveItemBeforeTwoDayDeadline() {
+		int removedItem = 1;
+
+		theAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
+				"A reprint of Picasso's The Old Guitarist.", 100.00);
+
+		assertEquals(removedItem, theAuction.removeItem("Painting"));
+	}
+	/**
+	 * Test method for {@link model.Auction#testRemoveItemWithNoItem()}.
+	 */
+	@Test
+	public void testRemoveItemWithNoItem() {
+		int noItemToRemove = 2;
+		assertEquals(noItemToRemove, theAuction.removeItem("Painting"));
+	}
+	/**
+	 * Test method for {@link model.Auction#testRemoveItemAfterTwoDayDeadline()}.
+	 */
+	@Test
+	public void testRemoveItemAfterTwoDayDeadline() {
+		Auction myAuction = new Auction(a, 
+				LocalDateTime.of(2016, 11, 23, 12, 00), 10, "None", 123456);
+		int tooLateDate = 3;
+
+		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
+				"A reprint of Picasso's The Old Guitarist.", 100.00);
+
+		assertEquals(tooLateDate, myAuction.removeItem("Painting"));
+	}
+	/**
+	 * Test method for {@link model.Auction#testRemoveItemOnTwoDayDeadline()}.
+	 */
+	@Test
+	public void testRemoveItemOnTwoDayDeadline() {
+		int removedItem = 1;
+		Auction myAuction = new Auction(a, 
+				LocalDateTime.of(2016, 11, 24, 13, 00), 10, "None", 123456);
+
+		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
+				"A reprint of Picasso's The Old Guitarist.", 100.00);
+
+		assertEquals(removedItem, myAuction.removeItem("Painting"));
+	}
 
 //	/**
 //	 * Test method for {@link model.Auction#tostring()}.

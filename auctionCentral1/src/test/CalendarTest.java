@@ -46,7 +46,18 @@ public class CalendarTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
+
+//	/**
+//	 * Test method for {@link model.Calendar#Calendar()}.
+//	 */
+//	@Test
+//	public void testCalendar() {
+//		fail("Not yet implemented");
+//	}
+
+
+
 	/**
 	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
 	 */
@@ -183,6 +194,7 @@ public class CalendarTest {
 	}
 	
 
+	
 	@Test
 	public void testIsValidMaxNumberOfAuctionOnNegativeValue(){
 		assertFalse(myCalendar.isValidMaxNumberOfAuction(-1));
@@ -213,6 +225,7 @@ public class CalendarTest {
 		assertTrue(myCalendar.isValidMaxNumberOfAuction(50));
 	}
 	
+
 	//Carl Seiber Author of delete Auction Tests and method.
 	/**
 	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
@@ -269,6 +282,7 @@ public class CalendarTest {
 		myCalendar.addAuctionNoDateRestriction(b, LocalDateTime.now().plusDays(1), 10, "");
 		assertEquals(myCalendar.deleteAuction(a.getMyName()), 1);
 	}
+
 
 	/**
 	 * Test method for {@link model.Calendar#getAuctions(java.util.Date)}.

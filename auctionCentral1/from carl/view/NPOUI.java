@@ -1,16 +1,12 @@
 package view;
-
+//match
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import model.Calendar;
 import model.NPO;
 import model.Staff;
-/**
- * The NPOUI class creates the user interface for the NPO user
- * @author  Seiber, Tran, Gillet, Fitzgerald, Wiklanski
- * @version 11/14/2016 
- */
+
 public class NPOUI {
 
 	static Calendar myCalendar;
@@ -21,11 +17,7 @@ public class NPOUI {
 
 	NPOUI() {
 	}
-    /**
-     * creates the NPO UI screens
-     * @param theUser
-     * @param theCalendar
-     */
+
 	public static void welcomeScreen(NPO theUser, Calendar theCalendar) {
 		choice = 0;
 		curNPO = theUser;
@@ -39,8 +31,7 @@ public class NPOUI {
 			System.out.println("2. Add an item to my upcoming auction");
 			System.out.println("3. Log out and return to main menu.");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -70,22 +61,8 @@ public class NPOUI {
 			}
 		}
 	}
-	/** 
-	 * checks for user input
-	 */
-	private static void checkInput(){	
-		while(!sc.hasNextInt()){
-			System.out.println("\nPlease Enter an integer:");
-			System.out.println("");
-			System.out.print(">> ");
-			sc.next();	
-		}
-	}
-	
-    /**
-     * creates the NPO UI screens
-     */
-	private static void welcomeScreen() {
+
+	static void welcomeScreen() {
 		choice = 0;
 		System.out.println("\n\nAuction Central Main NPO View");
 		System.out.println("You are logged in as: " + curNPO.getMyName());
@@ -96,8 +73,7 @@ public class NPOUI {
 			System.out.println("2. Add an item to my upcoming auction");
 			System.out.println("3. Log out and return to main menu.");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -127,9 +103,7 @@ public class NPOUI {
 			}
 		}
 	}
-    /**
-     * create the NPO auction request screen
-     */
+
 	public static void auctionRequestScreen() {
 		choice = 0;
 		System.out.println("\n\nAuction Central NPO Auction Requests");
@@ -142,7 +116,6 @@ public class NPOUI {
 		int items = 0;
 		if (ans.equals("y")) {
 			System.out.println("How many items do you plan on auctioning?");
-			checkInput();
 			items = sc.nextInt();
 			System.out.println("");
 			System.out.println("What notes would you like to add to the auction record?");
@@ -153,16 +126,12 @@ public class NPOUI {
 			System.out.println("Please enter the following information about when you would like the auction");
 			System.out.println("");
 			System.out.println("The Year (ex: 2015): ");
-			checkInput();
 			int year = sc.nextInt();
 			System.out.println("The month (ex: for May type '5'): ");
-			checkInput();
 			int month = sc.nextInt();
 			System.out.println("The day (ex: 15): ");
-			checkInput();
 			int day = sc.nextInt();
 			System.out.println("The time (on the hour please in 24 hour format, (ex: for 4pm type 16): ");
-			checkInput();
 			int hour = sc.nextInt();
 			LocalDateTime auctionDate = LocalDateTime.of(year, month, day, hour, 0);
 			System.out.println("");
@@ -175,8 +144,7 @@ public class NPOUI {
 			System.out.println("2. Change Auction information");
 			System.out.println("3. Cancel request and return to the NPO Main Menu.");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -200,9 +168,7 @@ public class NPOUI {
 			}
 		}
 	}
-    /**
-     * create the screen that verifies that an auction was created and gives option to add items to the auction
-     */
+
 	public static void auctionCreatedScreen() {
 		choice = 0;
 		System.out.println("\n\nAuction Central auction Success View");
@@ -215,8 +181,7 @@ public class NPOUI {
 			System.out.println("1. Add an item to my upcoming auction");
 			System.out.println("2. Return to the NPO Main Menu..");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -236,9 +201,7 @@ public class NPOUI {
 			}
 		}
 	}
-    /**
-     * create the interface to add items to an NPO's auction
-     */
+
 	public static void addItemScreen() {
 		choice = 0;
 		System.out.println("\n\nAuction Central NPO add inventory");
@@ -254,11 +217,6 @@ public class NPOUI {
 		System.out.println("large (at least one dimension is greater than three feet)");
 		String size = sc.next();
 		System.out.println("Minimum acceptable bid (positive integer)");
-		while(!sc.hasNextDouble()){
-			System.out.println("Please Enter a double: ");
-			System.out.println();
-			sc.next();
-		}
 		double minBid = sc.nextDouble();
 		System.out.println("");
 		System.out.println("Thank you, would you like to enter addtional details now? (y/n)");
@@ -292,8 +250,7 @@ public class NPOUI {
 			System.out.println("2. Change item information");
 			System.out.println("3. Cancel item add and return to the NPO Main menu.");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -313,16 +270,7 @@ public class NPOUI {
 			}
 		}
 	}
-	/** 
-	 * create display of the confirmation screen for an item that has been added by the NPO and has option to enter another item
-	 * @param theItemName
-	 * @param theDonor
-	 * @param theCondition
-	 * @param theSize
-	 * @param theNote
-	 * @param theDescription
-	 * @param theMinBid
-	 */
+	
 	public static void itemConfirmationScreen(String theItemName, String theDonor, String theCondition, String theSize, String theNote, String theDescription, double theMinBid)
 	{
 		choice = 0;
@@ -343,8 +291,7 @@ public class NPOUI {
 			System.out.println("1. Add another item to my upcoming auction");
 			System.out.println("2. Return to the NPO Main Menu..");
 			System.out.println("");
-			System.out.print(">> ");
-			checkInput();
+			System.out.println(">>");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:

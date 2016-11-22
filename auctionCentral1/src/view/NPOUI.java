@@ -37,7 +37,8 @@ public class NPOUI {
 			System.out.println("");
 			System.out.println("1. Submit an auction request");
 			System.out.println("2. Add an item to my upcoming auction");
-			System.out.println("3. Log out and return to main menu.");
+			System.out.println("3. Remove an item from my upcoming auction");
+			System.out.println("4. Log out and return to main menu.");
 			System.out.println("");
 			System.out.print(">> ");
 			checkInput();
@@ -62,6 +63,15 @@ public class NPOUI {
 					addItemScreen();
 				break;
 			case 3:
+				if (!curNPO.hasAuction()) {
+					System.out.println(
+							"I am sorry but our records show you currently do not have an auction scheduled, please submit an auction request to begin the "
+									+ "process of scheduling an auction");
+					welcomeScreen();
+				} else
+					removeItemScreen();
+				break;
+			case 4:
 				System.out.println("You have been logged out of the System");
 				choice = EXIT;
 				break;
@@ -94,7 +104,8 @@ public class NPOUI {
 			System.out.println("");
 			System.out.println("1. Submit an auction request");
 			System.out.println("2. Add an item to my upcoming auction");
-			System.out.println("3. Log out and return to main menu.");
+			System.out.println("3. Remove an item from my upcoming auction");
+			System.out.println("4. Log out and return to main menu.");
 			System.out.println("");
 			System.out.print(">> ");
 			checkInput();
@@ -119,6 +130,15 @@ public class NPOUI {
 					addItemScreen();
 				break;
 			case 3:
+				if (!curNPO.hasAuction()) {
+					System.out.println(
+							"I am sorry but our records show you currently do not have an auction scheduled, please submit an auction request to begin the "
+									+ "process of scheduling an auction");
+					welcomeScreen();
+				} else
+					removeItemScreen();
+				break;
+			case 4:
 				System.out.println("You have been logged out of the System");
 				choice = EXIT;
 				break;
@@ -313,6 +333,55 @@ public class NPOUI {
 			}
 		}
 	}
+	public static void removeItemScreen() {
+		choice = 0;
+		System.out.println("\n\nAuction Central NPO remove inventory");
+		System.out.println("You are logged in as: " + curNPO.getMyName());
+		System.out.println("Welcome " + curNPO.getMyName() + ", please enter the following data below:");
+		System.out.println("");
+		System.out.println("What Item would you like to remove, please enter the item name? ");
+		String itemToRemove = sc.next();
+		System.out.println("are you sure you want to remove " + itemToRemove + "? ");
+		
+		while (choice != 1 && choice != 2 && choice != 3 && choice != EXIT) {
+			System.out.println("");
+			System.out.println("1. Yes, remove the displayed item");
+			System.out.println("2. Choose another Item to remove");
+			System.out.println("3. Cancel item remove and return to the NPO Main menu.");
+			System.out.println("");
+			System.out.print(">> ");
+			checkInput();
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				switch (myCalendar.getAuction(curNPO).removeItem(itemToRemove)) {
+				case 1:
+					removeItemConfirmationScreen(itemToRemove);
+					break;
+				case 2:
+					System.out.println("I am sorry, it appears the item you are trying to remove is not listed in your auction, please try again");
+					removeItemScreen();
+					break;
+				case 3:
+					System.out.println("I am sorry, It is too late to remove items from this auction");
+					removeItemScreen();
+					break;
+				default:
+					welcomeScreen();
+			    break;
+				}
+			case 2:
+				removeItemScreen();
+				break;
+			case 3:
+				welcomeScreen();
+				break;
+			default:
+				welcomeScreen();
+			}
+			
+		}
+	}
 	/** 
 	 * create display of the confirmation screen for an item that has been added by the NPO and has option to enter another item
 	 * @param theItemName
@@ -353,6 +422,35 @@ public class NPOUI {
 			case 2:
 				welcomeScreen();
 				break;
+			default:
+				System.out.println("Please choose within the range provided!");
+			}
+		}
+	}
+	public static void removeItemConfirmationScreen(String itemName)
+	{
+		choice = 0;
+		System.out.println("\n\nAuction Central NPO confirmation");
+		System.out.println("You are logged in as: " + curNPO.getMyName());
+		System.out.println("Congratulations " + curNPO.getMyName() + "!, your item was successfully removed");
+		System.out.println("You removed the item with item name " + itemName);
+
+		System.out.println("What would you like to do now " + curNPO.getMyName() + "?");
+		while (choice != 1 && choice != 2 && choice != EXIT) {
+			System.out.println("");
+			System.out.println("1. remove another item from my upcoming auction");
+			System.out.println("2. Return to the NPO Main Menu..");
+			System.out.println("");
+			System.out.print(">> ");
+			checkInput();
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				removeItemScreen();
+				break;
+//			case 2:
+//				welcomeScreen();
+//				break;
 			default:
 				System.out.println("Please choose within the range provided!");
 			}
