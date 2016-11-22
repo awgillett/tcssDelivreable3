@@ -166,6 +166,7 @@ public class Calendar implements Serializable {
 	 * 
 	 * @param NPO
 	 * @return True if the auction is deleted.
+	 * @author Carl Seiber
 	 */
 	public int deleteAuction(String NPO) {
 		for (Auction a : myAuctionList) {
