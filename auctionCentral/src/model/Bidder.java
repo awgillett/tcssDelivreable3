@@ -129,9 +129,12 @@ public class Bidder extends User implements Serializable{
 	}
 
 	/**
-	 * checks if bid is valid then adds it if it is valid
-	 * @param myBid the Bid to set
-	 * @return true if the bid is valid, else false
+	 * @author aaron
+	 * checks to make sure that the bid offer is a positive number
+	 * checks to make sure that the the bidder does not already have a bit for this item
+	 * @param myBid the Bid in question
+	 * @return true if the bid is a positive number & does not already exist
+	 * @return false if the bid is negative or already exists
 	 */
 	public boolean addBid(Bid myBid) {
 		
@@ -145,13 +148,26 @@ public class Bidder extends User implements Serializable{
 		return true;
 	}
 	
+	/**
+	 * @author aaron
+	 * adds the supplied bid to the bidders list of bids
+	 * @param myBid the Bid to add
+	 * @return void
+	 */
 	public void placeBid(Bid myBid) {
 		
 		myBids.add(myBid);
 	}
 	
-	// returns true if bid can be removed, false if not
-//	public boolean bidRemovalRequest(int itemID, Calendar myCalendar){
+	/**
+	 * @author aaron
+	 * checks if a bid can be removed from the bidders list of bids
+	 * @param itemID the item number corresponding to the bid removal request
+	 * @param myCalendar The calendar which holds all of the auctions
+	 * @return 1 if the bid found and able to be canceled
+	 * @return 2 if the bid is found but may not be canceled do to the date of the auction
+	 * @return 3 if the bid does not exist
+	 */
 	public int bidRemovalRequest(int itemID, Calendar myCalendar){
 		int itemFoundAndRemovable = 1;
 		int itemFoundButNotRemovable = 2;
@@ -178,7 +194,14 @@ public class Bidder extends User implements Serializable{
 
 	}
 	
-	public boolean removaTheBid(int itemID) {
+	/**
+	 * @author aaron
+	 * @removes the bid that is associated with the provided itemID
+	 * @param itemID the item number corresponding to the bid removal
+	 * @return true if the bid is successfully removed
+	 * @return false if there is no bid for associated with the itemID
+	 */
+	public boolean removeTheBid(int itemID) {
 		
 		Bid myBid = getBid(itemID);
 		if(myBid == null){
@@ -188,6 +211,13 @@ public class Bidder extends User implements Serializable{
 		return true;
 	}	
 	
+	/**
+	 * @author aaron
+	 * @takes an itemID and returns the bid
+	 * @param itemID the item number corresponding to the bid to return
+	 * @return Bid if the bid is successfully found in the list of bids
+	 * @return null if there is no bid for associated with the itemID
+	 */
 	private Bid getBid(int itemID) {
 		
 		Bid myBid = null;
@@ -226,6 +256,28 @@ public class Bidder extends User implements Serializable{
 		}
 		str.append("\n");
 		return str.toString();
+	}
+	
+	public void addBidRequest(int itemID, Calendar myCalendar) {
+		
+		
+		
+		for(Auction a : myCalendar.getAllAuctions()){
+			for(Item i : a.getItemList()){
+				if(i.getMyItemID() == itemID){
+					
+					
+//					System.out.println("Bidding on:");
+//					System.out.println("\nItem ID: \tName: \t\tMin Bid: \tCondition: \tdescription: ");
+//					System.out.println(" "+a.getItem(itemID).getMyItemID()+ "\t\t" + a.getItem(itemID).getItemName()+
+//							"\t\t" + a.getItem(itemID).getMyMinBid() +"\t\t"+ a.getItem(itemID).getMyCondition() 
+//							+"\t"+a.getItem(itemID).getMyDescription());
+//					thisAuct = a;
+//					found = true;
+				}
+			}
+		}
+		
 	}
 
 

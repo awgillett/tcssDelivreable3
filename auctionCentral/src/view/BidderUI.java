@@ -332,7 +332,7 @@ public class BidderUI {
 
 	private static void confirmedBidCancel(int itemID) {
 		
-		if(currentBidder.removaTheBid(itemID)){
+		if(currentBidder.removeTheBid(itemID)){
 			System.out.println("Your bid for item number " + itemID + " has been canceled.");
 			printBids();
 		}else{
