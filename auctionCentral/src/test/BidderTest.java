@@ -18,7 +18,13 @@ import model.NPO;
 
 public class BidderTest {
 	
+	Bidder theBidder;
+	Auction theAuction;
 	Calendar myCalendar;
+	Item itemA;
+	Item itemB;
+	Bid bidA;
+	Bid bidNull;
 	NPO a;
 	NPO b;
 	NPO c;
@@ -26,10 +32,22 @@ public class BidderTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		myCalendar = new Calendar();
 		a = new NPO("NPOa", "a");
 		b = new NPO("NPOb", "b");
 		c = new NPO("NPOc", "c");
+		
+		theBidder = new Bidder("theBidderName", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
+		theAuction = new Auction(a, LocalDateTime.now().plusDays(5), 1, "None", 1);
+		
+		myCalendar = new Calendar();	
+		itemA = new Item("itemA", "NPOA", "good", "small", "NOTE", "DESC", 10., 123);
+		itemB = new Item("itemB", "good", "small", 10.);
+		
+		myCalendar.addAuction(theAuction);
+		theAuction.addItem(itemA);
+		
+		bidA = theBidder.createBid(itemA.getMyMinBid(), itemA, myCalendar);
+		bidNull = null;
 	}
 
 	@After
@@ -40,128 +58,130 @@ public class BidderTest {
 	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
 	 */
 	@Test
-	public void testAddBidWhenAlreadyHasBid() {
-		Bid theBid = new Bid("theBidderName", 1234,  100.00, 7894);
-		Bid theSecondBid = new Bid("theBidderName", 456,  200.00, 7894);
-		Bidder theBidder = new Bidder("theBidderName", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
-		theBidder.addBid(theBid);
-		assertFalse(theBidder.addBid(theSecondBid));
+	public void testAddBidForDuplicateBid() {
+			
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		assertTrue(theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid()) == 3);
 	}
 	/**
 	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
 	 */
 	@Test
-	public void testAddBidWhenNoBidYet() {
-		Bid theBid = new Bid("theBidderName", 1234,  100.00, 4321);
-		Bidder theBidder = new Bidder("TheBidder", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
-		assertTrue(theBidder.addBid(theBid));
+	public void testAddBidForNonduplicateBid() {
+		assertTrue(theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid()) == 1);
 	}
 	/**
 	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
 	 */
 	@Test
-	public void testAddBidZeroDollars() {
-		Bid theBid = new Bid("theBidderName", 1234,  0.00, 4321);
-		Bidder theBidder = new Bidder("TheBidder", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
-		assertFalse(theBidder.addBid(theBid));
+	public void testAddBidOfZeroDollars() {
+//		bidA.setMyBidAmount(0)
+		assertTrue(theBidder.addBid(myCalendar,itemA, 0) == 2);
 	}
 	/**
 	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
 	 */
 	@Test
 	public void testAddBidNegativeDollars() {
-		Bid theBid = new Bid("theBidderName", 1234,  -1.00, 4321);
-		Bidder theBidder = new Bidder("TheBidder", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
-		assertFalse(theBidder.addBid(theBid));
+//		bidA.setMyBidAmount(-5);
+		assertTrue(theBidder.addBid(myCalendar,itemA, -5) == 2);
 	}
 	/**
 	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 */
+	@Test
+	public void testAddBidAfterAuctionHasBegun() {
+		theAuction.setAuctionDate(LocalDateTime.now());
+		assertTrue(theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid()) == 4);
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 */
+	@Test
+	public void testAddBidAfterAuctionHasCompleted() {
+		theAuction.setAuctionDate(LocalDateTime.now().minusDays(1));
+		assertTrue(theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid()) == 4);
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
 	public void testBidRemovalRequestOneDayBeforeAuction() {
 		
-		Bidder theBidder = new Bidder("bidder", "Bidder", "address", "phone", "email", "thePaymentInfo");
-		Auction theAuction = new Auction(a, LocalDateTime.now().plusDays(1), 1, "None", 123456);
-		theAuction.addItem("thing", "donor", "good", "small", "you don't want this", "missing one bite", 1000);
-		myCalendar.addAuction(theAuction);
-		int itemID = 0;
-		for(Item item : theAuction.getItemList()){
-			itemID = item.getMyItemID();
-		}
-		Bid theBid = new Bid("theBidderName", itemID,  1000, 123456);
-		theBidder.placeBid(theBid);
-		assertFalse(theBidder.bidRemovalRequest(itemID, myCalendar) == 1);
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		theAuction.setAuctionDate(LocalDateTime.now().plusDays(1));
+		assertTrue(theBidder.bidRemovalRequest(bidA.getMyItemID(), myCalendar) == 2);
 	}
 	/**
-	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
 	public void testBidRemovalRequestThreeDaysBeforeAuction() {
-		
-		Bidder theBidder = new Bidder("bidder", "Bidder", "address", "phone", "email", "thePaymentInfo");
-		Auction theAuction = new Auction(a, LocalDateTime.now().plusDays(3), 1, "None", 123456);
-		theAuction.addItem("thing", "donor", "good", "small", "you don't want this", "missing one bite", 1000);
-		myCalendar.addAuction(theAuction);
-		int itemID = 0;
-		for(Item item : theAuction.getItemList()){
-			itemID = item.getMyItemID();
-		}
-		Bid theBid = new Bid("theBidderName", itemID,  1000, 123456);
-		theBidder.placeBid(theBid);
-		assertTrue(theBidder.bidRemovalRequest(itemID, myCalendar) == 1);
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		theAuction.setAuctionDate(LocalDateTime.now().plusDays(3));
+		assertTrue(theBidder.bidRemovalRequest(bidA.getMyItemID(), myCalendar) == 1);
 	}
 	/**
-	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
 	public void testBidRemovalRequestTwoDaysBeforeAuction() {
-		
-		Bidder theBidder = new Bidder("bidder", "Bidder", "address", "phone", "email", "thePaymentInfo");
-		Auction theAuction = new Auction(a, LocalDateTime.now().plusDays(2), 1, "None", 123456);
-		theAuction.addItem("thing", "donor", "good", "small", "you don't want this", "missing one bite", 1000);
-		myCalendar.addAuction(theAuction);
-		int itemID = 0;
-		for(Item item : theAuction.getItemList()){
-			itemID = item.getMyItemID();
-		}
-		Bid theBid = new Bid("theBidderName", itemID,  1000, 123456);
-		theBidder.placeBid(theBid);
-		assertTrue(theBidder.bidRemovalRequest(itemID, myCalendar) == 1);
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		theAuction.setAuctionDate(LocalDateTime.now().plusDays(2));
+		assertTrue(theBidder.bidRemovalRequest(itemA.getMyItemID(), myCalendar) == 1);
 	}
 	/**
-	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
 	public void testBidRemovalRequestZeroDaysBeforeAuction() {
-		
-		Bidder theBidder = new Bidder("bidder", "Bidder", "address", "phone", "email", "thePaymentInfo");
-		Auction theAuction = new Auction(a, LocalDateTime.now(), 1, "None", 123456);
-		theAuction.addItem("thing", "donor", "good", "small", "you don't want this", "missing one bite", 1000);
-		myCalendar.addAuction(theAuction);
-		int itemID = 0;
-		for(Item item : theAuction.getItemList()){
-			itemID = item.getMyItemID();
-		}
-		Bid theBid = new Bid("theBidderName", itemID,  1000, 123456);
-		theBidder.placeBid(theBid);
-		assertFalse(theBidder.bidRemovalRequest(itemID, myCalendar) == 1);
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		theAuction.setAuctionDate(LocalDateTime.now());
+		assertTrue(theBidder.bidRemovalRequest(bidA.getMyItemID(), myCalendar) == 2);
 	}
 	/**
-	 * Test method for {@link model.Bidder#theBidder.addBid(theBid)}.
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
 	public void testBidRemovalRequestTenDaysBeforeAuction() {
-		
-		Bidder theBidder = new Bidder("bidder", "Bidder", "address", "phone", "email", "thePaymentInfo");
-		Auction theAuction = new Auction(a, LocalDateTime.now().plusDays(10), 1, "None", 123456);
-		theAuction.addItem("thing", "donor", "good", "small", "you don't want this", "missing one bite", 1000);
-		myCalendar.addAuction(theAuction);
-		int itemID = 0;
-		for(Item item : theAuction.getItemList()){
-			itemID = item.getMyItemID();
-		}
-		Bid theBid = new Bid("theBidderName", itemID,  1000, 123456);
-		theBidder.placeBid(theBid);
-		assertTrue(theBidder.bidRemovalRequest(itemID, myCalendar) == 1);
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		theAuction.setAuctionDate(LocalDateTime.now().plusDays(10));
+		assertTrue(theBidder.bidRemovalRequest(bidA.getMyItemID(), myCalendar) == 1);
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
+	 */
+	@Test
+	public void testBidRemovalRequestBidDoesNotExist() {
+		assertTrue(theBidder.bidRemovalRequest(bidA.getMyItemID(), myCalendar) == 3);
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.removeTheBid(itemID)}.
+	 */
+	@Test
+	public void testRemoveTheBidForExistingBid() {
+		theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid());
+		assertTrue(theBidder.removeTheBid(bidA.getMyItemID()));
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.removeTheBid(itemID)}.
+	 */
+	@Test
+	public void testRemoveTheBidForNonExistingBid() {
+		assertFalse(theBidder.removeTheBid(bidA.getMyItemID()));
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.placeBid(newBid)}.
+	 */
+	@Test
+	public void testPlaceBidForNullBid() {
+		assertFalse(theBidder.placeBid(bidNull));
+	}
+	/**
+	 * Test method for {@link model.Bidder#theBidder.placeBid(newBid)}.
+	 */
+	@Test
+	public void testPlaceBidForNonNullBid() {
+		assertTrue(theBidder.placeBid(bidA));
 	}
 }

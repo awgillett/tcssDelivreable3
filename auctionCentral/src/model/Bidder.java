@@ -1,5 +1,4 @@
 package model;
-//match
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,9 +10,6 @@ import java.util.Collection;
  */
 public class Bidder extends User implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String myAddress;
 	private String myPhone;
@@ -41,18 +37,20 @@ public class Bidder extends User implements Serializable{
 	}
 	
 	/**
-	 * get the address of the bidder
-	 * @return the myAddress
+	 * @author aaron
+	 * @return bidCancelBuffer the maximum number of 
+	 * days before an auction that a bid may be reoved
 	 */
-	public int bidCancelBuffer() {
+	public int getBidCancelBuffer() {
 		return bidCancelBuffer;
 	}
 
 	/**
-	 * set the address of the bidder
-	 * @param myAddress the myAddress to set
+	 * @author aaron
+	 * set the bidCancelBuffer of the bidder
+	 * @param newBuffer the maximum number of days before an auction that a bid may be reoved
 	 */
-	public void bidCancelBuffer(int newBuffer) {
+	public void setBidCancelBuffer(int newBuffer) {
 		Bidder.bidCancelBuffer = newBuffer;
 	}
 	
@@ -133,30 +131,48 @@ public class Bidder extends User implements Serializable{
 	 * checks to make sure that the bid offer is a positive number
 	 * checks to make sure that the the bidder does not already have a bit for this item
 	 * @param myBid the Bid in question
+	 * @param itemToBidOn 
 	 * @return true if the bid is a positive number & does not already exist
 	 * @return false if the bid is negative or already exists
 	 */
-	public boolean addBid(Bid myBid) {
+	public int addBid(Calendar cal, Item itemToBidOn, double bidOffer) {
 		
-		if (myBid.getMyBidAmount() <= 0)
-			return false;
-		for (Bid b : myBids){
-			
-			if (b.getMyItemID() == myBid.getMyItemID())
-				return false;
+		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
+		
+		int bidAccepted = 1;
+		int bidBelowMinBid = 2;
+		int bidForItemAlreadyExists = 3;
+		int auctionHasStarted = 4;
+		
+		if(!cal.requestBid(newBid.getMyItemID())){
+			return auctionHasStarted;
+		}else if(!itemToBidOn.isValidBid(newBid.getMyBidAmount())){
+			return bidBelowMinBid;
+		}else if(getBid(newBid.getMyItemID()) != null){
+			return bidForItemAlreadyExists;
+		}else{
+			placeBid(newBid);
+			return bidAccepted;
 		}
-		return true;
 	}
 	
 	/**
 	 * @author aaron
 	 * adds the supplied bid to the bidders list of bids
+	 * @param newBid 
 	 * @param myBid the Bid to add
+	 * @return 
 	 * @return void
 	 */
-	public void placeBid(Bid myBid) {
+	public boolean placeBid(Bid newBid) {
+		boolean bidPlaced = true;
+		if(newBid != null){
+			myBids.add(newBid);
+		}else{
+			bidPlaced = false;
+		}
+		return bidPlaced;
 		
-		myBids.add(myBid);
 	}
 	
 	/**
@@ -213,72 +229,96 @@ public class Bidder extends User implements Serializable{
 	
 	/**
 	 * @author aaron
-	 * @takes an itemID and returns the bid
+	 * takes an itemID and returns the bid
 	 * @param itemID the item number corresponding to the bid to return
 	 * @return Bid if the bid is successfully found in the list of bids
-	 * @return null if there is no bid for associated with the itemID
+	 * @return null if there is no bid associated with the itemID
 	 */
 	private Bid getBid(int itemID) {
 		
 		Bid myBid = null;
-		
 		for (Bid b : myBids){
 			if (b.getMyItemID() == itemID)
 				myBid = b;
 		}
 		return myBid;
-		
 	}
-
+	
+	/**
+	 * @author aaron
+	 * takes an itemID and returns a formated string showing the item and the bid
+	 * @param itemID of the item corresponding to the bid to print
+	 * @return str a formated string showing the itemID and the bid amount. If there is a bid for that item
+	 * @return str If there is no bid for the item with the provided itemID. 
+	 * A message indicating that currently there is no bid for the item associated with the provided itemID.
+	 */
 	public String printBid(int itemID){
-		StringBuilder str = new StringBuilder();
 		
 		Bid b  = getBid(itemID);
-		
-		str.append("\n\tItem Number: \tYour Bid");
-		str.append("\n\t"+ b.getMyItemID() + "\t\t" + b.getMyBidAmount());
-		
+		StringBuilder str = new StringBuilder();
+		if(b == null){
+			str.append("You currently have no bid for this item.");
+		}else{
+			str.append("\n\tItem Number: \tYour Bid:");
+			str.append("\n\t"+ itemID + "\t\t" + b.getMyBidAmount());
+		}
 		return str.toString();
 	}
 	
-	public String printBids(){
-		
+	/**
+	 * 
+	 * @param myCalendar 
+	 * @return str 
+	 */
+	public String printBids(Calendar myCalendar){
 		StringBuilder str = new StringBuilder();
-
-		
-		str.append("\n\tItem Number: \tYour Bid");
-		
-		for (Bid b : myBids)
-		{
-			//System.out.println("printBids");
-			str.append("\n\t"+ b.getMyItemID() + "\t\t" + b.getMyBidAmount());
-
+		myCalendar.getAllAuctions();
+		str.append("\n\tItem Number: \tYour Bid:");
+		for (Bid b : myBids){
+			str.append("\n\t"+ b.getMyItemID() +"\t\t" + b.getMyBidAmount());
 		}
 		str.append("\n");
 		return str.toString();
 	}
 	
-	public void addBidRequest(int itemID, Calendar myCalendar) {
+	/**
+	 * @author aaron
+	 * takes an itemID and calendar and returns the item object or null if it does not exist
+	 * @param itemID the ID of the item that the bidder wishes to bid on
+	 * @param myCalendar the system calendar
+	 * @return getItemToBidOn the item for the supplied ID or null if it does not exist
+	 */
+	public Item getItemToBidOn(int itemID, Calendar myCalendar) {
 		
+		return myCalendar.getItem(itemID);
+	}
+	
+	/**
+	 * @author aaron
+	 * helper method that takes an item, an offer and a calendar and returns a bid object
+	 * @param bidOffer the bid amount 
+	 * @param itemToBidOn the item object that the bid is for
+	 * @param myCalendar the calendar
+	 * @return new Bid Object
+	 */
+	public Bid createBid(double bidOffer, Item itemToBidOn, Calendar myCalendar) {
 		
-		
-		for(Auction a : myCalendar.getAllAuctions()){
-			for(Item i : a.getItemList()){
-				if(i.getMyItemID() == itemID){
-					
-					
-//					System.out.println("Bidding on:");
-//					System.out.println("\nItem ID: \tName: \t\tMin Bid: \tCondition: \tdescription: ");
-//					System.out.println(" "+a.getItem(itemID).getMyItemID()+ "\t\t" + a.getItem(itemID).getItemName()+
-//							"\t\t" + a.getItem(itemID).getMyMinBid() +"\t\t"+ a.getItem(itemID).getMyCondition() 
-//							+"\t"+a.getItem(itemID).getMyDescription());
-//					thisAuct = a;
-//					found = true;
-				}
-			}
-		}
+		return new Bid(getMyUserName(), itemToBidOn.getMyItemID(), bidOffer, myCalendar.getAuction(itemToBidOn.getMyItemID()).getMyID());
+
 		
 	}
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

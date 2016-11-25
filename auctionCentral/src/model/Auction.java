@@ -178,6 +178,10 @@ public class Auction implements Serializable {
 		nextItemID++;
 		return true;
 	}
+	
+	public void addItem(Item item){
+		myItemList.add(item);
+	}
 	/**
 	 * @author Jesse Wiklanski
 	 * @param itemName The name of the item that is to be removed

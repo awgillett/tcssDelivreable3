@@ -156,7 +156,7 @@ public class Calendar implements Serializable {
 				}
 				if (a.getItem(theItemID).isValidBid(theBidAmount))
 				{
-					theBidder.addBid(new Bid(theBidder.getMyName(), theItemID, theBidAmount, theAuctionID));
+					theBidder.placeBid(new Bid(theBidder.getMyName(), theItemID, theBidAmount, theAuctionID));
 					return true;
 				}
 			}
@@ -164,7 +164,21 @@ public class Calendar implements Serializable {
 		
 		return false;
 	}
-	
+
+	/**
+	 * @author aaron
+	 * takes an itemID and determines if the auction has started or is past
+	 * @param itemID
+	 * @return canBid true if the the auction has not already begun
+	 */
+	public boolean requestBid(int itemID){
+		boolean canBid = true;
+		Auction auc = getAuction(itemID);
+		if(auc.getAuctionDate().isBefore(LocalDateTime.now()) || auc.getAuctionDate().isEqual((LocalDateTime.now()))){
+			canBid = false;
+		}
+		return canBid;
+	}
 	
 
 	
@@ -234,5 +248,49 @@ public class Calendar implements Serializable {
 		}
 		return count;
 	}
-	
+
+
+	/**
+	 * @author aaron
+	 * Takes an itemID and returns the Item object or null.
+	 * Allows access to Items for the Bidder class through calendar.
+	 * @param itemID
+	 * @return Item associated with the supplied itemID
+	 * @return null if there is no item associated with the supplied itemID
+	 */
+	public Item getItem(int itemID) {
+		for(Auction a : getAllAuctions()){
+			if(a.getItem(itemID) != null){
+				return a.getItem(itemID);
+			}
+		}
+		return null;
+	}
+	public Auction getAuction(int itemID) {
+		for(Auction a : getAllAuctions()){
+			if(a.getItem(itemID) != null){
+				return a;
+			}
+		}
+		return null;
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -31,8 +31,10 @@ public class BidderUI {
 	}
 
 	/**
+	 * @author aaron
 	 * displays the welcome screen for a Bidder
-	 * @param bidder
+	 * @param bidder the bidder that is logged into the system
+	 * @param theCalendar the system calendar
 	 */
 	public static void welcomeScreen(Bidder bidder, Calendar theCalendar){
 		
@@ -74,7 +76,6 @@ public class BidderUI {
 		}
 	}
 	
-	
 	private static void checkInput(){	
 		while(!sc.hasNextInt()){
 			System.out.println("\nPlease choose within the range provided");
@@ -85,7 +86,8 @@ public class BidderUI {
 	}
 	
 	/**
-	 * prints list of available auctions to UI
+	 * @author aaron
+	 * displays all of the scheduled auctions for the bidder.
 	 */
 	public static void showAuctions() {
 
@@ -131,37 +133,23 @@ public class BidderUI {
 
 	public static void makeBid() {
 		choice = 0;
-		boolean found = false;
 		int itemID;
 		double bidOffer = 0;
-		Auction thisAuct = null;
 		System.out.println("");
 		System.out.println("Enter the item number?");
 		System.out.println(">>");
 		checkInput();
 		itemID = sc.nextInt();
 		
-		for(Auction a : myCalendar.getAllAuctions()){
-			for(Item i : a.getItemList()){
-				if(i.getMyItemID() == itemID){
-					System.out.println("Bidding on:");
-					System.out.println("\nItem ID: \tName: \t\tMin Bid: \tCondition: \tdescription: ");
-					System.out.println(" "+a.getItem(itemID).getMyItemID()+ "\t\t" + a.getItem(itemID).getItemName()+
-							"\t\t" + a.getItem(itemID).getMyMinBid() +"\t\t"+ a.getItem(itemID).getMyCondition() 
-							+"\t"+a.getItem(itemID).getMyDescription());
-					thisAuct = a;
-					found = true;
-				}
-			}
-		}
-		if(!found){
-			System.out.println("Item not found");
+		Item itemToBidOn = currentBidder.getItemToBidOn(itemID, myCalendar);
+		
+		if(itemToBidOn == null){
+			System.out.println("\nSorry, we can not find an item with that item number.\n");
 			welcomeScreen(currentBidder, myCalendar);
 		}
-		
-		
+				
 		System.out.println("");
-		System.out.println("What is your bid?");
+		System.out.println("How much would you like to bid?");
 		System.out.println(">>");
 		while(!sc.hasNextDouble()){
 			System.out.println("Please enter a double: ");
@@ -171,8 +159,10 @@ public class BidderUI {
 		}
 		bidOffer = sc.nextDouble();
 		
+		
+		
 		while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != EXIT) {
-			System.out.println("Your bid is " + bidOffer + " for "+ thisAuct.getItem(itemID).getItemName()+".");
+			System.out.println("Your bid is $" + bidOffer + " for "+ itemToBidOn.getItemName()+".");
 			System.out.println("Please choose one of the following");
 			System.out.println("");
 			System.out.println("1. Confirm and place your bid");
@@ -184,7 +174,7 @@ public class BidderUI {
 			switch (choice) {
 	
 			case 1:
-				placeBid(thisAuct, bidOffer, itemID);
+				placeBid(bidOffer, itemToBidOn);
 				break;
 			case 2:
 				System.out.println("Bid canceled");
@@ -205,26 +195,38 @@ public class BidderUI {
 		
 	}
 
-	private static void placeBid(Auction a, double bidOffer, int itemID) {
+	private static void placeBid(double bidOffer, Item itemToBidOn) {
 		
-		Bid myBid = new Bid(currentBidder.getMyUserName(), itemID, bidOffer, a.getMyID());
+		int result = currentBidder.addBid(myCalendar, itemToBidOn, bidOffer);
+		switch (result) {
 		
-		
-//!!!!!!!!!!!!!!!!!!!!put all this logic in the bidder class************************************		
-		if(a.getItem(itemID).isValidBid(bidOffer) && currentBidder.addBid(myBid)){
-			
-			currentBidder.placeBid(myBid);
-			System.out.println("Congratulations! Your bid of $" + bidOffer + " for " + a.getItem(itemID).getItemName() + " has been placed.\n");
+		case 1:
+			System.out.println("Congratulations! Your bid of $" + bidOffer + " for " + itemToBidOn.getItemName() + " has been placed.\n");
 			welcomeScreen(currentBidder, myCalendar);
-		}else{
-			
-//!!!!!!!!!!!!!!!!!!! add a reason for bid denial********************************************************
-			System.out.println("Sorry, invalid bid.");
+			break;
+		case 2:
+			System.out.println("Your bid is below the minimum bid amount of $" + itemToBidOn.getMyMinBid() + 
+					" please adjust your bid and try again.");
+			makeBid();
+			break;
+		case 3:
+			System.out.println("You already have a bid for this item.");
+			makeBid();
+			break;
+		case 4:
+			System.out.println("Sorry, online bidding is closed for this auction.");
+			break;
+
+		default:
 			makeBid();
 		}
-	
 	}
 
+	/**
+	 * @author aaron
+	 * UI method that allows the bidder to view all of their current bids
+	 * as well as giving the option to cancel a current bid.
+	 */
 	public static void showBids() {
 		choice = 0;
 
@@ -234,7 +236,7 @@ public class BidderUI {
 			System.out.println("");
 			System.out.println("Current bids for " + currentBidder.getMyName());
 			
-			System.out.println(currentBidder.printBids());
+			System.out.println(currentBidder.printBids(myCalendar));
 			
 			System.out.println("What would you like to do?");
 			System.out.println("Please choose one of the following");
@@ -345,7 +347,7 @@ public class BidderUI {
 	private static void printBids() {
 		
 		System.out.println("Your current list of active bids:");
-		System.out.println(currentBidder.printBids());
+		System.out.println(currentBidder.printBids(myCalendar));
 	}
 	
 	
