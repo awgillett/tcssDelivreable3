@@ -185,29 +185,22 @@ public class Bidder extends User implements Serializable{
 	 * @return 3 if the bid does not exist
 	 */
 	public int bidRemovalRequest(int itemID, Calendar myCalendar){
-		int itemFoundAndRemovable = 1;
-		int itemFoundButNotRemovable = 2;
-		int itemNotFound = 3;
-		
+		int bidFoundAndRemovable = 1;
+		int bidFoundButNotRemovable = 2;
+		int bidNotFound = 3;
 		Bid myBid = getBid(itemID);
-		
 		if(myBid == null){
-			// there is no bid for the item
-			return itemNotFound;
+			return bidNotFound;
 		}
 		for(Auction a : myCalendar.getAllAuctions()){
-			
 			if(myBid.getMyAuctionID() == a.getMyID()){
-				
 				if(a.getAuctionDate().isBefore(LocalDateTime.now().plusDays(bidCancelBuffer))){
-					return itemFoundButNotRemovable;
+					return bidFoundButNotRemovable;
 				}
-				return itemFoundAndRemovable;
+				return bidFoundAndRemovable;
 			}
 		}
-
-		return itemFoundAndRemovable;
-
+		return bidFoundAndRemovable;
 	}
 	
 	/**
@@ -215,7 +208,7 @@ public class Bidder extends User implements Serializable{
 	 * @removes the bid that is associated with the provided itemID
 	 * @param itemID the item number corresponding to the bid removal
 	 * @return true if the bid is successfully removed
-	 * @return false if there is no bid for associated with the itemID
+	 * @return false if there is no bid associated with the itemID
 	 */
 	public boolean removeTheBid(int itemID) {
 		
