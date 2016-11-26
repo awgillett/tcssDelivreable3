@@ -28,6 +28,8 @@ public class BidderTest {
 	NPO a;
 	NPO b;
 	NPO c;
+	
+	//TODO create automated ATs
 
 	@Before
 	public void setUp() throws Exception {
@@ -75,7 +77,6 @@ public class BidderTest {
 	 */
 	@Test
 	public void testAddBidOfZeroDollars() {
-//		bidA.setMyBidAmount(0)
 		assertTrue(theBidder.addBid(myCalendar,itemA, 0) == 2);
 	}
 	/**
@@ -83,7 +84,6 @@ public class BidderTest {
 	 */
 	@Test
 	public void testAddBidNegativeDollars() {
-//		bidA.setMyBidAmount(-5);
 		assertTrue(theBidder.addBid(myCalendar,itemA, -5) == 2);
 	}
 	/**
