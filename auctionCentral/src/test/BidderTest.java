@@ -103,6 +103,15 @@ public class BidderTest {
 		assertTrue(theBidder.addBid(myCalendar,itemA, itemA.getMyMinBid()) == 4);
 	}
 	/**
+	 * Test method for {@link model.Bidder#theBidder.placeBid(newBid)}.
+	 */
+	@Test
+	public void testPlaceBidForNonNullBid() {
+		assertTrue(theBidder.placeBid(bidA));
+	}
+	
+	
+	/**
 	 * Test method for {@link model.Bidder#theBidder.bidRemovalRequest(itemID, myCalendar)}.
 	 */
 	@Test
@@ -177,11 +186,5 @@ public class BidderTest {
 	public void testPlaceBidForNullBid() {
 		assertFalse(theBidder.placeBid(bidNull));
 	}
-	/**
-	 * Test method for {@link model.Bidder#theBidder.placeBid(newBid)}.
-	 */
-	@Test
-	public void testPlaceBidForNonNullBid() {
-		assertTrue(theBidder.placeBid(bidA));
-	}
+
 }
