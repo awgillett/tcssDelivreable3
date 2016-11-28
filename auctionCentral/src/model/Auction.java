@@ -45,13 +45,6 @@ public class Auction implements Serializable {
 	}
 	
 	/**
-	 * get NPO object of an auction
-	 * @return the nPOname 
-	 */
-	public NPO getNPOname() {
-		return NPOname;
-	}
-	/**
 	 * set the NPO object associated with the auction
 	 * @param nPOname the nPOname to set
 	 */
