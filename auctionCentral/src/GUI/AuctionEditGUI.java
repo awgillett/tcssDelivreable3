@@ -31,7 +31,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AuctionEditGUI extends JFrame {
+public class AuctionEditGUI extends JDialog {
 
 	// private JFrame frame;
 	Auction myAuction;
@@ -39,7 +39,9 @@ public class AuctionEditGUI extends JFrame {
 	AddItemGUI addItemMenu;
 	NumberFormat currency = NumberFormat.getCurrencyInstance();
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
+	int selectedItem = -1;
 	private JTable tblItems;
+	private JLabel lblInfo;
 	DefaultTableModel tblModel = new DefaultTableModel(new Object[][] {},
 			new String[] { "ID", "Name", "Description", "Condition", "Min Bid" });
 
@@ -113,10 +115,7 @@ public class AuctionEditGUI extends JFrame {
 		tblItems.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					int index = tblItems.getSelectedRow();
-
-				}
+				selectedItem = tblItems.getSelectedRow();
 			}
 		});
 		tblItems.setShowVerticalLines(false);
@@ -135,7 +134,7 @@ public class AuctionEditGUI extends JFrame {
 		lblNewLabel.setBounds(10, 95, 308, 24);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblInfo = new JLabel(auctionInfo);
+		lblInfo = new JLabel(auctionInfo);
 		lblInfo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setVerticalAlignment(SwingConstants.TOP);
@@ -145,7 +144,9 @@ public class AuctionEditGUI extends JFrame {
 		JButton btnAddItem = new JButton("Add New Item");
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addItemMenu.setVisible(true);
+				addItemMenu.setModal(true);
+				addItemMenu.setVisible(true);				
+				updateStatus();
 
 			}
 		});
@@ -156,9 +157,10 @@ public class AuctionEditGUI extends JFrame {
 		JButton btnRemoveItem = new JButton("Remove Selected Item");
 		btnRemoveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				removeItem(myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0)));
 			}
 		});
-		btnRemoveItem.setToolTipText("Click here to remove the item highlighted in the list.");
+		btnRemoveItem.setToolTipText("Click here to remove the last item highlighted in the list.");
 		btnRemoveItem.setBounds(338, 411, 154, 23);
 		getContentPane().add(btnRemoveItem);
 
@@ -179,6 +181,7 @@ public class AuctionEditGUI extends JFrame {
 	}
 
 	private void populateItems() {
+		tblModel.setRowCount(0);
 		for (Item i : myAuction.getItemList()) {
 			tblModel.addRow(new Object[] { i.getMyItemID(), i.getItemName(), i.getMyDescription(), i.getMyCondition(),
 					currency.format(i.getMyMinBid()) });
@@ -194,12 +197,17 @@ public class AuctionEditGUI extends JFrame {
 				+ theItem.getMyItemName() + "<br>Condition: " + theItem.getMyCondition() + "<br>Size: "
 				+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
 
-		// JOptionPane confirm = new JOptionPane();
-		// JLabel info = new JLabel(message);
-		// confirm.getContentPane().add(info);
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			myAuction.
+			myAuction.removeItem(theItem.getMyItemName());
+			JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
+			updateStatus();
 		}
 
+	}
+	
+	private void updateStatus() {
+		populateAuctionInfo();
+		populateItems();
+		lblInfo.setText(auctionInfo);
 	}
 }

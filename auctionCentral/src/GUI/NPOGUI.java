@@ -26,10 +26,13 @@ public class NPOGUI {
 
 	private JFrame frame;
 	static Calendar curCalendar;
-	Auction curAuction;
+	private Auction curAuction;
 	AuctionEditGUI editMenu;
 	static NPO curNPO;
 	String auctionInfo;
+	private JLabel lblAuctionInfo;
+	private JButton btnEditAuction;
+	private JButton btnRequest;
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM"
 			+ " d yyyy, hh:mm a");
 
@@ -60,6 +63,7 @@ public class NPOGUI {
 		initialize();
 		editMenu = new AuctionEditGUI(curAuction);
 		editMenu.setVisible(false);
+		editMenu.setModal(true);
 	}
 
 	/**
@@ -100,7 +104,7 @@ public class NPOGUI {
 		txtUser.setBounds(386, 52, 392, 24);
 		frame.getContentPane().add(txtUser);
 
-		JLabel lblAuctionInfo = new JLabel(auctionInfo);
+		lblAuctionInfo = new JLabel(auctionInfo);
 		lblAuctionInfo.setBounds(20, 87, 450, 115);
 		frame.getContentPane().add(lblAuctionInfo);
 		
@@ -109,17 +113,18 @@ public class NPOGUI {
 		lblNewLabel_2.setBounds(33, 297, 306, 34);
 		frame.getContentPane().add(lblNewLabel_2);
 		
-		JButton btnRequest = new JButton("Submit Auction Request");
+		btnRequest = new JButton("Submit Auction Request");
 		btnRequest.setToolTipText("Click here to submit an Auction Request");
 		btnRequest.setBounds(81, 379, 154, 23);
 		frame.getContentPane().add(btnRequest);
 		if (curNPO.hasAuction())
 			btnRequest.setEnabled(false);
 		
-		JButton btnEditAuction = new JButton("Edit Current Auction");
+		btnEditAuction = new JButton("Edit Current Auction");
 		btnEditAuction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editMenu.setVisible(true);
+				updateStatus();
 			}
 		});
 		btnEditAuction.setToolTipText("Click here to edit items, add items, remove items, or cancel the auction.");
@@ -151,4 +156,18 @@ public class NPOGUI {
 					    + "You have " + curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
 		}
 	}
+	
+	private void updateStatus() {
+		loadAuctionOverview();
+		lblAuctionInfo.setText(auctionInfo);
+		if (!curNPO.hasAuction()) {
+			btnEditAuction.setEnabled(false);
+			btnRequest.setEnabled(true);
+		}
+		else {
+			btnEditAuction.setEnabled(true);
+			btnRequest.setEnabled(false);
+		}
+	}
+	
 }

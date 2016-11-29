@@ -12,8 +12,10 @@ import java.time.LocalDateTime;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -26,7 +28,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AddItemGUI extends JFrame {
+public class AddItemGUI extends JDialog {
 
 	private JPanel contentPane;
 	private Auction myAuction;
@@ -196,13 +198,16 @@ public class AddItemGUI extends JFrame {
 		btnAdd = new JButton("Add Item");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				myAuction.addItem(txtName.getText(), txtDonor.getText(), cboCondition.getSelectedItem().toString(), 
+				if(myAuction.addItem(txtName.getText(), txtDonor.getText(), cboCondition.getSelectedItem().toString(), 
 								  cboSize.getSelectedItem().toString(), txtNotes.getText(), txtDescription.getText(),
-								  Double.parseDouble(txtMinBid.getText()));
+								  Double.parseDouble(txtMinBid.getText()))) 
+					addItemSuccess();
+				else
+					addItemFail();
 			}
 		});
 		btnAdd.setToolTipText("Click here to submit an Auction Request");
-		btnAdd.setBounds(127, 430, 154, 23);
+		btnAdd.setBounds(98, 431, 154, 23);
 		btnAdd.setEnabled(false);
 		contentPane.add(btnAdd);
 		
@@ -213,7 +218,7 @@ public class AddItemGUI extends JFrame {
 			}
 		});
 		btnCancelItemAddition.setToolTipText("Click here to edit items, add items, remove items, or cancel the auction.");
-		btnCancelItemAddition.setBounds(408, 430, 154, 23);
+		btnCancelItemAddition.setBounds(273, 431, 154, 23);
 		contentPane.add(btnCancelItemAddition);
 		
 		JLabel lblDonor = new JLabel("Donor:");
@@ -248,6 +253,16 @@ public class AddItemGUI extends JFrame {
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNotes.setBounds(55, 324, 48, 17);
 		contentPane.add(lblNotes);
+		
+		JButton btnDone = new JButton("Finished");
+		btnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				close();
+			}
+		});
+		btnDone.setToolTipText("Click Here to return to the Auction Edit Menu");
+		btnDone.setBounds(448, 431, 154, 23);
+		contentPane.add(btnDone);
 	}
 	
 	private void setupSnapshot() {
@@ -276,6 +291,15 @@ public class AddItemGUI extends JFrame {
 		}			
 	}
 	
+	private void addItemSuccess() {
+		JOptionPane.showMessageDialog(this, "Item has been successfully added to Inventory!");
+		clearAll();
+	}
+	
+	private void addItemFail() {
+		JOptionPane.showMessageDialog(this, null, "Oops failed to add item, it appears you already have this item in inventory.", 0);
+	}
+	
 	boolean tryParseDouble(String value) {  
 	     try {  
 	         Double.parseDouble(value);  
@@ -287,5 +311,14 @@ public class AddItemGUI extends JFrame {
 	
 	private void close() {
 		this.setVisible(false);
+	}
+	
+	private void clearAll() {
+		txtDescription.setText("");
+		txtName.setText("");
+		txtMinBid.setText("");
+		txtSnapshot.setText(itemInfo);
+		txtDonor.setText("");
+		txtNotes.setText("");
 	}
 }

@@ -10,12 +10,12 @@ public class Item implements Serializable {
 	
 
 	private static final long serialVersionUID = -2307887234345780299L;
-	private String myItemName = "";
-	private String myDonor = "";
-	private String myCondition = "";
-	private String mySize = "";
-	private String myNotes = "";
-	private String myDescription = "";
+	private String myItemName;
+	private String myDonor;
+	private String myCondition;
+	private String mySize;
+	private String myNotes;
+	private String myDescription;
 	private int myItemID;
 	private double myMinBid;
 	
@@ -195,12 +195,11 @@ public class Item implements Serializable {
 	public String toString(){
 		StringBuilder str = new StringBuilder();
 
-		str.append("<html>"+ myItemID);
-		str.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + myItemName);
-		str.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + myMinBid);
-		str.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + myCondition);
-		str.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + myDescription);
-		str.append("<html>");
+		str.append("\n"+ myItemID);
+		str.append("\t\t" + myItemName);
+		str.append("\t\t" + myMinBid);
+		str.append("\t\t" + myCondition);
+		str.append("\t" + myDescription);
 		return str.toString();
 	}
 }

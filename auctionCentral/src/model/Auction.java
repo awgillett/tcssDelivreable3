@@ -25,6 +25,7 @@ public class Auction implements Serializable {
 	private String myNotes;
 	private int nextItemID;
 	private Collection<Item> myItemList;
+	private static int itemCancelBuffer = 2;
 	/**
 	 * an Auction has NPO name, auction date, item count, side notes, and auction ID
 	 * @param NPOname
@@ -44,6 +45,13 @@ public class Auction implements Serializable {
 		myID = theID;
 	}
 	
+	/**
+	 * get NPO object of an auction
+	 * @return the nPOname 
+	 */
+	public NPO getNPOname() {
+		return NPOname;
+	}
 	/**
 	 * set the NPO object associated with the auction
 	 * @param nPOname the nPOname to set
@@ -170,6 +178,66 @@ public class Auction implements Serializable {
 		nextItemID++;
 		return true;
 	}
+	
+	public void addItem(Item item){
+		myItemList.add(item);
+	}
+	/**
+	 * @author Jesse Wiklanski
+	 * @param itemName The name of the item that is to be removed
+	 * @return (1) for did remove item, or (2) for no item to remove, 
+	 * (3) for too late to remove the item
+	 */
+	
+	public int removeItem(String itemName){
+		boolean set = false;
+		int removedItem = 1;
+		int noItemToRemove = 2;
+		int tooLateDate = 3;
+		if(this.getAuctionDate().isAfter(LocalDateTime.now().plusDays(itemCancelBuffer))){
+			for (Item i : myItemList){
+				if(itemName.equals(i.getMyItemName())){
+					myItemList.remove(i);
+					set = true;
+					break;
+				}
+			}
+			if(set == true){
+				return removedItem;
+			}else{
+				return noItemToRemove;
+			}
+		}
+		else{
+			return tooLateDate;
+		}
+	}
+//	public int removeItem(String itemName){
+//		boolean set = false;
+//		int removedItem = 1;
+//		int noItemToRemove = 2;
+//		int tooLateDate = 3;
+//		if(this.getAuctionDate().isAfter(LocalDateTime.now().plusDays(itemCancelBuffer))){
+//			outerloop:
+//			for (Item i : myItemList){
+//				if(itemName.equals(i.getMyItemName())){
+//					myItemList.remove(i);
+//					set = true;
+//					if(myItemList.size() == 0){
+//						break outerloop;// neat this to get out of loop so no crashy
+//					}
+//				}
+//			}
+//			if(set == true){
+//				return removedItem;
+//			}else{
+//				return noItemToRemove;
+//			}
+//		}
+//		else{
+//			return tooLateDate;
+//		}
+//	}
 	
 	/**
 	 * searches through item myItemList to find item that matches the given ID
