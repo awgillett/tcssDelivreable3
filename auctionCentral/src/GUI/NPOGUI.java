@@ -61,7 +61,7 @@ public class NPOGUI {
 		curCalendar.addAuction(curNPO, LocalDateTime.now().plusDays(15), 15, "");
 		loadAuctionOverview();
 		initialize();
-		editMenu = new AuctionEditGUI(curAuction);
+		editMenu = new AuctionEditGUI(theNPO, theCalendar);
 		editMenu.setVisible(false);
 		editMenu.setModal(true);
 	}

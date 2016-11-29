@@ -6,7 +6,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 import model.Auction;
+import model.Calendar;
 import model.Item;
+import model.NPO;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -33,16 +35,16 @@ import java.awt.event.MouseEvent;
 
 public class AuctionEditGUI extends JDialog {
 
-	// private JFrame frame;
+	private Calendar myCalendar;
 	Auction myAuction;
-	String auctionInfo;
-	AddItemGUI addItemMenu;
-	NumberFormat currency = NumberFormat.getCurrencyInstance();
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
-	int selectedItem = -1;
+	private String auctionInfo;
+	private AddItemGUI addItemMenu;
+	private NumberFormat currency = NumberFormat.getCurrencyInstance();
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
+	private int selectedItem = -1;
 	private JTable tblItems;
 	private JLabel lblInfo;
-	DefaultTableModel tblModel = new DefaultTableModel(new Object[][] {},
+	private DefaultTableModel tblModel = new DefaultTableModel(new Object[][] {},
 			new String[] { "ID", "Name", "Description", "Condition", "Min Bid" });
 
 	/**
@@ -64,15 +66,10 @@ public class AuctionEditGUI extends JDialog {
 	/**
 	 * Create the application.
 	 */
-	public AuctionEditGUI(Auction theAuction) {
-		addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				populateAuctionInfo();
-				populateItems();
-			}
-		});
-		myAuction = theAuction;
+	//public AuctionEditGUI(Auction theAuction) {
+	public AuctionEditGUI(NPO theNPO, Calendar theCalendar) {
+		myCalendar = theCalendar;
+		myAuction = theCalendar.getAuction(theNPO);
 		populateAuctionInfo();
 		initialize();
 		addItemMenu = new AddItemGUI(myAuction);
@@ -151,7 +148,7 @@ public class AuctionEditGUI extends JDialog {
 			}
 		});
 		btnAddItem.setToolTipText("Click here to submit an Auction Request");
-		btnAddItem.setBounds(103, 411, 154, 23);
+		btnAddItem.setBounds(31, 411, 154, 23);
 		getContentPane().add(btnAddItem);
 
 		JButton btnRemoveItem = new JButton("Remove Selected Item");
@@ -161,7 +158,7 @@ public class AuctionEditGUI extends JDialog {
 			}
 		});
 		btnRemoveItem.setToolTipText("Click here to remove the last item highlighted in the list.");
-		btnRemoveItem.setBounds(338, 411, 154, 23);
+		btnRemoveItem.setBounds(216, 411, 168, 23);
 		getContentPane().add(btnRemoveItem);
 
 		JButton btnBack = new JButton("Back");
@@ -170,8 +167,18 @@ public class AuctionEditGUI extends JDialog {
 				close();
 			}
 		});
-		btnBack.setBounds(573, 411, 154, 23);
+		btnBack.setBounds(600, 411, 154, 23);
 		getContentPane().add(btnBack);
+		
+		JButton btnCancelAuction = new JButton("Cancel Auction");
+		btnCancelAuction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancelAuction();
+			}
+		});
+		btnCancelAuction.setToolTipText("Click here to Canel Auction Request");
+		btnCancelAuction.setBounds(415, 411, 154, 23);
+		getContentPane().add(btnCancelAuction);
 		populateItems();
 	}
 
@@ -209,5 +216,16 @@ public class AuctionEditGUI extends JDialog {
 		populateAuctionInfo();
 		populateItems();
 		lblInfo.setText(auctionInfo);
+	}
+	
+	private void cancelAuction() {
+		String message = "<html>This auction is scheduled for: " + myAuction.getAuctionDate().format(dateFormat)
+				       + "<br><br>You have " + myAuction.getMyItemList().size() + " items currently listed.<br><br>"
+				       + "Are you sure you want to CANCEL THIS AUCTION? (This operation CANNOT be undone)</html>";
+		
+		if (JOptionPane.showConfirmDialog(this, message) == 0) {
+			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1)
+				JOptionPane.showMessageDialog(this, "Your auction has been successfully cancelled!");
+		}
 	}
 }
