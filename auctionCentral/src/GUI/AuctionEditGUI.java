@@ -38,6 +38,7 @@ public class AuctionEditGUI extends JDialog {
 	private Calendar myCalendar;
 	Auction myAuction;
 	private String auctionInfo;
+	private String selectedItemInfo;
 	private AddItemGUI addItemMenu;
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
@@ -70,6 +71,7 @@ public class AuctionEditGUI extends JDialog {
 	public AuctionEditGUI(NPO theNPO, Calendar theCalendar) {
 		myCalendar = theCalendar;
 		myAuction = theCalendar.getAuction(theNPO);
+		selectedItemInfo = "";
 		populateAuctionInfo();
 		initialize();
 		addItemMenu = new AddItemGUI(myAuction);
@@ -111,8 +113,11 @@ public class AuctionEditGUI extends JDialog {
 		tblItems = new JTable();
 		tblItems.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				selectedItem = tblItems.getSelectedRow();
+				if (e.getClickCount() >= 2) {
+					displayItemInfo();
+				}
 			}
 		});
 		tblItems.setShowVerticalLines(false);
@@ -227,5 +232,14 @@ public class AuctionEditGUI extends JDialog {
 			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1)
 				JOptionPane.showMessageDialog(this, "Your auction has been successfully cancelled!");
 		}
+	}
+	
+	private void displayItemInfo() {
+		Item curItem = myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0));
+		selectedItemInfo = "<html>Detailed information for Item #" + curItem.getMyItemID() + "<br><br>Name: " + curItem.getItemName()
+			       + "<br>Description: " + curItem.getMyDescription() + "<br>Condition: " + curItem.getMyCondition()
+			       + "<br>Size: " + curItem.getMySize() + "<br>Donor: " + curItem.getMyDonor()
+			       + "<br>Minimum Bid: " + currency.format(curItem.getMyMinBid()) + "<br>Notes: " + curItem.getMyNotes() + "</html>";
+		JOptionPane.showMessageDialog(this, selectedItemInfo);
 	}
 }
