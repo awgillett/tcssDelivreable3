@@ -302,32 +302,22 @@ public class Bidder extends User implements Serializable{
 
 		
 	}
-
+	/**
+	 * @author aaron
+	 * Prints a string showing all of the bidders bids. 
+	 * This view is specifically designed for the bidder GUI main window.
+	 * @param myCalendar
+	 * @return String of all of the bidders current bids
+	 */
 	public String printBidsGUI(Calendar myCalendar) {
-		
 		StringBuilder str = new StringBuilder();
-//		myCalendar.getAllAuctions();
-//		int ItemID;
-//		String itemName;
-//		Double minBid;
-//		Double bidAmount;
-//		LocalDateTime auctionDate;
-//		str.append("Item: \tYour Bid:");
 		str.append("Item ID\t");
 		str.append("Item name\t");
 		str.append("Minimum bid\t");
 		str.append("Your bid\t");
 		str.append("Auction date\t");
 		str.append("\n");
-//		System.out.println(myBids.size());
 		for (Bid b : myBids){
-//			itemID, item name, minbid, bidders bid, auction date
-//			ItemID = b.getMyItemID();
-//			itemName = myCalendar.getItem(b.getMyItemID()).getItemName();
-//			minBid = myCalendar.getItem(b.getMyItemID()).getMyMinBid();
-//			bidAmount = b.getMyBidAmount();
-//			auctionDate = myCalendar.getAuction(b.getMyItemID()).getAuctionDate();
-			
 			str.append(b.getMyItemID());
 			str.append("\t");
 			str.append(myCalendar.getItem(b.getMyItemID()).getItemName());
@@ -338,14 +328,9 @@ public class Bidder extends User implements Serializable{
 			str.append("\t");
 			str.append(myCalendar.getAuction(b.getMyItemID()).getAuctionDate().format(dateFormat));
 			str.append("\n");
-			
-//			str.append("\n"+ b.getMyItemID() +"\t" + myCalendar.getItem(b.getMyItemID()).getMyMinBid() + "\t" + b.getMyBidAmount());
 		}
-//		str.append("\n");
 		return str.toString();
 	}
-
-
 }
 
 

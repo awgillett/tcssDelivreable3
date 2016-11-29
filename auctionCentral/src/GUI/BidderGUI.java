@@ -25,18 +25,22 @@ import model.NPO;
 import model.User;
 
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+
 import java.awt.Font;
 import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JTextArea;
-
-
+import javax.swing.JScrollPane;
 
 public class BidderGUI{
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM"			+ " d yyyy, hh:mm a");
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM d yyyy, hh:mm a");
+	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
 	protected JFrame myFrame = new JFrame();
 	
@@ -47,6 +51,8 @@ public class BidderGUI{
 	private static String loggedInAs = "You are signed in as: ";
 	
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+	
+	BidderGUIaddBid addBidGUI;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
@@ -77,7 +83,8 @@ public class BidderGUI{
 		
 		
 		startGUI();
-		
+		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
+		addBidGUI.setVisible(false);
 		
 
 		
@@ -135,15 +142,13 @@ public class BidderGUI{
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
 		
-		
-		
 		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
 		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWelcomeBanner.setBounds(12, 18, 286, 16);
 		myFrame.getContentPane().add(lblWelcomeBanner);
 		
-		JLabel lblYouAreSignedAs = new JLabel(loggedInAs+ currentBidder.getMyName());
+		JLabel lblYouAreSignedAs = new JLabel(loggedInAs + currentBidder.getMyName());
 		lblYouAreSignedAs.setFont(mainFont);
 		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
 		lblYouAreSignedAs.setBounds(22, 40, 265, 16);
@@ -164,6 +169,7 @@ public class BidderGUI{
 		JButton btnViewAuctions = new JButton("View Auctions");
 		btnViewAuctions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		btnViewAuctions.setFont(mainFont);
@@ -171,6 +177,11 @@ public class BidderGUI{
 		myFrame.getContentPane().add(btnViewAuctions);
 		
 		JButton btnAddABid = new JButton("add a bid");
+		btnAddABid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addBidGUI.setVisible(true);
+			}
+		});
 		btnAddABid.setFont(mainFont);
 		btnAddABid.setBounds(27, 195, 150, 56);
 		myFrame.getContentPane().add(btnAddABid);
@@ -185,16 +196,21 @@ public class BidderGUI{
 		btnLogOut.setBounds(27, 340, 150, 65);
 		myFrame.getContentPane().add(btnLogOut);
 		
+		String bids = currentBidder.printBidsGUI(myCalendar);
+		System.out.println(bids);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(232, 114, 542, 317);
+		scrollPane.setViewportBorder(border);
+		scrollPane.setBorder( border );
+		myFrame.getContentPane().add(scrollPane);
+		
 		JTextArea txtrHereIsA = new JTextArea();
+		scrollPane.setViewportView(txtrHereIsA);
 		txtrHereIsA.setFont(mainFont);
 		txtrHereIsA.setBackground(SystemColor.control);
 		txtrHereIsA.setEditable(false);
-		
-		String bids = currentBidder.printBidsGUI(myCalendar);
-		System.out.println(bids);
 		txtrHereIsA.setText(bids);
-		txtrHereIsA.setBounds(232, 114, 542, 317);
-		myFrame.getContentPane().add(txtrHereIsA);
 		
 
 		
