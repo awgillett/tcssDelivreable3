@@ -53,6 +53,8 @@ public class BidderGUIaddBid extends JFrame{
 	private static String loggedInAs = "You are signed in as: ";
 	
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+	private JTextField txtItemNumber;
+	private JTextField txtBidAmount;
 
 	
 	public BidderGUIaddBid(Bidder theBidder, Calendar theCalendar) {
@@ -96,21 +98,10 @@ public class BidderGUIaddBid extends JFrame{
 		lblYourCurrentActive.setBounds(225, 89, 185, 16);
 		this.getContentPane().add(lblYourCurrentActive);
 		
-		JLabel lblWhatWouldYou = new JLabel("What would you like to do?");
-		lblWhatWouldYou.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWhatWouldYou.setFont(mainFont);
-		lblWhatWouldYou.setBounds(12, 89, 185, 16);
-		this.getContentPane().add(lblWhatWouldYou);
-		
-		JButton btnAddABid = new JButton("add a bid");
+		JButton btnAddABid = new JButton("Submit bid");
 		btnAddABid.setFont(mainFont);
-		btnAddABid.setBounds(27, 195, 150, 56);
+		btnAddABid.setBounds(624, 375, 150, 56);
 		this.getContentPane().add(btnAddABid);
-		
-		JButton btnLogOut = new JButton("log out");
-		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(27, 340, 150, 65);
-		this.getContentPane().add(btnLogOut);
 		
 		String bids = currentBidder.printBidsGUI(myCalendar);
 //		System.out.println(bids);
@@ -120,7 +111,7 @@ public class BidderGUIaddBid extends JFrame{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(border);
 		scrollPane.setBorder( border );
-		scrollPane.setBounds(232, 114, 542, 317);
+		scrollPane.setBounds(232, 114, 542, 226);
 		
 		this.getContentPane().add(scrollPane);
 		
@@ -130,6 +121,18 @@ public class BidderGUIaddBid extends JFrame{
 		txtrHereIsA.setBackground(SystemColor.control);
 		txtrHereIsA.setEditable(false);
 		txtrHereIsA.setText(bids);
+		
+		txtItemNumber = new JTextField();
+		txtItemNumber.setText("Item Number");
+		txtItemNumber.setBounds(55, 393, 116, 22);
+		getContentPane().add(txtItemNumber);
+		txtItemNumber.setColumns(10);
+		
+		txtBidAmount = new JTextField();
+		txtBidAmount.setText("bid amount");
+		txtBidAmount.setBounds(225, 393, 116, 22);
+		getContentPane().add(txtBidAmount);
+		txtBidAmount.setColumns(10);
 		
 	}
 	public void actionPerformed(ActionEvent arg0) {
