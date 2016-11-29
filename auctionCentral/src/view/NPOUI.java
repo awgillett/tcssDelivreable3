@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import model.Calendar;
+import model.Item;
 import model.NPO;
 import model.Staff;
 /**
@@ -319,8 +320,9 @@ public class NPOUI {
 		System.out.println("You are logged in as: " + curNPO.getMyName());
 		System.out.println("Welcome " + curNPO.getMyName() + ", please enter the following data below:");
 		System.out.println("");
-		System.out.println("What Item would you like to remove, please enter the item name? ");
-		String itemToRemove = sc.next();
+		System.out.println("What Item would you like to remove, please selllect the item you wnt to remove? ");
+		//need to use a button to ad the item.
+		Item itemToRemove = itemRemove;
 		System.out.println("are you sure you want to remove " + itemToRemove + "? ");
 		
 		while (choice != 1 && choice != 2 && choice != 3 && choice != EXIT) {
@@ -407,7 +409,7 @@ public class NPOUI {
 			}
 		}
 	}
-	public static void removeItemConfirmationScreen(String itemName)
+	public static void removeItemConfirmationScreen(Item itemName)
 	{
 		choice = 0;
 		System.out.println("\n\nAuction Central NPO confirmation");
