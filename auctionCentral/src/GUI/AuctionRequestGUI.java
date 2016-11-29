@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 public class AuctionRequestGUI extends JDialog {
 
 	//private final JPanel contentPanel = new JPanel();
+	private Calendar myCalendar;
+	private NPO myNPO;
 
 	/**
 	 * Launch the application.
@@ -36,6 +38,8 @@ public class AuctionRequestGUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public AuctionRequestGUI(NPO theNPO, Calendar theCalendar) {
+		myCalendar = theCalendar;
+		myNPO = theNPO;
 		getContentPane().setLayout(null);
 		
 		JLabel label = new JLabel("Auction Central");
@@ -44,11 +48,11 @@ public class AuctionRequestGUI extends JDialog {
 		label.setBounds(0, 0, 788, 24);
 		getContentPane().add(label);
 		
-		JLabel lblWelcomeToThe = new JLabel("Welcome to the Auction Request Menu");
-		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcomeToThe.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblWelcomeToThe.setBounds(0, 29, 788, 24);
-		getContentPane().add(lblWelcomeToThe);
+		JLabel lblWelcome = new JLabel("Welcome to the Auction Request Menu");
+		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcome.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblWelcome.setBounds(0, 29, 788, 24);
+		getContentPane().add(lblWelcome);
 		
 		JLabel label_2 = new JLabel("Logged in as: ");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -56,7 +60,7 @@ public class AuctionRequestGUI extends JDialog {
 		label_2.setBounds(10, 52, 366, 24);
 		getContentPane().add(label_2);
 		
-		JLabel label_3 = new JLabel((String) null);
+		JLabel label_3 = new JLabel(theNPO.getMyName());
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_3.setBounds(386, 52, 392, 24);
 		getContentPane().add(label_3);
