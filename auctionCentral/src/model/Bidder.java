@@ -1,6 +1,7 @@
 package model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 /*
@@ -17,6 +18,7 @@ public class Bidder extends User implements Serializable{
 	private String myPaymentInfo;
 	private Collection<Bid> myBids;
 	private static int bidCancelBuffer = 2;
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/d/yyyy");
 	/**
      * a Bidder has user name, name, address, phone, email, and payment info 
      * @param theUserName
@@ -299,6 +301,48 @@ public class Bidder extends User implements Serializable{
 		return new Bid(getMyUserName(), itemToBidOn.getMyItemID(), bidOffer, myCalendar.getAuction(itemToBidOn.getMyItemID()).getMyID());
 
 		
+	}
+
+	public String printBidsGUI(Calendar myCalendar) {
+		
+		StringBuilder str = new StringBuilder();
+//		myCalendar.getAllAuctions();
+//		int ItemID;
+//		String itemName;
+//		Double minBid;
+//		Double bidAmount;
+//		LocalDateTime auctionDate;
+//		str.append("Item: \tYour Bid:");
+		str.append("Item ID\t");
+		str.append("Item name\t");
+		str.append("Minimum bid\t");
+		str.append("Your bid\t");
+		str.append("Auction date\t");
+		str.append("\n");
+//		System.out.println(myBids.size());
+		for (Bid b : myBids){
+//			itemID, item name, minbid, bidders bid, auction date
+//			ItemID = b.getMyItemID();
+//			itemName = myCalendar.getItem(b.getMyItemID()).getItemName();
+//			minBid = myCalendar.getItem(b.getMyItemID()).getMyMinBid();
+//			bidAmount = b.getMyBidAmount();
+//			auctionDate = myCalendar.getAuction(b.getMyItemID()).getAuctionDate();
+			
+			str.append(b.getMyItemID());
+			str.append("\t");
+			str.append(myCalendar.getItem(b.getMyItemID()).getItemName());
+			str.append("\t");
+			str.append(myCalendar.getItem(b.getMyItemID()).getMyMinBid());
+			str.append("\t");
+			str.append(b.getMyBidAmount());
+			str.append("\t");
+			str.append(myCalendar.getAuction(b.getMyItemID()).getAuctionDate().format(dateFormat));
+			str.append("\n");
+			
+//			str.append("\n"+ b.getMyItemID() +"\t" + myCalendar.getItem(b.getMyItemID()).getMyMinBid() + "\t" + b.getMyBidAmount());
+		}
+//		str.append("\n");
+		return str.toString();
 	}
 
 
