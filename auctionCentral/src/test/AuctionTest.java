@@ -27,8 +27,6 @@ public class AuctionTest {
 	NPO a;
 	Auction theAuction = new Auction(a, 
 			LocalDateTime.of(2017, 02, 16, 12, 00), 10, "None", 123456);
-	Auction myAuction = new Auction(a, 
-			LocalDateTime.of(2016, 11, 30, 13, 00), 10, "None", 123456);
 	
 	/**
 	 * @throws java.lang.Exception
@@ -154,6 +152,8 @@ public class AuctionTest {
 	@Test
 	public void testRemoveItemAfterTwoDayDeadline() {
 		int tooLateDate = 3;
+		Auction myAuction = new Auction(a, 
+				LocalDateTime.of(2016, 11, 29, 13, 00), 10, "None", 123456);
 		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
 				"A reprint of Picasso's The Old Guitarist.", 100.00);
 		Item myItem = myAuction.getItem(1234560);
@@ -166,6 +166,8 @@ public class AuctionTest {
 	@Test
 	public void testRemoveItemOnTwoDayDeadline() {
 		int removedItem = 1;
+		Auction myAuction = new Auction(a, 
+				LocalDateTime.of(2016, 11, 30, 23, 00), 10, "None", 123456);
 		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
 				"A reprint of Picasso's The Old Guitarist.", 100.00);
 		Item myItem = myAuction.getItem(1234560);
