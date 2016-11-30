@@ -26,6 +26,9 @@ public class ItemEditGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtName;
 	private JTextField txtMinBid;
+	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
+	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
+	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
 	JTextArea txtDescription;
 	JTextArea txtNewInfo;
 	private JComboBox cboCondition;
@@ -58,7 +61,7 @@ public class ItemEditGUI extends JFrame {
 		myItem = theItem;
 		setItemInfo();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 707, 468);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,49 +69,49 @@ public class ItemEditGUI extends JFrame {
 		
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		label.setFont(mainFont);
 		label.setBounds(0, 0, 691, 24);
 		contentPane.add(label);
 		
 		JLabel label_1 = new JLabel("Welcome to the NPO Auction Item Edit Menu");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		label_1.setFont(subMenuFont);
 		label_1.setBounds(0, 29, 691, 24);
 		contentPane.add(label_1);
 		
 		JLabel label_2 = new JLabel("Logged in as: ");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_2.setFont(detailsFont);
 		label_2.setBounds(0, 64, 347, 24);
 		contentPane.add(label_2);
 		
 		JLabel label_3 = new JLabel((String) null);
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label_3.setFont(detailsFont);
 		label_3.setBounds(357, 64, 315, 24);
 		contentPane.add(label_3);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblName.setFont(detailsFont);
 		lblName.setBounds(58, 112, 45, 17);
 		contentPane.add(lblName);
 		
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDescription.setFont(detailsFont);
 		lblDescription.setBounds(21, 140, 82, 17);
 		contentPane.add(lblDescription);
 		
 		JLabel lblCondition = new JLabel("Condition:");
-		lblCondition.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCondition.setFont(detailsFont);
 		lblCondition.setBounds(31, 235, 72, 17);
 		contentPane.add(lblCondition);
 		
 		JLabel lblSize = new JLabel("Size:");
-		lblSize.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSize.setFont(detailsFont);
 		lblSize.setBounds(71, 263, 32, 17);
 		contentPane.add(lblSize);
 		
 		JLabel lblMinimumBid = new JLabel("Minimum Bid:");
-		lblMinimumBid.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMinimumBid.setFont(detailsFont);
 		lblMinimumBid.setBounds(10, 291, 93, 17);
 		contentPane.add(lblMinimumBid);
 		
@@ -180,13 +183,13 @@ public class ItemEditGUI extends JFrame {
 //		contentPane.add(lblNewInfo);
 		
 		JLabel lblNewLabel = new JLabel("Current Item Info");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setFont(detailsFont);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(357, 115, 190, 24);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewItemInfo = new JLabel("New Item Info");
-		lblNewItemInfo.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewItemInfo.setFont(detailsFont);
 		lblNewItemInfo.setBounds(557, 115, 124, 24);
 		contentPane.add(lblNewItemInfo);
 		

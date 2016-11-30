@@ -25,6 +25,9 @@ import java.awt.event.ActionEvent;
 public class NPOGUI {
 
 	private JFrame frame;
+	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
+	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
+	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
 	static Calendar curCalendar;
 	private Auction curAuction;
 	AuctionEditGUI editMenu;
@@ -67,11 +70,11 @@ public class NPOGUI {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the GUI components of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 804, 491);
+		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setBackground(Color.BLUE);
@@ -79,37 +82,33 @@ public class NPOGUI {
 		JLabel lblNewLabel = new JLabel("Welcome to the NPO Main Menu");
 		lblNewLabel.setBounds(0, 29, 788, 24);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblNewLabel.setFont(subMenuFont);
 		frame.getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Logged in as: ");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(10, 52, 366, 24);
+		JLabel lblNewLabel_1 = new JLabel("Logged in as: " + curNPO.getMyName());
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(detailsFont);
+		lblNewLabel_1.setBounds(10, 52, 764, 24);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_3 = new JLabel();
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setFont(detailsFont);
 		lblNewLabel_3.setBounds(102, 137, 85, 14);
 		frame.getContentPane().add(lblNewLabel_3);
 
 		JLabel lblAuctionCentral = new JLabel("Auction Central");
 		lblAuctionCentral.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAuctionCentral.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		lblAuctionCentral.setFont(mainFont);
 		lblAuctionCentral.setBounds(0, 0, 788, 24);
 		frame.getContentPane().add(lblAuctionCentral);
 
-		JLabel txtUser = new JLabel(curNPO.getMyName());
-		txtUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtUser.setBounds(386, 52, 392, 24);
-		frame.getContentPane().add(txtUser);
-
 		lblAuctionInfo = new JLabel(auctionInfo);
-		lblAuctionInfo.setBounds(20, 87, 450, 115);
+		lblAuctionInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAuctionInfo.setBounds(0, 87, 784, 115);
 		frame.getContentPane().add(lblAuctionInfo);
 		
 		JLabel lblNewLabel_2 = new JLabel("What would you like to do today?");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setFont(detailsFont);
 		lblNewLabel_2.setBounds(33, 297, 306, 34);
 		frame.getContentPane().add(lblNewLabel_2);
 		
@@ -143,6 +142,9 @@ public class NPOGUI {
 		frame.getContentPane().add(btnLogOut);
 	}
 
+	/**
+	 * Loads the details of the upcoming auction (if any).
+	 */
 	private void loadAuctionOverview() {
 		if (!curNPO.hasAuction()) {
 			auctionInfo = "You have no upcoming auctions.";
@@ -152,11 +154,14 @@ public class NPOGUI {
 			curAuction.addItem("Calculator", "Dr Phill", "Good", "Medium", "No Notes", "TI NSpire CAS", 40);
 			curAuction.addItem("Football", "Sherman", "Good", "Medium", "No Notes", "Seahawks signed football", 40);
 			auctionInfo = "<html>Auction Overview:<br>"
-					    + "You have an auction scheduled on " + curAuction.getAuctionDate().format(dateFormat) + "<br>"
+					    + "Auction Date: " + curAuction.getAuctionDate().format(dateFormat) + "<br>"
 					    + "You have " + curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
 		}
 	}
 	
+	/**
+	 * Update all views with the most current information.
+	 */
 	private void updateStatus() {
 		loadAuctionOverview();
 		lblAuctionInfo.setText(auctionInfo);

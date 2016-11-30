@@ -70,7 +70,7 @@ public class AddItemGUI extends JDialog {
 	
 	private void setupGUI() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 707, 503);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -294,6 +294,7 @@ public class AddItemGUI extends JDialog {
 	private void addItemSuccess() {
 		JOptionPane.showMessageDialog(this, "Item has been successfully added to Inventory!");
 		clearAll();
+		btnAdd.setEnabled(false);
 	}
 	
 	private void addItemFail() {

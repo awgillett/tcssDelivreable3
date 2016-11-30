@@ -41,6 +41,7 @@ public class AuctionRequestGUI extends JDialog {
 		myCalendar = theCalendar;
 		myNPO = theNPO;
 		getContentPane().setLayout(null);
+		setBounds(100, 100, 800, 500);
 		
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
