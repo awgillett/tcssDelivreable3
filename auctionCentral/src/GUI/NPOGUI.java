@@ -136,6 +136,7 @@ public class NPOGUI {
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				System.exit(0);
 			}
 		});
 		btnLogOut.setBounds(551, 379, 154, 23);
@@ -159,11 +160,17 @@ public class NPOGUI {
 		}
 	}
 	
+	private void updateAuctionDetails() {
+		auctionInfo = "<html>Auction Overview:<br>"
+			    + "Auction Date: " + curAuction.getAuctionDate().format(dateFormat) + "<br>"
+			    + "You have " + curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
+	}
+	
 	/**
 	 * Update all views with the most current information.
 	 */
 	private void updateStatus() {
-		loadAuctionOverview();
+		updateAuctionDetails();
 		lblAuctionInfo.setText(auctionInfo);
 		if (!curNPO.hasAuction()) {
 			btnEditAuction.setEnabled(false);

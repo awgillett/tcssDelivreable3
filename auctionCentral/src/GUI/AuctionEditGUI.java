@@ -200,7 +200,7 @@ public class AuctionEditGUI extends JDialog {
 	 * Loads and displays the auction date and number of items.
 	 */
 	private void populateAuctionInfo() {
-		auctionInfo = "<html>Scheduled:  " + myAuction.getAuctionDate().format(dateFormat) + "<br>"
+		auctionInfo = "<html>Scheduled:<br><br>" + myAuction.getAuctionDate().format(dateFormat) + "<br>"
 				+ "<br><br>You have " + myAuction.getMyItemList().size() + " items currently listed.</html>";
 	}
 
@@ -232,8 +232,13 @@ public class AuctionEditGUI extends JDialog {
 				+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
 
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			myAuction.removeItem(theItem);
-			JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
+			int result = myAuction.removeItem(theItem);
+			if (result == 1)
+				JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
+			else if (result == 2)
+				JOptionPane.showMessageDialog(this, "Sorry, this item was not found in inventory."); //This should never occur with the GUI
+			else
+				JOptionPane.showMessageDialog(this, "Items can no longer be removed from this auction since its scheduled to commence in less than two days.");
 			updateStatus();
 		}
 

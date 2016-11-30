@@ -42,6 +42,9 @@ public class AddItemGUI extends JDialog {
 	private JButton btnAdd;
 	private JTextField txtDonor;
 	private JTextArea txtNotes;
+	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
+	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
+	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
 
 	/**
 	 * Launch the application.
@@ -78,49 +81,44 @@ public class AddItemGUI extends JDialog {
 		
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		label.setFont(mainFont);
 		label.setBounds(0, 0, 691, 24);
 		contentPane.add(label);
 		
 		JLabel lblWelcome = new JLabel("Welcome to the NPO Add Item Menu");
 		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcome.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblWelcome.setFont(subMenuFont);
 		lblWelcome.setBounds(0, 29, 691, 24);
 		contentPane.add(lblWelcome);
 		
-		JLabel label_2 = new JLabel("Logged in as: ");
-		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_2.setBounds(0, 64, 347, 24);
-		contentPane.add(label_2);
-		
-		JLabel label_3 = new JLabel(myAuction.getNPO().getMyName());
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_3.setBounds(357, 64, 315, 24);
-		contentPane.add(label_3);
+		JLabel lblNewLabel_1 = new JLabel("Logged in as: " + myAuction.getNPO().getMyName());
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(detailsFont);
+		lblNewLabel_1.setBounds(10, 52, 764, 24);
+		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblName.setFont(detailsFont);
 		lblName.setBounds(58, 112, 45, 17);
 		contentPane.add(lblName);
 		
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDescription.setFont(detailsFont);
 		lblDescription.setBounds(21, 251, 82, 17);
 		contentPane.add(lblDescription);
 		
 		JLabel lblCondition = new JLabel("Condition:");
-		lblCondition.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCondition.setFont(detailsFont);
 		lblCondition.setBounds(31, 140, 72, 17);
 		contentPane.add(lblCondition);
 		
 		JLabel lblSize = new JLabel("Size:");
-		lblSize.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSize.setFont(detailsFont);
 		lblSize.setBounds(71, 168, 32, 17);
 		contentPane.add(lblSize);
 		
 		JLabel lblMinimumBid = new JLabel("Minimum Bid:");
-		lblMinimumBid.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMinimumBid.setFont(detailsFont);
 		lblMinimumBid.setBounds(10, 196, 93, 17);
 		contentPane.add(lblMinimumBid);
 		
@@ -184,7 +182,7 @@ public class AddItemGUI extends JDialog {
 		//txtDescription.setText(myItem.getMyDescription());
 		
 		JLabel lblNewLabel = new JLabel("Item Information Snapshot");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setFont(detailsFont);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(344, 109, 190, 24);
 		contentPane.add(lblNewLabel);
@@ -222,7 +220,7 @@ public class AddItemGUI extends JDialog {
 		contentPane.add(btnCancelItemAddition);
 		
 		JLabel lblDonor = new JLabel("Donor:");
-		lblDonor.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDonor.setFont(detailsFont);
 		lblDonor.setBounds(55, 221, 48, 17);
 		contentPane.add(lblDonor);
 		
@@ -250,7 +248,7 @@ public class AddItemGUI extends JDialog {
 		contentPane.add(txtNotes);
 		
 		JLabel lblNotes = new JLabel("Notes:");
-		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNotes.setFont(detailsFont);
 		lblNotes.setBounds(55, 324, 48, 17);
 		contentPane.add(lblNotes);
 		
