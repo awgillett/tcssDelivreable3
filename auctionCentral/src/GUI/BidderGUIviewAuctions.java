@@ -38,11 +38,14 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 
-public class BidderGUIaddBid extends JDialog{
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM d yyyy, hh:mm a");
+public class BidderGUIviewAuctions extends JDialog{
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM"			+ " d yyyy, hh:mm a");
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
 //	protected JFrame myFrame = new JFrame();
@@ -50,15 +53,16 @@ public class BidderGUIaddBid extends JDialog{
 	static Calendar myCalendar;
 	static Bidder currentBidder;
 	
-	private static String welcomeBanner = "Add a bid to your account";
+	private static String welcomeBanner = "Auction view";
 	private static String loggedInAs = "You are signed in as: ";
 	
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	private JTextField txtItemNumber;
 	private JTextField txtBidAmount;
+	private JTable table;
 
 	
-	public BidderGUIaddBid(Bidder theBidder, Calendar theCalendar) {
+	public BidderGUIviewAuctions(Bidder theBidder, Calendar theCalendar) {
 		
 		currentBidder = theBidder;
 		myCalendar = theCalendar;
@@ -77,6 +81,7 @@ public class BidderGUIaddBid extends JDialog{
 		this.setName("Auction Central");
 		this.setBounds(100, 100, 804, 491);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setVisible(true);
 		
 		
 		
@@ -92,33 +97,12 @@ public class BidderGUIaddBid extends JDialog{
 		lblYouAreSignedAs.setBounds(22, 40, 265, 16);
 		this.getContentPane().add(lblYouAreSignedAs);
 		
-		JLabel lblYourCurrentActive = new JLabel("Your current active bids:");
-		lblYourCurrentActive.setHorizontalAlignment(SwingConstants.LEFT);
-		lblYourCurrentActive.setFont(mainFont);
-		lblYourCurrentActive.setBounds(225, 89, 185, 16);
-		this.getContentPane().add(lblYourCurrentActive);
-		
 		JButton btnAddABid = new JButton("Submit bid");
 		btnAddABid.setFont(mainFont);
 		btnAddABid.setBounds(624, 375, 150, 56);
 		this.getContentPane().add(btnAddABid);
 		
 		String bids = currentBidder.printBidsGUI(myCalendar);
-//		System.out.println(bids);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportBorder(border);
-		scrollPane.setBorder( border );
-		scrollPane.setBounds(232, 114, 542, 226);
-		
-		this.getContentPane().add(scrollPane);
-		
-		JTextArea txtrHereIsA = new JTextArea();
-		scrollPane.setViewportView(txtrHereIsA);
-		txtrHereIsA.setFont(mainFont);
-		txtrHereIsA.setBackground(SystemColor.control);
-		txtrHereIsA.setEditable(false);
-		txtrHereIsA.setText(bids);
 		
 		txtItemNumber = new JTextField();
 		txtItemNumber.setBounds(55, 393, 116, 22);
@@ -129,6 +113,18 @@ public class BidderGUIaddBid extends JDialog{
 		txtBidAmount.setBounds(225, 393, 116, 22);
 		getContentPane().add(txtBidAmount);
 		txtBidAmount.setColumns(10);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(192);
+		table.setBounds(22, 69, 737, 293);
+		getContentPane().add(table);
 		
 	}
 	public void actionPerformed(ActionEvent arg0) {

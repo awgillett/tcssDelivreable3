@@ -50,9 +50,10 @@ public class BidderGUI{
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static String loggedInAs = "You are signed in as: ";
 	
-	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+	public Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	
 	BidderGUIaddBid addBidGUI;
+	BidderGUIviewAuctions viewAuctionsGUI;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
@@ -79,13 +80,10 @@ public class BidderGUI{
 		
 		currentBidder = theBidder;
 		myCalendar = theCalendar;
-		
-		
+
 		
 		startGUI();
-		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
-		addBidGUI.setVisible(false);
-		
+	
 
 		
 	}
@@ -136,22 +134,27 @@ public class BidderGUI{
 	}
 
 	public void startGUI(){
+		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
+		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
+		addBidGUI.setVisible(false);
+		viewAuctionsGUI.setVisible(false);
 		myFrame.getContentPane().setLayout(null);
 		myFrame.setName("Auction Central");
-		myFrame.setBounds(100, 100, 804, 491);
+		myFrame.setBounds(100, 100, 800, 500);
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
 		
-		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
-		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
-		lblWelcomeBanner.setBounds(12, 18, 286, 16);
+		JLabel lblWelcomeBanner = new JLabel("Auction Central");
+		lblWelcomeBanner.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeBanner.setBounds(-1, 8, 782, 28);
 		myFrame.getContentPane().add(lblWelcomeBanner);
 		
 		JLabel lblYouAreSignedAs = new JLabel(loggedInAs + currentBidder.getMyName());
 		lblYouAreSignedAs.setFont(mainFont);
-		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
-		lblYouAreSignedAs.setBounds(22, 40, 265, 16);
+		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.CENTER);
+		lblYouAreSignedAs.setBounds(-12, 60, 782, 16);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 		
 		JLabel lblYourCurrentActive = new JLabel("Your current active bids:");
@@ -169,12 +172,13 @@ public class BidderGUI{
 		JButton btnViewAuctions = new JButton("View Auctions");
 		btnViewAuctions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				viewAuctionsGUI.setVisible(true);
 			}
 		});
 		btnViewAuctions.setFont(mainFont);
 		btnViewAuctions.setBounds(27, 118, 150, 65);
 		myFrame.getContentPane().add(btnViewAuctions);
+		
 		
 		JButton btnAddABid = new JButton("add a bid");
 		btnAddABid.addActionListener(new ActionListener() {
@@ -212,13 +216,11 @@ public class BidderGUI{
 		txtrHereIsA.setEditable(false);
 		txtrHereIsA.setText(bids);
 		
-
-		
-
-		
-
-		
-		
+		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
+		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcomeToThe.setBounds(-1, 42, 782, 16);
+		myFrame.getContentPane().add(lblWelcomeToThe);
 		
 	}
 	public void actionPerformed(ActionEvent arg0) {
