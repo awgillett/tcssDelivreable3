@@ -232,7 +232,7 @@ public class AuctionEditGUI extends JDialog {
 				+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
 
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			myAuction.removeItem(theItem.getMyItemName());
+			myAuction.removeItem(theItem);
 			JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
 			updateStatus();
 		}
