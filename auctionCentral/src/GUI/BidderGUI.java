@@ -37,6 +37,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class BidderGUI{
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM d yyyy, hh:mm a");
@@ -54,6 +56,7 @@ public class BidderGUI{
 	
 	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
+	private JTable table;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
@@ -203,24 +206,25 @@ public class BidderGUI{
 		String bids = currentBidder.printBidsGUI(myCalendar);
 		System.out.println(bids);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(232, 114, 542, 317);
-		scrollPane.setViewportBorder(border);
-		scrollPane.setBorder( border );
-		myFrame.getContentPane().add(scrollPane);
-		
-		JTextArea txtrHereIsA = new JTextArea();
-		scrollPane.setViewportView(txtrHereIsA);
-		txtrHereIsA.setFont(mainFont);
-		txtrHereIsA.setBackground(SystemColor.control);
-		txtrHereIsA.setEditable(false);
-		txtrHereIsA.setText(bids);
-		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
 		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcomeToThe.setBounds(-1, 42, 782, 16);
 		myFrame.getContentPane().add(lblWelcomeToThe);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Organization:", "Number of Items", "Date of Auction"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(202);
+		table.getColumnModel().getColumn(1).setPreferredWidth(123);
+		table.getColumnModel().getColumn(2).setPreferredWidth(170);
+		table.setBounds(235, 118, 535, 322);
+		myFrame.getContentPane().add(table);
 		
 	}
 	public void actionPerformed(ActionEvent arg0) {
