@@ -1,72 +1,88 @@
 package GUI;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import javax.swing.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import model.*;
 
-import model.Calendar;
-import model.User;
 
-public class HomeGUI extends JPanel implements ActionListener{
+public class HomeGUI implements ActionListener{
 	
 	private JTextField userText;
 	//protected static Calendar myCalendar = new Calendar();
+	protected JFrame myFrame;
 	private ArrayList<User> userList = new ArrayList();
 	User curUser;
-	JLabel message = new JLabel("Welcome");
+	JLabel message = new JLabel();
 
-	public HomeGUI(ArrayList<User> theUserList){
+
+	public HomeGUI(ArrayList<User> theUserList, JFrame theFrame){
 		userList = theUserList;
+		myFrame = theFrame;
 		curUser = null;
-		setupPanel();
 	}
 
-	protected void setupPanel() {
+	protected void startGUI() {
 
-		this.setLayout(null);
+		myFrame.getContentPane().setLayout(null);
 
-		JLabel userLabel = new JLabel("Username");
-		userLabel.setBounds(10, 45, 80, 25);
-		this.add(userLabel);
-		
-		message.setBounds(100, 15, 100, 25);
-		this.add(message);
-		
-		userText = new JTextField(20);
-		userText.setBounds(100, 45, 160, 25);
-		this.add(userText);
-		userText.addActionListener(this);
-		
+		addTextBox();
+		addTextBoxLabel();
+		addTitle();
 		addLoginButton();
 		addRegisterButton();
 	}
 	
+	private void addTextBoxLabel(){
+		JLabel userLabel = new JLabel("Username");
+		userLabel.setBounds(20, 85, 80, 25);
+		myFrame.getContentPane().add(userLabel);
+	}
+	
+	private void addTextBox(){
+		userText = new JTextField(20);
+		userText.setBounds(110, 85, 160, 25);
+		
+		myFrame.getContentPane().add(userText);
+		userText.addActionListener(this);
+	}
+	
+	private void addTitle(){
+		JLabel lblWelcomeBanner = new JLabel("Welcome To Auction Central");
+		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
+		lblWelcomeBanner.setBounds(10, 10, 285, 20);
+		myFrame.getContentPane().add(lblWelcomeBanner);
+		
+		JLabel lblYouAreSignedAs = new JLabel("Please sign in:");
+		lblYouAreSignedAs.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
+		lblYouAreSignedAs.setBounds(20, 55, 265, 20);
+		myFrame.getContentPane().add(lblYouAreSignedAs);
+	}
+	
 	private void addLoginButton(){
 		JButton loginButton = new JButton("login");
-		loginButton.setBounds(30, 80, 80, 25);
+		loginButton.setBounds(40, 120, 80, 25);
 		loginButton.addActionListener(this);
-		this.add(loginButton);
+		myFrame.getContentPane().add(loginButton);
 		
 	}
 	
 	private void addRegisterButton(){
 		JButton registerButton = new JButton("register");
-		registerButton.setBounds(160, 80, 80, 25);
-		this.add(registerButton);	
+		registerButton.setBounds(170, 120, 80, 25);
+		myFrame.getContentPane().add(registerButton);	
 		registerButton.addActionListener(new ActionListener() {
+			
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
             	MainGUI.myFrame.getContentPane().removeAll();
-            	RegisterPanel RegisterPanel = new RegisterPanel();
-            	RegisterPanel.setupPanel();
-            	MainGUI.myFrame.add(RegisterPanel);
-            	MainGUI.myFrame.setVisible(true);
+            	RegisterGUI RegisterPanel = new RegisterGUI(myFrame, userList);
+            	RegisterPanel.runTest();
             }
         });
 	}
