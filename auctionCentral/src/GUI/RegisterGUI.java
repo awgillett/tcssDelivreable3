@@ -24,7 +24,7 @@ import javax.swing.JButton;
 public class RegisterGUI implements ActionListener {
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
-	private static Font buttonFont = new Font("Tahoma", Font.PLAIN, 15);
+	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
 
@@ -184,7 +184,7 @@ public class RegisterGUI implements ActionListener {
 	private void addRadioButton(){
 		
 		JLabel label = new JLabel("You are register as: ");		
-		label.setFont(buttonFont);
+		label.setFont(details);
 		label.setBounds(4,13, 165,20);
 		contentPane.add(label);
 		
@@ -223,12 +223,12 @@ public class RegisterGUI implements ActionListener {
 		contentPane.add(phoneText);
 		
 		JLabel phoneLabel = new JLabel("Phone #: ");
-		phoneLabel.setFont(buttonFont);
+		phoneLabel.setFont(details);
 		phoneLabel.setBounds(25, 180, 84, 14);
 		contentPane.add(phoneLabel);
 		
 		JLabel addressLabel = new JLabel("Address: ");
-		addressLabel.setFont(buttonFont);
+		addressLabel.setFont(details);
 		addressLabel.setBounds(25, 150, 63, 14);
 		contentPane.add(addressLabel);
 		
@@ -243,12 +243,12 @@ public class RegisterGUI implements ActionListener {
 		contentPane.add(paymentText);
 		
 		JLabel paymentLabel = new JLabel("Payment: ");
-		paymentLabel.setFont(buttonFont);
+		paymentLabel.setFont(details);
 		paymentLabel.setBounds(26, 239, 84, 19);
 		contentPane.add(paymentLabel);
 		
 		JLabel emailLabel = new JLabel("Email: ");
-		emailLabel.setFont(buttonFont);
+		emailLabel.setFont(details);
 		emailLabel.setBounds(25, 211, 63, 14);
 		contentPane.add(emailLabel);
 		
@@ -277,17 +277,17 @@ public class RegisterGUI implements ActionListener {
 		addRegisterButton();
 		addCancelButton();
 		JLabel label2 = new JLabel("Please enter the following informations:");
-		label2.setFont(buttonFont);
+		label2.setFont(details);
 		label2.setBounds(15,50, 264,20);
 		contentPane.add(label2);
 		
 		JLabel nameLabel = new JLabel("Name: ");
-		nameLabel.setFont(buttonFont);
+		nameLabel.setFont(details);
 		nameLabel.setBounds(25, 94, 63, 14);
 		contentPane.add(nameLabel);
 		
 		JLabel usernameLabel = new JLabel("Username: ");
-		usernameLabel.setFont(buttonFont);
+		usernameLabel.setFont(details);
 		usernameLabel.setBounds(25, 124, 84, 14);
 		contentPane.add(usernameLabel);
 		

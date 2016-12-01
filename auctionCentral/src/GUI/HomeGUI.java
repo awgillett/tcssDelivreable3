@@ -57,7 +57,7 @@ public class HomeGUI implements ActionListener{
 	}
 	
 	private void addTitle(){
-		JLabel lblWelcomeBanner = new JLabel("Welcome To Auction Central");
+		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
 		lblWelcomeBanner.setFont(welcome);
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWelcomeBanner.setBounds(10, 10, 400, 20);
