@@ -102,16 +102,11 @@ public class AuctionEditGUI extends JDialog {
 		lblWelcome.setBounds(0, 29, 788, 24);
 		this.getContentPane().add(lblWelcome);
 
-		JLabel label_1 = new JLabel("Logged in as: ");
-		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(detailsFont);
-		label_1.setBounds(0, 64, 366, 24);
-		this.getContentPane().add(label_1);
-
-		JLabel lblUser = new JLabel(myAuction.getNPO().getMyName());
-		lblUser.setFont(detailsFont);
-		lblUser.setBounds(376, 64, 392, 24);
-		this.getContentPane().add(lblUser);
+		JLabel lblNewLabel_1 = new JLabel("Logged in as: " + myAuction.getNPO().getMyName());
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(detailsFont);
+		lblNewLabel_1.setBounds(10, 52, 764, 24);
+		this.getContentPane().add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

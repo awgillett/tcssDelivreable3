@@ -82,13 +82,13 @@ public class AddItemGUI extends JDialog {
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(mainFont);
-		label.setBounds(0, 0, 691, 24);
+		label.setBounds(0, 0, 784, 24);
 		contentPane.add(label);
 		
 		JLabel lblWelcome = new JLabel("Welcome to the NPO Add Item Menu");
 		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWelcome.setFont(subMenuFont);
-		lblWelcome.setBounds(0, 29, 691, 24);
+		lblWelcome.setBounds(0, 29, 784, 24);
 		contentPane.add(lblWelcome);
 		
 		JLabel lblNewLabel_1 = new JLabel("Logged in as: " + myAuction.getNPO().getMyName());
