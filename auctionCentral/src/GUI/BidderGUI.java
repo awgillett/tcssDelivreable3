@@ -39,6 +39,10 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ListSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BidderGUI{
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/d/yyyy");
@@ -226,14 +230,29 @@ public class BidderGUI{
 		myFrame.getContentPane().add(lblWelcomeToThe);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(null);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(235, 154, 535, 286);
 		myFrame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				System.out.println(arg0.getComponent());
+				arg0.getSource().toString();
+			}
+		});
+		table.setUpdateSelectionOnSort(false);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setOpaque(false);
+		table.setFocusTraversalKeysEnabled(false);
+		table.setBorder(null);
+		table.setAutoscrolls(false);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setBackground(SystemColor.control);
 		scrollPane.setViewportView(table);
 		table.setShowVerticalLines(false);
-		table.setShowHorizontalLines(false);
 		table.setShowGrid(false);
 		
 		table.setModel(tblModelAuctions);
