@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -24,6 +25,7 @@ import model.NPO;
 import model.Staff;
 import model.User;
 import java.awt.GridLayout;
+
 
 public class MainGUI implements MouseListener{
 	
@@ -66,7 +68,7 @@ public class MainGUI implements MouseListener{
     private void setupFrame() { 
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setMinimumSize(new Dimension(myFrame.getWidth(), myFrame.getHeight()));
-        myFrame.setBounds(0, 0, 350, 200);
+        myFrame.setBounds(0, 0, 701, 400);//I made this 701because 700 caused an issue not sure why yet
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
         

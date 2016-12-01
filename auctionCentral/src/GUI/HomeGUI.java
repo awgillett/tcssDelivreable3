@@ -11,6 +11,11 @@ import model.*;
 
 public class HomeGUI implements ActionListener{
 	
+	private static String welcomeBanner = "Welcome to Auction Central";
+	private static Font buttonFont = new Font("Tahoma", Font.PLAIN, 15);
+	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
+	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
+	
 	private JTextField userText;
 	//protected static Calendar myCalendar = new Calendar();
 	protected JFrame myFrame;
@@ -39,6 +44,7 @@ public class HomeGUI implements ActionListener{
 	private void addTextBoxLabel(){
 		JLabel userLabel = new JLabel("Username");
 		userLabel.setBounds(20, 85, 80, 25);
+		userLabel.setFont(buttonFont);
 		myFrame.getContentPane().add(userLabel);
 	}
 	
@@ -52,15 +58,15 @@ public class HomeGUI implements ActionListener{
 	
 	private void addTitle(){
 		JLabel lblWelcomeBanner = new JLabel("Welcome To Auction Central");
-		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcomeBanner.setFont(welcome);
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
-		lblWelcomeBanner.setBounds(10, 10, 285, 20);
+		lblWelcomeBanner.setBounds(10, 10, 400, 20);
 		myFrame.getContentPane().add(lblWelcomeBanner);
 		
 		JLabel lblYouAreSignedAs = new JLabel("Please sign in:");
-		lblYouAreSignedAs.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		lblYouAreSignedAs.setFont(subWelcome);
 		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
-		lblYouAreSignedAs.setBounds(20, 55, 265, 20);
+		lblYouAreSignedAs.setBounds(20, 55, 300, 30);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 	}
 	

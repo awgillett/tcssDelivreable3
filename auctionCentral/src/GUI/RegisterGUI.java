@@ -22,6 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class RegisterGUI implements ActionListener {
+	
+	private static String welcomeBanner = "Welcome to Auction Central";
+	private static Font buttonFont = new Font("Tahoma", Font.PLAIN, 15);
+	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
+	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
 
 	private JPanel contentPane;
 	private JTextField nameText;
@@ -163,7 +168,7 @@ public class RegisterGUI implements ActionListener {
 	
 	public void runTest(){
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		myFrame.setBounds(100, 100, 450, 250);
+		myFrame.setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		myFrame.setContentPane(contentPane);
@@ -179,7 +184,7 @@ public class RegisterGUI implements ActionListener {
 	private void addRadioButton(){
 		
 		JLabel label = new JLabel("You are register as: ");		
-		label.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		label.setFont(buttonFont);
 		label.setBounds(4,13, 165,20);
 		contentPane.add(label);
 		
@@ -218,12 +223,12 @@ public class RegisterGUI implements ActionListener {
 		contentPane.add(phoneText);
 		
 		JLabel phoneLabel = new JLabel("Phone #: ");
-		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		phoneLabel.setFont(buttonFont);
 		phoneLabel.setBounds(25, 180, 84, 14);
 		contentPane.add(phoneLabel);
 		
 		JLabel addressLabel = new JLabel("Address: ");
-		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addressLabel.setFont(buttonFont);
 		addressLabel.setBounds(25, 150, 63, 14);
 		contentPane.add(addressLabel);
 		
@@ -238,12 +243,12 @@ public class RegisterGUI implements ActionListener {
 		contentPane.add(paymentText);
 		
 		JLabel paymentLabel = new JLabel("Payment: ");
-		paymentLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		paymentLabel.setFont(buttonFont);
 		paymentLabel.setBounds(26, 239, 84, 19);
 		contentPane.add(paymentLabel);
 		
 		JLabel emailLabel = new JLabel("Email: ");
-		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emailLabel.setFont(buttonFont);
 		emailLabel.setBounds(25, 211, 63, 14);
 		contentPane.add(emailLabel);
 		
@@ -272,17 +277,17 @@ public class RegisterGUI implements ActionListener {
 		addRegisterButton();
 		addCancelButton();
 		JLabel label2 = new JLabel("Please enter the following informations:");
-		label2.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		label2.setFont(buttonFont);
 		label2.setBounds(15,50, 264,20);
 		contentPane.add(label2);
 		
 		JLabel nameLabel = new JLabel("Name: ");
-		nameLabel.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		nameLabel.setFont(buttonFont);
 		nameLabel.setBounds(25, 94, 63, 14);
 		contentPane.add(nameLabel);
 		
 		JLabel usernameLabel = new JLabel("Username: ");
-		usernameLabel.setFont( new Font("Tahoma", Font.PLAIN, 15));
+		usernameLabel.setFont(buttonFont);
 		usernameLabel.setBounds(25, 124, 84, 14);
 		contentPane.add(usernameLabel);
 		
@@ -318,12 +323,12 @@ public class RegisterGUI implements ActionListener {
 	public void actionPerformed(ActionEvent theEvent) {
 		if(theEvent.getActionCommand().equals("NPO")
 				|| theEvent.getActionCommand().equals("Staff")){
-			myFrame.setBounds(100, 100, 450, 250);
+			myFrame.setBounds(100, 100, 700, 400);
 			addStaffNPORegisterPanel();
 			myFrame.repaint();
 		} else if (theEvent.getActionCommand().equals("Bidder")){
 			addBidderRegisterPanel();
-			myFrame.setBounds(100, 100, 450, 350);
+			myFrame.setBounds(100, 100, 700, 400);
 			myFrame.repaint();
 		}
 
