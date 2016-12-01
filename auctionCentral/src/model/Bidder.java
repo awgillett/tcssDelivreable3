@@ -229,7 +229,7 @@ public class Bidder extends User implements Serializable{
 	 * @return Bid if the bid is successfully found in the list of bids
 	 * @return null if there is no bid associated with the itemID
 	 */
-	private Bid getBid(int itemID) {
+	public Bid getBid(int itemID) {
 		
 		Bid myBid = null;
 		for (Bid b : myBids){

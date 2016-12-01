@@ -274,8 +274,16 @@ public class Calendar implements Serializable {
 		}
 		return null;
 	}
-
-
+	public Auction getAuctionWithAucID(String npoName){
+		Auction auction = null;
+		for (Auction a : myAuctionList)	{
+			if (a.getNPO().getMyName().equals(npoName)){
+				auction = a;
+				break;
+			}
+		}
+		return auction;
+	}
 }
 
 

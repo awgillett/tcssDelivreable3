@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Auction;
+import model.Bid;
 import model.Bidder;
 import model.Calendar;
 import model.Item;
@@ -32,6 +34,7 @@ import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Component;
+import java.awt.Dialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -43,9 +46,17 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.text.NumberFormat;
 
 public class BidderGUI{
+	protected static final int BID_TABLE = 1;
+	protected static final int AUC_TABLE = 0;
+	public int currentTableMode = AUC_TABLE;
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/d/yyyy");
+	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
 	protected JFrame myFrame = new JFrame();
@@ -60,9 +71,13 @@ public class BidderGUI{
 	
 	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
-	private JTable table;
-	private DefaultTableModel tblModelAuctions = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
+	BidderGUIviewItems viewItems;
 	
+	private JTable table;
+	private DefaultTableModel tblModelAuc = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
+	private DefaultTableModel tblModelBid = new DefaultTableModel(new Object[][] {}, new String[] { "Item", "Minimum Bid", "Your Bid" });
+//	private DefaultTableModel tblModel;
+	private int selectedAuctionRow;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
 
@@ -92,10 +107,21 @@ public class BidderGUI{
 
 		//this is for testing
 		testBidderInit();
+//		load();
 		
+		windowInits();
 		startGUI();
 	
 
+		
+	}
+
+	private void windowInits() {
+		
+		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
+		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
+		addBidGUI.setVisible(false);
+		viewAuctionsGUI.setVisible(false);
 		
 	}
 
@@ -115,13 +141,11 @@ public class BidderGUI{
 		
 		Auction testAuctionA = new Auction(testNpoA, LocalDateTime.now().plusDays(7), 10, "Notes", 1);
 		Auction testAuctionB = new Auction(testNpoB, LocalDateTime.now().plusDays(10), 10, "Notes", 1);
-
 		Auction testAuctionC = new Auction(testNpoC, LocalDateTime.now().plusDays(11), 10, "Notes", 1);
 		Auction testAuctionD = new Auction(testNpoD, LocalDateTime.now().plusDays(12), 10, "Notes", 1);
 
 		testCalendar.addAuction(testAuctionA);
 		testCalendar.addAuction(testAuctionB);
-
 		testCalendar.addAuction(testAuctionC);
 		testCalendar.addAuction(testAuctionD);
 		
@@ -135,14 +159,13 @@ public class BidderGUI{
 		testAuctionA.addItem(testItem1);
 		testAuctionA.addItem(testItem2);
 		testAuctionA.addItem(testItem3);
-		
 		testAuctionB.addItem(testItem4);
-		testAuctionB.addItem(testItem5);
-		testAuctionB.addItem(testItem6);
+		testAuctionC.addItem(testItem5);
+		testAuctionD.addItem(testItem6);
 
-		testBidder.addBid(testCalendar, testItem1, testItem1.getMyMinBid());
-		testBidder.addBid(testCalendar, testItem2, testItem2.getMyMinBid());
-		testBidder.addBid(testCalendar, testItem3, testItem3.getMyMinBid());
+		testBidder.addBid(testCalendar, testItem1, testItem1.getMyMinBid()+42);
+		testBidder.addBid(testCalendar, testItem2, testItem2.getMyMinBid()+1);
+		testBidder.addBid(testCalendar, testItem3, testItem3.getMyMinBid()+3);
 		
 		testBidder.addBid(testCalendar, testItem4, testItem4.getMyMinBid());
 //		testBidder.addBid(testCalendar, testItem5, testItem5.getMyMinBid());
@@ -154,14 +177,10 @@ public class BidderGUI{
 
 	public void startGUI(){
 		
+		populateTable();
+		
 
 		
-		runUpdates();
-		
-		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
-		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
-		addBidGUI.setVisible(false);
-		viewAuctionsGUI.setVisible(false);
 		myFrame.getContentPane().setLayout(null);
 		myFrame.setName("Auction Central");
 		myFrame.setBounds(100, 100, 800, 500);
@@ -183,41 +202,23 @@ public class BidderGUI{
 		lblYouAreSignedAs.setBounds(-1, 70, 782, 16);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 		
-		JLabel lblYourCurrentActive = new JLabel("Here is a list of scheduled auctions");
-		lblYourCurrentActive.setHorizontalAlignment(SwingConstants.LEFT);
+		JLabel lblYourCurrentActive = new JLabel("Click an Auction to see what items are up for bid");
+		lblYourCurrentActive.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblYourCurrentActive.setFont(mainFont);
-		lblYourCurrentActive.setBounds(235, 125, 318, 16);
+		lblYourCurrentActive.setBounds(235, 125, 535, 16);
 		myFrame.getContentPane().add(lblYourCurrentActive);
 		
-		JButton btnViewAuctions = new JButton("View Auctions");
-		btnViewAuctions.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				viewAuctionsGUI.setVisible(true);
-			}
-		});
-		btnViewAuctions.setFont(mainFont);
-		btnViewAuctions.setBounds(12, 148, 150, 65);
-		myFrame.getContentPane().add(btnViewAuctions);
 		
+
 		
-		JButton btnAddABid = new JButton("add a bid");
-		btnAddABid.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addBidGUI.setVisible(true);
-			}
-		});
-		btnAddABid.setFont(mainFont);
-		btnAddABid.setBounds(12, 226, 150, 56);
-		myFrame.getContentPane().add(btnAddABid);
-		
-		JButton btnRemoveABid = new JButton("remove a bid");
+		JButton btnRemoveABid = new JButton("Edit Your Bids");
 		btnRemoveABid.setFont(mainFont);
-		btnRemoveABid.setBounds(12, 297, 150, 65);
+		btnRemoveABid.setBounds(12, 317, 150, 55);
 		myFrame.getContentPane().add(btnRemoveABid);
 		
 		JButton btnLogOut = new JButton("log out");
 		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(12, 375, 150, 65);
+		btnLogOut.setBounds(12, 385, 150, 55);
 		myFrame.getContentPane().add(btnLogOut);
 		
 		String bids = currentBidder.printBidsGUI(myCalendar);
@@ -235,12 +236,23 @@ public class BidderGUI{
 		scrollPane.setBounds(235, 154, 535, 286);
 		myFrame.getContentPane().add(scrollPane);
 		
+		
+		//here is the table
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				System.out.println(arg0.getComponent());
-				arg0.getSource().toString();
+				
+				if(currentTableMode == AUC_TABLE){
+				
+					String npoName = (String) tblModelAuc.getValueAt(table.getSelectedRow(), 0);
+					Auction auc = myCalendar.getAuctionWithAucID(npoName);
+					
+					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
+					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+					viewItems.setVisible(true);
+				}
 			}
 		});
 		table.setUpdateSelectionOnSort(false);
@@ -254,8 +266,7 @@ public class BidderGUI{
 		scrollPane.setViewportView(table);
 		table.setShowVerticalLines(false);
 		table.setShowGrid(false);
-		
-		table.setModel(tblModelAuctions);
+		table.setModel(tblModelAuc);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setResizable(false);
@@ -264,19 +275,77 @@ public class BidderGUI{
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		table.setAlignmentY(SwingConstants.CENTER);
 		
-	}
-	private void runUpdates(){
-		populateAuctions();
+		
+		
+		JButton btnViewBids = new JButton("View Auctions");
+		btnViewBids.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(tblModelAuc);
+				currentTableMode = AUC_TABLE;
+				table.updateUI();
+			}
+		});
+		btnViewBids.setFont(mainFont);
+		btnViewBids.setBounds(12, 249, 150, 55);
+		myFrame.getContentPane().add(btnViewBids);
+		
+		JButton btnViewYourBids = new JButton("View Your Bids");
+		btnViewYourBids.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(tblModelBid);
+				currentTableMode = BID_TABLE;
+				table.updateUI();
+			}
+		});
+		btnViewYourBids.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnViewYourBids.setBounds(12, 181, 150, 55);
+		myFrame.getContentPane().add(btnViewYourBids);
 		
 	}
-	private void populateAuctions() {
-		tblModelAuctions.setRowCount(0);
-		for (Auction auc : myCalendar.getAllAuctions()) {
-//			System.out.println(auc.getNPOname().getMyName() +" "+ auc.getMyItemList().size() +" "+ auc.getAuctionDate());
-			tblModelAuctions.addRow(new Object[] { auc.getNPOname().getMyName(), auc.getMyItemList().size(), auc.getAuctionDate().format(dateFormat)});
-		}
+	private void runUpdates(){
+//		populateAuctions();
+		
+	}
+	private void populateTable() {
+		
+
+			tblModelBid.setRowCount(0);
+			for(Bid bid : currentBidder.getMyBids()){
+				Item ThisItem = myCalendar.getItem(bid.getMyItemID());
+				String bidAmount = currency.format(currentBidder.getBid(ThisItem.getMyItemID()).getMyBidAmount());
+				String minBid = currency.format(ThisItem.getMyMinBid());
+				
+				tblModelBid.addRow(new Object[] { ThisItem.getItemName() , minBid, bidAmount});
+			}
+			
+
+			tblModelAuc.setRowCount(0);
+			for (Auction auc : myCalendar.getAllAuctions()) {
+				tblModelAuc.addRow(new Object[] { auc.getNPOname().getMyName(), auc.getMyItemList().size(), auc.getAuctionDate().format(dateFormat)});
+			}
+
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+	}
+	
+	private void load() {
+		
+		currentBidder = new Bidder("userName","name","address","phone","email","payInfo");
+		try {
+			FileInputStream fileIn = new FileInputStream("./Calendar.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			myCalendar = (Calendar) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Calendar class not found");
+			c.printStackTrace();
+			return;
+		}
+
 	}
 }
