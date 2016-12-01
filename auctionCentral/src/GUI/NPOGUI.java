@@ -30,14 +30,14 @@ public class NPOGUI {
 	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
 	static Calendar curCalendar;
 	private Auction curAuction;
-	AuctionEditGUI editMenu;
+	private AuctionEditGUI editMenu;
+	private AuctionRequestGUI requestMenu;
 	static NPO curNPO;
 	String auctionInfo;
 	private JLabel lblAuctionInfo;
 	private JButton btnEditAuction;
 	private JButton btnRequest;
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM"
-			+ " d yyyy, hh:mm a");
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
 
 	/**
 	 * Launch the application.
@@ -64,9 +64,6 @@ public class NPOGUI {
 		curCalendar.addAuction(curNPO, LocalDateTime.now().plusDays(15), 15, "");
 		loadAuctionOverview();
 		initialize();
-		editMenu = new AuctionEditGUI(theNPO, theCalendar);
-		editMenu.setVisible(false);
-		editMenu.setModal(true);
 	}
 
 	/**
@@ -106,22 +103,32 @@ public class NPOGUI {
 		lblAuctionInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAuctionInfo.setBounds(0, 87, 784, 115);
 		frame.getContentPane().add(lblAuctionInfo);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("What would you like to do today?");
 		lblNewLabel_2.setFont(detailsFont);
 		lblNewLabel_2.setBounds(33, 297, 306, 34);
 		frame.getContentPane().add(lblNewLabel_2);
-		
+
 		btnRequest = new JButton("Submit Auction Request");
+		btnRequest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				requestMenu = new AuctionRequestGUI(curNPO, curCalendar);
+				requestMenu.setModal(true);
+				requestMenu.setVisible(true);
+				updateStatus();
+			}
+		});
 		btnRequest.setToolTipText("Click here to submit an Auction Request");
 		btnRequest.setBounds(81, 379, 154, 23);
 		frame.getContentPane().add(btnRequest);
 		if (curNPO.hasAuction())
 			btnRequest.setEnabled(false);
-		
+
 		btnEditAuction = new JButton("Edit Current Auction");
 		btnEditAuction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				editMenu = new AuctionEditGUI(curNPO, curCalendar);
+				editMenu.setModal(true);
 				editMenu.setVisible(true);
 				updateStatus();
 			}
@@ -131,7 +138,7 @@ public class NPOGUI {
 		frame.getContentPane().add(btnEditAuction);
 		if (!curNPO.hasAuction())
 			btnEditAuction.setEnabled(false);
-		
+
 		JButton btnLogOut = new JButton("Log Out");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -154,18 +161,23 @@ public class NPOGUI {
 			curAuction.addItem("Car", "Dr Phil", "Good", "Medium", "No Notes", "Honda Civic", 1000);
 			curAuction.addItem("Calculator", "Dr Phill", "Good", "Medium", "No Notes", "TI NSpire CAS", 40);
 			curAuction.addItem("Football", "Sherman", "Good", "Medium", "No Notes", "Seahawks signed football", 40);
-			auctionInfo = "<html>Auction Overview:<br>"
-					    + "Auction Date: " + curAuction.getAuctionDate().format(dateFormat) + "<br>"
-					    + "You have " + curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
+			auctionInfo = "<html>Auction Overview:<br>" + "Auction Date: "
+					+ curAuction.getAuctionDate().format(dateFormat) + "<br>" + "You have "
+					+ curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
 		}
 	}
-	
+
 	private void updateAuctionDetails() {
-		auctionInfo = "<html>Auction Overview:<br>"
-			    + "Auction Date: " + curAuction.getAuctionDate().format(dateFormat) + "<br>"
-			    + "You have " + curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
+		if (!curNPO.hasAuction()) {
+			auctionInfo = "You have no upcoming auctions.";
+		} else {
+			curAuction = curCalendar.getAuction(curNPO);
+			auctionInfo = "<html>Auction Overview:<br>" + "Auction Date: "
+					+ curAuction.getAuctionDate().format(dateFormat) + "<br>" + "You have "
+					+ curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";
+		}
 	}
-	
+
 	/**
 	 * Update all views with the most current information.
 	 */
@@ -175,11 +187,10 @@ public class NPOGUI {
 		if (!curNPO.hasAuction()) {
 			btnEditAuction.setEnabled(false);
 			btnRequest.setEnabled(true);
-		}
-		else {
+		} else {
 			btnEditAuction.setEnabled(true);
 			btnRequest.setEnabled(false);
 		}
 	}
-	
+
 }

@@ -309,7 +309,8 @@ public class AddItemGUI extends JDialog {
 	}
 	
 	private void close() {
-		this.setVisible(false);
+		//this.setVisible(false);
+		this.dispose();
 	}
 	
 	private void clearAll() {

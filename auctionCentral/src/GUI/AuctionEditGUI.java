@@ -79,8 +79,6 @@ public class AuctionEditGUI extends JDialog {
 		selectedItemInfo = "";
 		populateAuctionInfo();
 		initialize();
-		addItemMenu = new AddItemGUI(myAuction);
-		addItemMenu.setVisible(false);
 	}
 
 	/**
@@ -155,6 +153,7 @@ public class AuctionEditGUI extends JDialog {
 		JButton btnAddItem = new JButton("Add New Item");
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				addItemMenu = new AddItemGUI(myAuction);
 				addItemMenu.setModal(true);
 				addItemMenu.setVisible(true);				
 				updateStatus();
@@ -168,7 +167,7 @@ public class AuctionEditGUI extends JDialog {
 		JButton btnRemoveItem = new JButton("Remove Selected Item");
 		btnRemoveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				removeItem(myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0)));
+				removeItem();
 			}
 		});
 		btnRemoveItem.setToolTipText("Click here to remove the last item highlighted in the list.");
@@ -219,28 +218,36 @@ public class AuctionEditGUI extends JDialog {
 	 * Hides the window from view
 	 */
 	private void close() {
-		this.setVisible(false);
+		//this.setVisible(false);
+		this.dispose();
 	}
 
 	/**
 	 * Displays a confirmation message and then removes the item if confirmed.
 	 * @param theItem the item requested to remove
 	 */
-	private void removeItem(Item theItem) {
-		String message = "<html>Are you sure you want to remove the following item?<br><br>Name: "
-				+ theItem.getMyItemName() + "<br>Condition: " + theItem.getMyCondition() + "<br>Size: "
-				+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
+	private void removeItem() {
+		if (selectedItem != -1) {
+			Item theItem = myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0));
+			String message = "<html>Are you sure you want to remove the following item?<br><br>Name: "
+					+ theItem.getMyItemName() + "<br>Condition: " + theItem.getMyCondition() + "<br>Size: "
+					+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
 
-		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			int result = myAuction.removeItem(theItem);
-			if (result == 1)
-				JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
-			else if (result == 2)
-				JOptionPane.showMessageDialog(this, "Sorry, this item was not found in inventory."); //This should never occur with the GUI
-			else
-				JOptionPane.showMessageDialog(this, "Items can no longer be removed from this auction since its scheduled to commence in less than two days.");
-			updateStatus();
+			if (JOptionPane.showConfirmDialog(this, message) == 0) {
+				int result = myAuction.removeItem(theItem);
+				if (result == 1)
+					JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
+				else if (result == 2)
+					JOptionPane.showMessageDialog(this, "Sorry, this item was not found in inventory."); //This should never occur with the GUI
+				else
+					JOptionPane.showMessageDialog(this, "Items can no longer be removed from this auction since its scheduled to commence in less than two days.");
+				selectedItem = -1;
+				updateStatus();
+			}
 		}
+		else
+			JOptionPane.showMessageDialog(this, "Please select an item to remove");
+
 
 	}
 	
@@ -262,8 +269,10 @@ public class AuctionEditGUI extends JDialog {
 				       + "Are you sure you want to CANCEL THIS AUCTION? (This operation CANNOT be undone)</html>";
 		
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1)
+			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1) {
 				JOptionPane.showMessageDialog(this, "Your auction has been successfully cancelled!");
+				close();
+			}
 		}
 	}
 	

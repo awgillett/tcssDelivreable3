@@ -224,6 +224,7 @@ public class Calendar implements Serializable {
 				int numOfDays = days.getDays();
 				if (numOfDays >= 2) {
 					a.getNPO().setAuction(false);
+					a.getNPO().setLastAuctionDate(LocalDateTime.of(1970, 1, 1, 12, 00));
 					myAuctionList.remove(a);
 					return 1; //auction found and deleted successfully
 				}
