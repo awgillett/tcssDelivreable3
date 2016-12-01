@@ -16,7 +16,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.Period;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
@@ -41,13 +44,22 @@ public class AuctionRequestGUI extends JDialog {
 	private Calendar myCalendar;
 	private NPO myNPO;
 	private JLabel lblDateError;
+	JLabel lblDate;
 	private JComboBox cboYear;
 	private JComboBox cboMonth;
 	private JComboBox cboDay;
+	JComboBox cboTime;
 	private LocalDateTime now;
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
 	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
 	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
+	private LocalDateTime date;
+	private int[][] times = {{6,0},{6,30},{7,0},{7,30},{8,0},{8,30},
+							 {9,0},{9,30},{10,0},{10,30},{11,0},{11,30},
+							 {12,0},{12,30},{13,0},{13,30},{14,0},{14,30},
+							 {15,0},{15,30},{16,0},{16,30},{17,0},{17,30},
+							 {18,0},{18,30},{19,0},{19,30},{20,0},{20,30}};
 
 	/**
 	 * Launch the application.
@@ -72,6 +84,7 @@ public class AuctionRequestGUI extends JDialog {
 		populateYear();
 		populateMonth();
 		populateDays();
+		
 	}
 	
 	private void initializeGUI() {
@@ -112,7 +125,7 @@ public class AuctionRequestGUI extends JDialog {
 		JButton btnSubmit = new JButton("Submit Auction Request");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				isValidDate();
+				//isValidDate();
 			}
 		});
 		btnSubmit.setBounds(66, 408, 292, 23);
@@ -123,25 +136,50 @@ public class AuctionRequestGUI extends JDialog {
 		getContentPane().add(btnCancel);
 		
 		cboYear = new JComboBox();
-		cboYear.setBounds(199, 139, 112, 20);
+		cboYear.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				loadDate();
+			}
+		});
+		cboYear.setBounds(50, 139, 112, 20);
 		getContentPane().add(cboYear);
 		
 		cboMonth = new JComboBox();
 		cboMonth.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				populateDays();
+				loadDate();
 			}
 		});
-		cboMonth.setBounds(321, 139, 112, 20);
+		cboMonth.setBounds(172, 139, 112, 20);
 		getContentPane().add(cboMonth);
 		
 		cboDay = new JComboBox();
-		cboDay.setBounds(443, 139, 112, 20);
+		cboDay.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				loadDate();
+			}
+		});
+		cboDay.setBounds(294, 139, 112, 20);
 		getContentPane().add(cboDay);
+		
+		lblDate = new JLabel("");
+		lblDate.setBounds(566, 139, 195, 20);
+		getContentPane().add(lblDate);
+		
+		cboTime = new JComboBox();
+		cboTime.setModel(new DefaultComboBoxModel(new String[] {"6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM"}));
+		cboTime.setBounds(416, 139, 112, 20);
+		getContentPane().add(cboTime);
 	}
 	
-	private void isValidDate() {
-		
+	private void loadDate() {
+		int year = (int) cboYear.getSelectedItem();
+		Month month = (Month) cboMonth.getSelectedItem();
+		int day = (int) cboDay.getSelectedItem();
+		int time = cboTime.getSelectedIndex();
+		time = time + time % 2;
+		lblDate.setText(LocalDateTime.of(year, month.getValue(), day, times[time][0], times[time][1]).format(dateFormat));
 	}
 	
 	private void populateYear() {

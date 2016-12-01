@@ -223,7 +223,7 @@ public class Auction implements Serializable {
 		int numOfDays = days.getDays();
 		if (numOfDays >= 2) {
 			for (Item i : myItemList) {
-				if (theItem.isEqual(i) && numOfDays >= 2) {
+				if (theItem.isEqual(i)) {
 					myItemList.remove(i);
 					return removedItem;
 				}
