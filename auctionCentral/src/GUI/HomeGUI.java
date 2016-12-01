@@ -12,7 +12,7 @@ import model.*;
 public class HomeGUI implements ActionListener{
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
-	private static Font buttonFont = new Font("Tahoma", Font.PLAIN, 15);
+	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
 	
@@ -44,7 +44,7 @@ public class HomeGUI implements ActionListener{
 	private void addTextBoxLabel(){
 		JLabel userLabel = new JLabel("Username");
 		userLabel.setBounds(20, 85, 80, 25);
-		userLabel.setFont(buttonFont);
+		userLabel.setFont(details);
 		myFrame.getContentPane().add(userLabel);
 	}
 	
