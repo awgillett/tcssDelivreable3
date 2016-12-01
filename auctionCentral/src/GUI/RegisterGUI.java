@@ -1,9 +1,11 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +29,13 @@ public class RegisterGUI implements ActionListener {
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
+	
+	int WINDOWWIDTH = 700;
+	int WINDOWHEIGHT = 400;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
+	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
+
 
 	private JPanel contentPane;
 	private JTextField nameText;
@@ -91,7 +100,7 @@ public class RegisterGUI implements ActionListener {
 //		bidder.setBounds(298, 0 , 100, 50);
 //		contentPane.add(bidder);
 //		
-//		JLabel label2 = new JLabel("Please enter the following informations:");
+//		JLabel label2 = new JLabel("Please enter the following information:");
 //		label2.setFont( new Font("Tahoma", Font.PLAIN, 15));
 //		label2.setBounds(14,50, 264,20);
 //		contentPane.add(label2);
@@ -168,10 +177,12 @@ public class RegisterGUI implements ActionListener {
 	
 	public void runTest(){
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		myFrame.setBounds(100, 100, 700, 400);
+		myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		myFrame.setContentPane(contentPane);
+        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 		contentPane.setLayout(null);
 		
 			
@@ -183,25 +194,25 @@ public class RegisterGUI implements ActionListener {
 	
 	private void addRadioButton(){
 		
-		JLabel label = new JLabel("You are register as: ");		
+		JLabel label = new JLabel("What would you like to register as: ");		
 		label.setFont(details);
-		label.setBounds(4,13, 165,20);
+		label.setBounds(4,13, 265,20);
 		contentPane.add(label);
 		
 		ButtonGroup group = new ButtonGroup();
 		JRadioButton staff = new JRadioButton("Staff");
-		staff.setBounds(144,0,70,50);
+		staff.setBounds(244,0,70,50);
 		contentPane.add(staff);
 		staff.addActionListener(this);
 			
 		JRadioButton NPO = new JRadioButton("NPO");
-		NPO.setBounds(224, 0, 50, 50);
+		NPO.setBounds(324, 0, 50, 50);
 		contentPane.add(NPO);
 		NPO.addActionListener(this);
 
 		
 		JRadioButton bidder = new JRadioButton("Bidder");
-		bidder.setBounds(298, 0 , 100, 50);
+		bidder.setBounds(398, 0 , 100, 50);
 		contentPane.add(bidder);
 		
 		group.add(staff);
@@ -276,7 +287,7 @@ public class RegisterGUI implements ActionListener {
 		addRadioButton();
 		addRegisterButton();
 		addCancelButton();
-		JLabel label2 = new JLabel("Please enter the following informations:");
+		JLabel label2 = new JLabel("Please enter the following information:");
 		label2.setFont(details);
 		label2.setBounds(15,50, 264,20);
 		contentPane.add(label2);
@@ -323,12 +334,16 @@ public class RegisterGUI implements ActionListener {
 	public void actionPerformed(ActionEvent theEvent) {
 		if(theEvent.getActionCommand().equals("NPO")
 				|| theEvent.getActionCommand().equals("Staff")){
-			myFrame.setBounds(100, 100, 700, 400);
+			//myFrame.setBounds(0, 0, 700, 400);
+	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			addStaffNPORegisterPanel();
 			myFrame.repaint();
 		} else if (theEvent.getActionCommand().equals("Bidder")){
 			addBidderRegisterPanel();
-			myFrame.setBounds(100, 100, 700, 400);
+			//myFrame.setBounds(0, 0, 700, 400);
+	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			myFrame.repaint();
 		}
 

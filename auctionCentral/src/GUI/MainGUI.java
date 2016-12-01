@@ -27,7 +27,15 @@ import model.User;
 import java.awt.GridLayout;
 
 
+
+
 public class MainGUI implements MouseListener{
+	int WINDOWWIDTH = 701; //I made this 701 because 700 caused an issue not sure why yet
+	int WINDOWHEIGHT = 400;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int screenHeight = ((int) screenSize.getHeight()/2) - WINDOWHEIGHT/2;
+	int screenWidth = ((int) screenSize.getWidth()/2) - WINDOWWIDTH/2;
+
 	
 	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
 	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
@@ -68,7 +76,7 @@ public class MainGUI implements MouseListener{
     private void setupFrame() { 
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setMinimumSize(new Dimension(myFrame.getWidth(), myFrame.getHeight()));
-        myFrame.setBounds(0, 0, 701, 400);//I made this 701because 700 caused an issue not sure why yet
+        myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
         

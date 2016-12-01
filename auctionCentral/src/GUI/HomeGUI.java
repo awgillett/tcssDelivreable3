@@ -15,6 +15,7 @@ public class HomeGUI implements ActionListener{
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
+
 	
 	private JTextField userText;
 	//protected static Calendar myCalendar = new Calendar();
@@ -60,11 +61,11 @@ public class HomeGUI implements ActionListener{
 		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
 		lblWelcomeBanner.setFont(welcome);
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
-		lblWelcomeBanner.setBounds(10, 10, 400, 20);
+		lblWelcomeBanner.setBounds(100, 10, 400, 20);
 		myFrame.getContentPane().add(lblWelcomeBanner);
 		
-		JLabel lblYouAreSignedAs = new JLabel("Please sign in:");
-		lblYouAreSignedAs.setFont(subWelcome);
+		JLabel lblYouAreSignedAs = new JLabel("Please sign in or register:");
+		lblYouAreSignedAs.setFont(details);
 		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
 		lblYouAreSignedAs.setBounds(20, 55, 300, 30);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
