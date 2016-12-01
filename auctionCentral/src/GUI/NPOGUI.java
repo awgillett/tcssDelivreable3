@@ -102,6 +102,7 @@ public class NPOGUI {
 		lblAuctionInfo = new JLabel(auctionInfo);
 		lblAuctionInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAuctionInfo.setBounds(0, 87, 784, 115);
+		lblAuctionInfo.setFont(detailsFont);
 		frame.getContentPane().add(lblAuctionInfo);
 
 		JLabel lblNewLabel_2 = new JLabel("What would you like to do today?");
