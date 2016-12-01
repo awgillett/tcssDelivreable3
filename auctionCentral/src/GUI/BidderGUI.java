@@ -41,13 +41,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class BidderGUI{
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM d yyyy, hh:mm a");
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/d/yyyy");
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
 	protected JFrame myFrame = new JFrame();
 	
-	static Calendar myCalendar;
-	static Bidder currentBidder;
+	static Calendar myCalendar = null;
+	static Bidder currentBidder = null;
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static String loggedInAs = "You are signed in as: ";
@@ -57,6 +57,7 @@ public class BidderGUI{
 	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
 	private JTable table;
+	private DefaultTableModel tblModelAuctions = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
@@ -65,11 +66,12 @@ public class BidderGUI{
 			public void run() {
 				try {
 					
-					//this is for testing
-					testBidderInit();
+					
 					
 					BidderGUI bidderWindow = new BidderGUI(currentBidder, myCalendar);
 					bidderWindow.myFrame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,6 +86,8 @@ public class BidderGUI{
 		currentBidder = theBidder;
 		myCalendar = theCalendar;
 
+		//this is for testing
+		testBidderInit();
 		
 		startGUI();
 	
@@ -100,14 +104,22 @@ public class BidderGUI{
 		
 		Bidder testBidder = new Bidder("userName","name","address","phone","email","payInfo");
 		Calendar testCalendar = new Calendar();
-		NPO testNpoA = new NPO("NPOa", "npoa");
-		NPO testNpoB = new NPO("NPOb", "npob");
+		NPO testNpoA = new NPO("NPOa", "goodwill");
+		NPO testNpoB = new NPO("NPOb", "st matthews");
+		NPO testNpoC = new NPO("NPOc", "compassion int");
+		NPO testNpoD = new NPO("NPOd", "red cross");
 		
 		Auction testAuctionA = new Auction(testNpoA, LocalDateTime.now().plusDays(7), 10, "Notes", 1);
 		Auction testAuctionB = new Auction(testNpoB, LocalDateTime.now().plusDays(10), 10, "Notes", 1);
 
+		Auction testAuctionC = new Auction(testNpoC, LocalDateTime.now().plusDays(11), 10, "Notes", 1);
+		Auction testAuctionD = new Auction(testNpoD, LocalDateTime.now().plusDays(12), 10, "Notes", 1);
+
 		testCalendar.addAuction(testAuctionA);
 		testCalendar.addAuction(testAuctionB);
+
+		testCalendar.addAuction(testAuctionC);
+		testCalendar.addAuction(testAuctionD);
 		
 		Item testItem1 = new Item("itemA", "NPOA", "good", "small", "NOTE", "DESC", 10., 1);
 		Item testItem2 = new Item("itemB", "NPOA", "good", "small", "NOTE", "DESC", 15., 2);
@@ -137,6 +149,11 @@ public class BidderGUI{
 	}
 
 	public void startGUI(){
+		
+
+		
+		runUpdates();
+		
 		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
 		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
 		addBidGUI.setVisible(false);
@@ -146,6 +163,8 @@ public class BidderGUI{
 		myFrame.setBounds(100, 100, 800, 500);
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
+		
+		
 		
 		JLabel lblWelcomeBanner = new JLabel("Auction Central");
 		lblWelcomeBanner.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -157,20 +176,14 @@ public class BidderGUI{
 		JLabel lblYouAreSignedAs = new JLabel(loggedInAs + currentBidder.getMyName());
 		lblYouAreSignedAs.setFont(mainFont);
 		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblYouAreSignedAs.setBounds(-12, 60, 782, 16);
+		lblYouAreSignedAs.setBounds(-1, 70, 782, 16);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 		
-		JLabel lblYourCurrentActive = new JLabel("Your current active bids:");
+		JLabel lblYourCurrentActive = new JLabel("Here is a list of scheduled auctions");
 		lblYourCurrentActive.setHorizontalAlignment(SwingConstants.LEFT);
 		lblYourCurrentActive.setFont(mainFont);
-		lblYourCurrentActive.setBounds(225, 89, 185, 16);
+		lblYourCurrentActive.setBounds(235, 125, 318, 16);
 		myFrame.getContentPane().add(lblYourCurrentActive);
-		
-		JLabel lblWhatWouldYou = new JLabel("What would you like to do?");
-		lblWhatWouldYou.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWhatWouldYou.setFont(mainFont);
-		lblWhatWouldYou.setBounds(12, 89, 185, 16);
-		myFrame.getContentPane().add(lblWhatWouldYou);
 		
 		JButton btnViewAuctions = new JButton("View Auctions");
 		btnViewAuctions.addActionListener(new ActionListener() {
@@ -179,7 +192,7 @@ public class BidderGUI{
 			}
 		});
 		btnViewAuctions.setFont(mainFont);
-		btnViewAuctions.setBounds(27, 118, 150, 65);
+		btnViewAuctions.setBounds(12, 148, 150, 65);
 		myFrame.getContentPane().add(btnViewAuctions);
 		
 		
@@ -190,17 +203,17 @@ public class BidderGUI{
 			}
 		});
 		btnAddABid.setFont(mainFont);
-		btnAddABid.setBounds(27, 195, 150, 56);
+		btnAddABid.setBounds(12, 226, 150, 56);
 		myFrame.getContentPane().add(btnAddABid);
 		
 		JButton btnRemoveABid = new JButton("remove a bid");
 		btnRemoveABid.setFont(mainFont);
-		btnRemoveABid.setBounds(27, 264, 150, 65);
+		btnRemoveABid.setBounds(12, 297, 150, 65);
 		myFrame.getContentPane().add(btnRemoveABid);
 		
 		JButton btnLogOut = new JButton("log out");
 		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(27, 340, 150, 65);
+		btnLogOut.setBounds(12, 375, 150, 65);
 		myFrame.getContentPane().add(btnLogOut);
 		
 		String bids = currentBidder.printBidsGUI(myCalendar);
@@ -212,20 +225,37 @@ public class BidderGUI{
 		lblWelcomeToThe.setBounds(-1, 42, 782, 16);
 		myFrame.getContentPane().add(lblWelcomeToThe);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Organization:", "Number of Items", "Date of Auction"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(202);
-		table.getColumnModel().getColumn(1).setPreferredWidth(123);
-		table.getColumnModel().getColumn(2).setPreferredWidth(170);
-		table.setBounds(235, 118, 535, 322);
-		myFrame.getContentPane().add(table);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(235, 154, 535, 286);
+		myFrame.getContentPane().add(scrollPane);
 		
+		table = new JTable();
+		table.setBackground(SystemColor.control);
+		scrollPane.setViewportView(table);
+		table.setShowVerticalLines(false);
+		table.setShowHorizontalLines(false);
+		table.setShowGrid(false);
+		
+		table.setModel(tblModelAuctions);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(110);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.setAlignmentY(SwingConstants.CENTER);
+		
+	}
+	private void runUpdates(){
+		populateAuctions();
+		
+	}
+	private void populateAuctions() {
+		tblModelAuctions.setRowCount(0);
+		for (Auction auc : myCalendar.getAllAuctions()) {
+//			System.out.println(auc.getNPOname().getMyName() +" "+ auc.getMyItemList().size() +" "+ auc.getAuctionDate());
+			tblModelAuctions.addRow(new Object[] { auc.getNPOname().getMyName(), auc.getMyItemList().size(), auc.getAuctionDate().format(dateFormat)});
+		}
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
