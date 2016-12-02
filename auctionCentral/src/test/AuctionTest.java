@@ -26,21 +26,26 @@ import model.NPO;
 public class AuctionTest {
 	
 	NPO a;
-	Auction theAuction = new Auction(a, 
-			LocalDateTime.of(2017, 02, 16, 12, 00), 10, "None", 123456);
-	Item lamp = new Item("Leg Lamp", "Private Collector", "New", "Large", "", 
-			"A Christmas Story Lamp.", 50.00, 555);
-	Item painting = new Item("Painting", "Private Collector", "New", "Large", "", 
-			"A reprint of Picasso's The Old Guitarist.", 100.00, 111);
-	LocalDate Today = LocalDateTime.now().toLocalDate();
-	int Month = Today.getMonthValue();
+	Auction theAuction; 
+	Item lamp;
+	Item painting; 
+	LocalDate Today;
+	int Month;
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		a = new NPO("NPOa", "a");		
+		a = new NPO("NPOa", "a");	
+		theAuction = new Auction(a, 
+				LocalDateTime.of(2017, 02, 16, 12, 00), 10, "None", 123456);
+		Today = LocalDateTime.now().toLocalDate();
+		Month = Today.getMonthValue();
+		painting = new Item("Painting", "Private Collector", "New", "Large", "", 
+				"A reprint of Picasso's The Old Guitarist.", 100.00, 111);
+		lamp  = new Item("Leg Lamp", "Private Collector", "New", "Large", "", 
+				"A Christmas Story Lamp.", 50.00, 555);
 	}
 
 	/**
