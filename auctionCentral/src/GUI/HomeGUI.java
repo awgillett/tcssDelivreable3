@@ -73,7 +73,7 @@ public class HomeGUI implements ActionListener{
 	
 	private void addLoginButton(){
 		JButton loginButton = new JButton("login");
-		loginButton.setBounds(40, 120, 80, 25);
+		loginButton.setBounds(20, 120, 154, 23);
 		loginButton.addActionListener(this);
 		myFrame.getContentPane().add(loginButton);
 		
@@ -81,7 +81,7 @@ public class HomeGUI implements ActionListener{
 	
 	private void addRegisterButton(){
 		JButton registerButton = new JButton("register");
-		registerButton.setBounds(170, 120, 80, 25);
+		registerButton.setBounds(200, 120, 154, 23);
 		myFrame.getContentPane().add(registerButton);	
 		registerButton.addActionListener(new ActionListener() {
 			

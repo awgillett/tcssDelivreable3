@@ -203,7 +203,7 @@ public class RegisterGUI implements ActionListener {
 		
 		JButton Staff = new JButton("Staff");
 		Staff.setFont(details);
-		Staff.setBounds(120,50,70,40);
+		Staff.setBounds(80,50,154,23);
 		contentPane.add(Staff);
 		
 //		ButtonGroup group = new ButtonGroup();
@@ -214,7 +214,7 @@ public class RegisterGUI implements ActionListener {
 		
 		JButton NPO = new JButton("NPO");
 		NPO.setFont(details);
-		NPO.setBounds(200, 50, 70, 40);
+		NPO.setBounds(260, 50,154, 23);
 		contentPane.add(NPO);
 		//btnOK.setActionCommand("enable");
 		//btnOK.setEnabled(false);
@@ -226,7 +226,7 @@ public class RegisterGUI implements ActionListener {
 
 		JButton bidder = new JButton("Bidder");
 		bidder.setFont(details);
-		bidder.setBounds(280, 50 , 100, 40);
+		bidder.setBounds(440, 50 , 154, 23);
 		contentPane.add(bidder);
 		
 //		JRadioButton bidder = new JRadioButton("Bidder");
@@ -243,8 +243,8 @@ public class RegisterGUI implements ActionListener {
 	private void addBidderRegisterPanel(){
 		contentPane.removeAll();
 		addStaffNPORegisterPanel();
-		cancelButton.setBounds(235, 327, 89, 23);
-		registerButton.setBounds(124, 327, 89, 23);
+		cancelButton.setBounds(305, 327, 154,23);
+		registerButton.setBounds(124, 327, 154,23);
 		
 		phoneText = new JTextField();
 		phoneText.setColumns(10);
@@ -353,7 +353,7 @@ public class RegisterGUI implements ActionListener {
 	
 	private void addRegisterButton(){
 		registerButton = new JButton("Register");
-		registerButton.setBounds(124, 215, 89, 23);
+		registerButton.setBounds(124, 215, 154,23);
 		contentPane.add(registerButton);
 		registerButton.setEnabled(false);
 		
@@ -362,7 +362,7 @@ public class RegisterGUI implements ActionListener {
 	private void addCancelButton(){
 		
 		cancelButton = new JButton("Cancel");
-		cancelButton.setBounds(235, 215, 89, 23);
+		cancelButton.setBounds(305, 215, 154,23);
 		contentPane.add(cancelButton);
 	}
 
