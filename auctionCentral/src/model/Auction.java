@@ -215,9 +215,9 @@ public class Auction implements Serializable {
 	 *         too late to remove the item
 	 */
 	public int removeItem(Item theItem) {
-		// boolean set = false;
+		//boolean set = false;
 		int removedItem = 1;
-		int noItemToRemove = 2;
+		int itemNotFound = 2;
 		int tooLateDate = 3;
 		Period days = Period.between(LocalDateTime.now().toLocalDate(), auctionDate.toLocalDate());
 		int numOfDays = days.getDays();
@@ -228,11 +228,10 @@ public class Auction implements Serializable {
 					return removedItem;
 				}
 			}
+			return itemNotFound;
 		}
 		else
 			return tooLateDate;
-		
-		return noItemToRemove;
 	}
 
 	/**

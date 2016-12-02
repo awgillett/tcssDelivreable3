@@ -5,6 +5,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import model.NPO;
 //import model.User;
 
 /**
- * @author Carl/Patrick
+ * @author Carl/Patrick/Jesse
  *
  */
 public class AuctionTest {
@@ -27,14 +28,19 @@ public class AuctionTest {
 	NPO a;
 	Auction theAuction = new Auction(a, 
 			LocalDateTime.of(2017, 02, 16, 12, 00), 10, "None", 123456);
+	Item lamp = new Item("Leg Lamp", "Private Collector", "New", "Large", "", 
+			"A Christmas Story Lamp.", 50.00, 555);
+	Item painting = new Item("Painting", "Private Collector", "New", "Large", "", 
+			"A reprint of Picasso's The Old Guitarist.", 100.00, 111);
+	LocalDate Today = LocalDateTime.now().toLocalDate();
+	int Month = Today.getMonthValue();
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		a = new NPO("NPOa", "a");	
-		
+		a = new NPO("NPOa", "a");		
 	}
 
 	/**
@@ -130,49 +136,53 @@ public class AuctionTest {
 	@Test
 	public void testRemoveItemBeforeTwoDayDeadline() {
 		int removedItem = 1;
-
-		theAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
-				"A reprint of Picasso's The Old Guitarist.", 100.00);
-		Item myItem = theAuction.getItem(1234560);
-
-		assertEquals(removedItem, theAuction.removeItem(myItem));
+		theAuction.addItem(painting);
+		theAuction.addItem(lamp);
+		assertEquals(removedItem, theAuction.removeItem(lamp));
 	}
+
 	/**
 	 * Test method for {@link model.Auction#testRemoveItemWithNoItem()}.
 	 */
 	@Test
 	public void testRemoveItemWithNoItem() {
-		int noItemToRemove = 2;
-		Item myItem = theAuction.getItem(1234560);
-		assertEquals(noItemToRemove, theAuction.removeItem(myItem));
+		int itemNotFound = 2;
+		assertEquals(itemNotFound, theAuction.removeItem(lamp));
 	}
 	/**
 	 * Test method for {@link model.Auction#testRemoveItemAfterTwoDayDeadline()}.
 	 */
 	@Test
 	public void testRemoveItemAfterTwoDayDeadline() {
+		LocalDate Today = LocalDateTime.now().toLocalDate();
+		int OneDayOut = Today.getDayOfMonth()+1;
 		int tooLateDate = 3;
 		Auction myAuction = new Auction(a, 
-				LocalDateTime.of(2016, 11, 29, 13, 00), 10, "None", 123456);
-		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
-				"A reprint of Picasso's The Old Guitarist.", 100.00);
-		Item myItem = myAuction.getItem(1234560);
-
-		assertEquals(tooLateDate, myAuction.removeItem(myItem));
+				LocalDateTime.of(2016, Month, OneDayOut, 23, 00), 10, "None", 123456);
+		theAuction.addItem(painting);
+		assertEquals(tooLateDate, myAuction.removeItem(painting));
 	}
 	/**
 	 * Test method for {@link model.Auction#testRemoveItemOnTwoDayDeadline()}.
 	 */
 	@Test
 	public void testRemoveItemOnTwoDayDeadline() {
+		LocalDate Today = LocalDateTime.now().toLocalDate();
+		int TwoDaysOut = Today.getDayOfMonth()+2;
 		int removedItem = 1;
 		Auction myAuction = new Auction(a, 
-				LocalDateTime.of(2016, 11, 30, 23, 00), 10, "None", 123456);
-		myAuction.addItem("Painting", "Private Collector", "New", "Large", "", 
-				"A reprint of Picasso's The Old Guitarist.", 100.00);
-		Item myItem = myAuction.getItem(1234560);
-
-		assertEquals(removedItem, myAuction.removeItem(myItem));
+				LocalDateTime.of(2016, Month, TwoDaysOut, 23, 00), 10, "None", 123456);
+		myAuction.addItem(painting);
+		assertEquals(removedItem, myAuction.removeItem(painting));
+	}
+	/**
+	 * Test method for {@link model.Auction#testRemoveItemOnTwoDayDeadline()}.
+	 */
+	@Test
+	public void testRemoveItemThatDoesNotExist() {
+		int itemNotFound = 2;
+		theAuction.addItem(painting);
+		assertEquals(itemNotFound, theAuction.removeItem(lamp));
 	}
 
 //	/**
@@ -187,7 +197,7 @@ public class AuctionTest {
 //				"Large", "None", "A Cocal-Cola machine from the 1920s.", 1000.00);
 //		theAuction.addItem("Comic Book", "Private Collector", "Very Good", "Small", "None", 
 //				"First appearance of Venom.", 500.00);
-//		
+//
 //		assertEquals("NPO Username: a\nAuction Date: 2017-12-16 12:00\nTotal number of items: 3\n\tItem 1: Painting\n\tItem 2: Vending Machine\n\tItem 3: Comic Book\n\n\n", theAuction.toString());
 //	}
 
