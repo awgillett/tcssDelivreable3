@@ -45,6 +45,7 @@ public class RegisterGUI implements ActionListener {
 	private JTextField paymentText;
 	private JTextField emailText;
 	private JButton cancelButton, registerButton;
+	private int UserType = 0;
 	
 	protected JFrame myFrame;
 	private ArrayList<User> userList = new ArrayList();
@@ -72,7 +73,8 @@ public class RegisterGUI implements ActionListener {
 	public RegisterGUI(JFrame theFrame, ArrayList<User> theUserList) {
 		myFrame = theFrame;
 		userList = theUserList;
-		contentPane = new JPanel();;
+		contentPane = new JPanel();
+		contentPane.setLayout(null);;
 		
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setBounds(100, 100, 450, 350);
@@ -196,28 +198,44 @@ public class RegisterGUI implements ActionListener {
 		
 		JLabel label = new JLabel("What would you like to register as: ");		
 		label.setFont(details);
-		label.setBounds(4,13, 265,20);
+		label.setBounds(125,13, 265,20);
 		contentPane.add(label);
 		
-		ButtonGroup group = new ButtonGroup();
-		JRadioButton staff = new JRadioButton("Staff");
-		staff.setBounds(244,0,70,50);
-		contentPane.add(staff);
-		staff.addActionListener(this);
-			
-		JRadioButton NPO = new JRadioButton("NPO");
-		NPO.setBounds(324, 0, 50, 50);
+		JButton Staff = new JButton("Staff");
+		Staff.setFont(details);
+		Staff.setBounds(120,50,70,40);
+		contentPane.add(Staff);
+		
+//		ButtonGroup group = new ButtonGroup();
+//		JRadioButton staff = new JRadioButton("Staff");
+//		staff.setBounds(244,0,70,50);
+//		contentPane.add(staff);
+		Staff.addActionListener(this);
+		
+		JButton NPO = new JButton("NPO");
+		NPO.setFont(details);
+		NPO.setBounds(200, 50, 70, 40);
 		contentPane.add(NPO);
+		//btnOK.setActionCommand("enable");
+		//btnOK.setEnabled(false);
+			
+//		JRadioButton NPO = new JRadioButton("NPO");
+//		NPO.setBounds(324, 0, 50, 50);
+//		contentPane.add(NPO);
 		NPO.addActionListener(this);
 
-		
-		JRadioButton bidder = new JRadioButton("Bidder");
-		bidder.setBounds(398, 0 , 100, 50);
+		JButton bidder = new JButton("Bidder");
+		bidder.setFont(details);
+		bidder.setBounds(280, 50 , 100, 40);
 		contentPane.add(bidder);
 		
-		group.add(staff);
-		group.add(NPO);
-		group.add(bidder);
+//		JRadioButton bidder = new JRadioButton("Bidder");
+//		bidder.setBounds(398, 0 , 100, 50);
+//		contentPane.add(bidder);
+		
+//		group.add(staff);
+//		group.add(NPO);
+//		group.add(bidder);
 		bidder.addActionListener(this);
 		
 	}
@@ -225,53 +243,54 @@ public class RegisterGUI implements ActionListener {
 	private void addBidderRegisterPanel(){
 		contentPane.removeAll();
 		addStaffNPORegisterPanel();
-		cancelButton.setBounds(335, 277, 89, 23);
-		registerButton.setBounds(224, 277, 89, 23);
+		cancelButton.setBounds(235, 327, 89, 23);
+		registerButton.setBounds(124, 327, 89, 23);
 		
 		phoneText = new JTextField();
 		phoneText.setColumns(10);
-		phoneText.setBounds(110, 179, 165, 20);
+		phoneText.setBounds(210, 229, 165, 20);
 		contentPane.add(phoneText);
+		
+//		JLabel currentUser = new JLabel("You are registering to be a Bidder");
+//		currentUser.setFont(details);
+//		currentUser.setBounds(240,13, 264,20);
+//		contentPane.add(currentUser);
 		
 		JLabel phoneLabel = new JLabel("Phone #: ");
 		phoneLabel.setFont(details);
-		phoneLabel.setBounds(25, 180, 84, 14);
+		phoneLabel.setBounds(125, 230, 84, 14);
 		contentPane.add(phoneLabel);
 		
 		JLabel addressLabel = new JLabel("Address: ");
 		addressLabel.setFont(details);
-		addressLabel.setBounds(25, 150, 63, 14);
+		addressLabel.setBounds(125, 200, 63, 14);
 		contentPane.add(addressLabel);
 		
 		addressText = new JTextField();
 		addressText.setColumns(10);
-		addressText.setBounds(110, 149, 165, 20);
+		addressText.setBounds(210, 199, 165, 20);
 		contentPane.add(addressText);
 		
 		paymentText = new JTextField();
 		paymentText.setColumns(10);
-		paymentText.setBounds(110, 240, 165, 20);
+		paymentText.setBounds(210, 290, 165, 20);
 		contentPane.add(paymentText);
 		
 		JLabel paymentLabel = new JLabel("Payment: ");
 		paymentLabel.setFont(details);
-		paymentLabel.setBounds(26, 239, 84, 19);
+		paymentLabel.setBounds(126, 289, 84, 19);
 		contentPane.add(paymentLabel);
 		
 		JLabel emailLabel = new JLabel("Email: ");
 		emailLabel.setFont(details);
-		emailLabel.setBounds(25, 211, 63, 14);
+		emailLabel.setBounds(125, 261, 63, 14);
 		contentPane.add(emailLabel);
 		
 		emailText = new JTextField();
 		emailText.setColumns(10);
-		emailText.setBounds(110, 210, 165, 20);		
+		emailText.setBounds(210, 260, 165, 20);		
 		contentPane.add(emailText);
-		
-
-
-		
-		
+	
 //		JButton registerButton = new JButton("Register");
 //		registerButton.setBounds(224, 277, 89, 23);
 //		contentPane.add(registerButton);
@@ -283,33 +302,50 @@ public class RegisterGUI implements ActionListener {
 	}
 	
 	private void addStaffNPORegisterPanel(){
+		
 		contentPane.removeAll();
+		if(UserType == 0){
+			JLabel currentUser = new JLabel("You are registering as NPO");
+			currentUser.setFont(details);
+			currentUser.setBounds(360,13, 264,20);
+			contentPane.add(currentUser);
+		}else if(UserType == 1){
+			JLabel currentUser = new JLabel("You are registering as Staff");
+			currentUser.setFont(details);
+			currentUser.setBounds(360,13, 264,20);
+			contentPane.add(currentUser);
+		}else{
+			JLabel currentUser = new JLabel("You are registering as Bidder");
+			currentUser.setFont(details);
+			currentUser.setBounds(360,13, 264,20);
+			contentPane.add(currentUser);
+		}
 		addRadioButton();
 		addRegisterButton();
 		addCancelButton();
 		JLabel label2 = new JLabel("Please enter the following information:");
 		label2.setFont(details);
-		label2.setBounds(15,50, 264,20);
+		label2.setBounds(125, 113, 300, 20);
 		contentPane.add(label2);
 		
 		JLabel nameLabel = new JLabel("Name: ");
 		nameLabel.setFont(details);
-		nameLabel.setBounds(25, 94, 63, 14);
+		nameLabel.setBounds(125, 144, 63, 14);
 		contentPane.add(nameLabel);
 		
 		JLabel usernameLabel = new JLabel("Username: ");
 		usernameLabel.setFont(details);
-		usernameLabel.setBounds(25, 124, 84, 14);
+		usernameLabel.setBounds(125, 174, 84, 14);
 		contentPane.add(usernameLabel);
 		
 		nameText = new JTextField();
-		nameText.setBounds(110, 93, 165, 20);
+		nameText.setBounds(210, 143, 165, 20);
 		contentPane.add(nameText);
 		nameText.setColumns(10);
 		
 		usernameText = new JTextField();
 		usernameText.setColumns(10);
-		usernameText.setBounds(110, 123, 165, 20);
+		usernameText.setBounds(210, 173, 165, 20);
 		contentPane.add(usernameText);
 
 		
@@ -317,7 +353,7 @@ public class RegisterGUI implements ActionListener {
 	
 	private void addRegisterButton(){
 		registerButton = new JButton("Register");
-		registerButton.setBounds(224, 165, 89, 23);
+		registerButton.setBounds(124, 215, 89, 23);
 		contentPane.add(registerButton);
 		registerButton.setEnabled(false);
 		
@@ -326,20 +362,32 @@ public class RegisterGUI implements ActionListener {
 	private void addCancelButton(){
 		
 		cancelButton = new JButton("Cancel");
-		cancelButton.setBounds(335, 165, 89, 23);
+		cancelButton.setBounds(235, 215, 89, 23);
 		contentPane.add(cancelButton);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent theEvent) {
+
 		if(theEvent.getActionCommand().equals("NPO")
 				|| theEvent.getActionCommand().equals("Staff")){
+			
+			if(theEvent.getActionCommand().equals("NPO")){
+				UserType = 0;
+			}else if(theEvent.getActionCommand().equals("Staff")){
+				UserType = 1;
+			}
+//			else{
+//				UserType = 2;
+//			}
 			//myFrame.setBounds(0, 0, 700, 400);
 	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
 	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			addStaffNPORegisterPanel();
+			
 			myFrame.repaint();
 		} else if (theEvent.getActionCommand().equals("Bidder")){
+			UserType = 2;
 			addBidderRegisterPanel();
 			//myFrame.setBounds(0, 0, 700, 400);
 	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
