@@ -53,9 +53,9 @@ public class RegisterPanel extends JPanel {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
             	MainGUI.myFrame.getContentPane().removeAll();
-            	HomeGUI homePanel = new HomeGUI(MainGUI.userList);
-            	homePanel.setupPanel();
-            	MainGUI.myFrame.add(homePanel);
+            	//HomeGUI homePanel = new HomeGUI(MainGUI.userList);
+            	//homePanel.setupPanel();
+            	//MainGUI.myFrame.add(homePanel);
             	MainGUI.myFrame.setVisible(true);
             	
             }

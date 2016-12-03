@@ -56,7 +56,7 @@ public class CalendarTest {
 		myCalendar.addAuction(a, LocalDateTime.now().plusDays(7), 10, "");
 		myCalendar.addAuction(b, LocalDateTime.now().plusDays(7), 10, "");
 		//assertFalse(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
-		assertTrue(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
+		assertEquals(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""), 3);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class CalendarTest {
 	@Test
 	public void testAddAuctionOnOneScheduledThatDay() {	
 		myCalendar.addAuction(a, LocalDateTime.now().plusDays(7), 10, "");
-		assertTrue(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""));
+		assertEquals(myCalendar.addAuction(c, LocalDateTime.now().plusDays(7), 10, ""), 4);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class CalendarTest {
 			myCalendar.addAuction(npo23, LocalDateTime.now().plusDays(18), 10, "");
 			myCalendar.addAuction(npo24, LocalDateTime.now().plusDays(19), 10, "");
 			myCalendar.addAuction(npo25, LocalDateTime.now().plusDays(19), 10, "");
-		assertFalse(myCalendar.addAuction(c, LocalDateTime.now().plusDays(20), 10, ""));
+		assertEquals(myCalendar.addAuction(c, LocalDateTime.now().plusDays(20), 10, ""), 2);
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class CalendarTest {
 		myCalendar.addAuction(npo22, LocalDateTime.now().plusDays(18), 10, "");
 		myCalendar.addAuction(npo23, LocalDateTime.now().plusDays(18), 10, "");
 		myCalendar.addAuction(npo24, LocalDateTime.now().plusDays(19), 10, "");
-		assertTrue(myCalendar.addAuction(npo25, LocalDateTime.now().plusDays(19), 10, ""));
+		assertEquals(myCalendar.addAuction(npo25, LocalDateTime.now().plusDays(19), 10, ""), 4);
 	}
 	
 

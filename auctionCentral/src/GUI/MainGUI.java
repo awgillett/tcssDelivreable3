@@ -1,7 +1,11 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,13 +24,23 @@ import model.Calendar;
 import model.NPO;
 import model.Staff;
 import model.User;
+import java.awt.GridLayout;
 
-public class MainGUI{
+
+
+
+public class MainGUI implements MouseListener{
+	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
+	int WINDOWHEIGHT = 500;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int screenHeight = ((int) screenSize.getHeight()/2) - WINDOWHEIGHT/2;
+	int screenWidth = ((int) screenSize.getWidth()/2) - WINDOWWIDTH/2;
+
 	
 	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
 	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
 	
-	protected static JFrame myFrame = new JFrame();
+	protected static JFrame myFrame = new JFrame("Auction Central");
 
 	protected static Calendar myCalendar = new Calendar();
 
@@ -44,31 +58,30 @@ public class MainGUI{
 	
 	
 	public void start(){
-		myFrame.setName("Auction Central");
-		myFrame.setSize(300, 150);
-		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setupFrame();
 		addLoginPanel();
-		position();
 		myFrame.setVisible(true);
+
 	}
 	
 	private void addLoginPanel(){
-		HomeGUI Loginpanel = new HomeGUI(userList);
-		myFrame.add(Loginpanel);
-
+		HomeGUI Loginpanel = new HomeGUI(userList, myFrame);
+		Loginpanel.startGUI();
 	}
 	
     /**
      * this method will keep the window in a fit size
      * and center screen position.
      */
-    private void position() {   
+    private void setupFrame() { 
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setMinimumSize(new Dimension(myFrame.getWidth(), myFrame.getHeight()));
-        
+        myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
-        myFrame.pack();
-
+        
+        //for debug
+        myFrame.addMouseListener(this);
     }
     
 
@@ -127,12 +140,12 @@ public class MainGUI{
 			c.printStackTrace();
 			return;
 		}
-
 	}
 	
 	public void preLoad()
 	{
 		userList.add(new Staff("cseiber", "Carl"));
+		userList.add(new NPO("seiber", "carl"));
 		userList.add(new Staff("lseiber", "Lindsey"));
 		
 		for (int i = 0; i < 26; i++)
@@ -170,6 +183,42 @@ public class MainGUI{
 				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
 			}
 		}
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("X: " + e.getX());
+		System.out.println("Y: " + e.getY());
+
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
