@@ -195,5 +195,8 @@ public class NPOGUI extends JDialog{
 			btnRequest.setEnabled(false);
 		}
 	}
+	public JFrame getFrame() {
+		return frame;
+	}
 
 }
