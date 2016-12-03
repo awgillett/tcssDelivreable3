@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 
-public class NPOGUI {
+public class NPOGUI extends JDialog{
 
 	private JFrame frame;
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
