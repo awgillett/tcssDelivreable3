@@ -6,11 +6,13 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.JOptionPane;
+import javax.swing.JDialog;
 
 import model.*;
+import model.Calendar;
 
 
-public class HomeGUI implements ActionListener{
+public class HomeGUI  extends JDialog{
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
@@ -18,10 +20,11 @@ public class HomeGUI implements ActionListener{
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
 	private int baseX = 200;
 	private int baseY = 0;
+	NPO myNPO;
 
 	
 	private JTextField userText;
-	//protected static Calendar myCalendar = new Calendar();
+	protected static Calendar myCalendar = new Calendar();
 	protected JFrame myFrame;
 	private ArrayList<User> userList = new ArrayList();
 	User curUser;
@@ -111,6 +114,23 @@ public class HomeGUI implements ActionListener{
 		
 		if (curUser != null){
 			System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
+			if(curUser.getUserType().equals("NPO")){
+				//go to NPOGUI
+				myNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
+				NPOGUI startNPOGUI = new NPOGUI(myNPO, myCalendar); 
+				startNPOGUI.setvisible(true);
+//				editMenu = new AuctionEditGUI(myNPO, myCalendar);
+//				editMenu.setModal(true);
+//				editMenu.setVisible(true);
+//				updateStatus();
+				//startNPOGUI.  setVisible(true);
+				//startNPOGUI.;
+			}else if(curUser.getUserType().equals("Bidder")){
+				//go to BidderGUI
+			}else{
+				//go to StaffGUI
+			}
+			
 			
 		} else{
 			JOptionPane.showMessageDialog(null, "username doesn't exist, please try again");
