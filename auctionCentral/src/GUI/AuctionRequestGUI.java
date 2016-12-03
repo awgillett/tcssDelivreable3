@@ -286,13 +286,16 @@ public class AuctionRequestGUI extends JDialog {
 
 	private void populateDays() {
 		cboDay.removeAllItems();
-		if (cboMonth.getSelectedIndex() == 0)
+		if (cboMonth.getSelectedIndex() == 0) {
 			for (int i = now.getDayOfMonth() + 7; i <= now.getMonth().maxLength(); i++)
 				cboDay.addItem(i);
-		else if (cboMonth.getSelectedIndex() == 1)
-			for (int i = now.plusDays(7).getDayOfMonth(); i <= now.plusDays(now.getMonth().maxLength())
-					.getDayOfMonth(); i++)
+		}
+		else if (cboMonth.getSelectedIndex() == 1) {
+			int daysLeft =  now.getDayOfMonth() - 1;
+			for (int i = 1; i <= daysLeft ; i++)
 				cboDay.addItem(i);
+		}
+
 	}
 
 	private void submitAuctionRequest() {
