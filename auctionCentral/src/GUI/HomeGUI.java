@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import model.*;
 
@@ -15,6 +16,8 @@ public class HomeGUI implements ActionListener{
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
+	private int baseX = 200;
+	private int baseY = 0;
 
 	
 	private JTextField userText;
@@ -44,14 +47,14 @@ public class HomeGUI implements ActionListener{
 	
 	private void addTextBoxLabel(){
 		JLabel userLabel = new JLabel("Username");
-		userLabel.setBounds(20, 85, 80, 25);
+		userLabel.setBounds(baseX + 20, baseY + 85, 80, 25);
 		userLabel.setFont(details);
 		myFrame.getContentPane().add(userLabel);
 	}
 	
 	private void addTextBox(){
 		userText = new JTextField(20);
-		userText.setBounds(110, 85, 160, 25);
+		userText.setBounds(baseX + 110, baseY + 85, 160, 25);
 		
 		myFrame.getContentPane().add(userText);
 		userText.addActionListener(this);
@@ -61,28 +64,30 @@ public class HomeGUI implements ActionListener{
 		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
 		lblWelcomeBanner.setFont(welcome);
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
-		lblWelcomeBanner.setBounds(100, 10, 400, 20);
+		lblWelcomeBanner.setBounds(baseX + 20, baseY + 10, 400, 20);
 		myFrame.getContentPane().add(lblWelcomeBanner);
 		
 		JLabel lblYouAreSignedAs = new JLabel("Please sign in or register:");
 		lblYouAreSignedAs.setFont(details);
 		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.LEFT);
-		lblYouAreSignedAs.setBounds(20, 55, 300, 30);
+		lblYouAreSignedAs.setBounds(baseX + 20, baseY + 55, 300, 30);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 	}
 	
 	private void addLoginButton(){
 		JButton loginButton = new JButton("login");
-		loginButton.setBounds(20, 120, 154, 23);
+		loginButton.setBounds(baseX + 20, baseY + 120, 154, 23);
 		loginButton.addActionListener(this);
+		loginButton.setToolTipText("Enter username above and click here to login.");
 		myFrame.getContentPane().add(loginButton);
 		
 	}
 	
 	private void addRegisterButton(){
 		JButton registerButton = new JButton("register");
-		registerButton.setBounds(200, 120, 154, 23);
-		myFrame.getContentPane().add(registerButton);	
+		registerButton.setBounds(baseX + 200, baseY + 120, 154, 23);
+		myFrame.getContentPane().add(registerButton);
+		registerButton.setToolTipText("Click here to begin registration.");
 		registerButton.addActionListener(new ActionListener() {
 			
             @Override
@@ -106,7 +111,9 @@ public class HomeGUI implements ActionListener{
 		
 		if (curUser != null){
 			System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
+			
 		} else{
+			JOptionPane.showMessageDialog(null, "username doesn't exist, please try again");
 			System.out.println("username doesn't exist, please try again");
 			message.setText("Please try again");
 			userText.setText("");

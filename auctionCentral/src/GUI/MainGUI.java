@@ -30,8 +30,8 @@ import java.awt.GridLayout;
 
 
 public class MainGUI implements MouseListener{
-	int WINDOWWIDTH = 701; //I made this 701 because 700 caused an issue not sure why yet
-	int WINDOWHEIGHT = 400;
+	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
+	int WINDOWHEIGHT = 500;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int screenHeight = ((int) screenSize.getHeight()/2) - WINDOWHEIGHT/2;
 	int screenWidth = ((int) screenSize.getWidth()/2) - WINDOWWIDTH/2;
@@ -140,7 +140,6 @@ public class MainGUI implements MouseListener{
 			c.printStackTrace();
 			return;
 		}
-
 	}
 	
 	public void preLoad()
