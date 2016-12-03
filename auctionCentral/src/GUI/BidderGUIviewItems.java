@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,8 @@ import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Component;
+import java.awt.Dialog;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JTextArea;
@@ -54,9 +58,11 @@ public class BidderGUIviewItems extends JDialog{
 	private static String loggedInAs = "You are signed in as: ";
 	
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+	Font headingFont = new Font("Tahoma", Font.BOLD, 20);
 	private JTable table;
-	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item", "Donor", "Description", "Minimum bid", "Your Bid"	});
+	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Donor", "Description", "Minimum bid", "Your Bid"	});
 
+	BidderGUIaddBid addBidGUI;
 	
 	public BidderGUIviewItems(Bidder theBidder, Calendar theCalendar, Auction theAuction) {
 		
@@ -83,11 +89,12 @@ public class BidderGUIviewItems extends JDialog{
 
 	public void startGUI(){
 		this.getContentPane().setLayout(null);
+		windowInits();
 		populateItems();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(58, 76, 659, 307);
+		scrollPane.setBounds(58, 76, 659, 270);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable(){
@@ -95,17 +102,55 @@ public class BidderGUIviewItems extends JDialog{
 				return false;               
 			};
 		};
+		table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				int ItemID = (int) tableOfItems.getValueAt(table.getSelectedRow(), 0);
+				
+				addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar, ItemID);
+								
+				addBidGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+				addBidGUI.setVisible(true);
+	
+			}
+		});
 		table.setBackground(SystemColor.control);
 		table.setShowVerticalLines(false);
 		table.setShowGrid(false);
 		scrollPane.setViewportView(table);
 		table.setModel(tableOfItems);
+		
+		JLabel lblClickAnItem = new JLabel("Click an item to bid to place a bid");
+		lblClickAnItem.setFont(mainFont);
+		lblClickAnItem.setHorizontalAlignment(SwingConstants.LEFT);
+		lblClickAnItem.setBounds(58, 47, 299, 16);
+		getContentPane().add(lblClickAnItem);
+		
+		JLabel lblNewLabel = new JLabel("Items on auction");
+		lblNewLabel.setFont(headingFont);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel.setBounds(58, 13, 443, 21);
+		getContentPane().add(lblNewLabel);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				close();
+			}
+		});
+		btnBack.setBounds(620, 359, 97, 25);
+		getContentPane().add(btnBack);
 		table.getColumnModel().getColumn(0).setPreferredWidth(108);
+		
+		
+		
 		this.setName("Auction Central");
 		this.setBounds(100, 100, 800, 500);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setBackground(SystemColor.control);
 		
-		String bids = currentBidder.printBidsGUI(myCalendar);
+//		String bids = currentBidder.printBidsGUI(myCalendar);
 		
 	}
 	private void populateItems() {
@@ -113,12 +158,20 @@ public class BidderGUIviewItems extends JDialog{
 		for (Item item : myAuction.getItemList()) {
 			String yourBid = "-";
 			if(currentBidder.getBid(item.getMyItemID()) != null){
-				
-				yourBid = currency.format(currentBidder.getBid(item.getMyItemID()).getMyBidAmount());
-				
+							yourBid = currency.format(currentBidder.getBid(item.getMyItemID()).getMyBidAmount());
 			}
-			tableOfItems.addRow(new Object[] { item.getMyItemName(), item.getMyDonor(), item.getMyDescription(), currency.format(item.getMyMinBid()), yourBid});
+			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), item.getMyDonor(), item.getMyDescription(), currency.format(item.getMyMinBid()), yourBid});
 		}
+	}
+	private void windowInits() {
+		
+//		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
+//		addBidGUI.setVisible(false);
+		
+	}
+	private void close() {
+		//this.setVisible(false);
+		this.dispose();
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

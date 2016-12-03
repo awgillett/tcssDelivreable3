@@ -69,13 +69,13 @@ public class BidderGUI{
 	
 	public Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	
-	BidderGUIaddBid addBidGUI;
+//	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
 	BidderGUIviewItems viewItems;
 	
 	private JTable table;
 	private DefaultTableModel tblModelAuc = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
-	private DefaultTableModel tblModelBid = new DefaultTableModel(new Object[][] {}, new String[] { "Item", "Minimum Bid", "Your Bid" });
+	private DefaultTableModel tblModelBid = new DefaultTableModel(new Object[][] {}, new String[] { "Item Number", "Item", "Minimum Bid", "Your Bid" });
 //	private DefaultTableModel tblModel;
 	private int selectedAuctionRow;
 	public static void main(String[] args) {
@@ -118,9 +118,9 @@ public class BidderGUI{
 
 	private void windowInits() {
 		
-		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
+//		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
 		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
-		addBidGUI.setVisible(false);
+//		addBidGUI.setVisible(false);
 		viewAuctionsGUI.setVisible(false);
 		
 	}
@@ -234,25 +234,38 @@ public class BidderGUI{
 		scrollPane.setViewportBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(235, 154, 535, 286);
+		scrollPane.setBorder(border);
 		myFrame.getContentPane().add(scrollPane);
 		
 		
 		//here is the table
 		table = new JTable();
+		table = new JTable(){
+			public boolean isCellEditable(int row, int column) {                
+				return false;               
+			};
+		};
+		
 		table.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				
 				if(currentTableMode == AUC_TABLE){
-				
 					String npoName = (String) tblModelAuc.getValueAt(table.getSelectedRow(), 0);
 					Auction auc = myCalendar.getAuctionWithAucID(npoName);
-					
 					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
 					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 					viewItems.setVisible(true);
 				}
+				
+//				if(currentTableMode == BID_TABLE){
+//					String npoName = (String) tblModelBid.getValueAt(table.getSelectedRow(), 0);
+//					Auction auc = myCalendar.getAuctionWithAucID(npoName);
+//					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
+//					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+//					viewItems.setVisible(true);
+//				}
 			}
 		});
 		table.setUpdateSelectionOnSort(false);
@@ -273,6 +286,7 @@ public class BidderGUI{
 		table.getColumnModel().getColumn(1).setPreferredWidth(110);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.setBorder(border);
 		table.setAlignmentY(SwingConstants.CENTER);
 		
 		
@@ -315,7 +329,7 @@ public class BidderGUI{
 				String bidAmount = currency.format(currentBidder.getBid(ThisItem.getMyItemID()).getMyBidAmount());
 				String minBid = currency.format(ThisItem.getMyMinBid());
 				
-				tblModelBid.addRow(new Object[] { ThisItem.getItemName() , minBid, bidAmount});
+				tblModelBid.addRow(new Object[] { ThisItem.getMyItemID(), ThisItem.getItemName() , minBid, bidAmount});
 			}
 			
 

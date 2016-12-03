@@ -32,12 +32,18 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class AuctionEditGUI extends JDialog {
 
 	private Calendar myCalendar;
 	Auction myAuction;
+	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
+	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
+	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
 	private String auctionInfo;
+	private String selectedItemInfo;
 	private AddItemGUI addItemMenu;
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
@@ -64,66 +70,67 @@ public class AuctionEditGUI extends JDialog {
 	// }
 
 	/**
-	 * Create the application.
+	 * Initialize the GUI
 	 */
 	//public AuctionEditGUI(Auction theAuction) {
 	public AuctionEditGUI(NPO theNPO, Calendar theCalendar) {
 		myCalendar = theCalendar;
 		myAuction = theCalendar.getAuction(theNPO);
+		selectedItemInfo = "";
 		populateAuctionInfo();
 		initialize();
-		addItemMenu = new AddItemGUI(myAuction);
-		addItemMenu.setVisible(false);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the GUI components of the frame.
 	 */
 	private void initialize() {
 		// frame = new JFrame();
-		this.setBounds(100, 100, 805, 484);
+		this.setBounds(100, 100, 800, 500);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		label.setFont(mainFont);
 		label.setBounds(0, 0, 788, 24);
 		this.getContentPane().add(label);
 
 		JLabel lblWelcome = new JLabel("Welcome to the NPO Auction Edit Menu");
 		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcome.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblWelcome.setFont(subMenuFont);
 		lblWelcome.setBounds(0, 29, 788, 24);
 		this.getContentPane().add(lblWelcome);
 
-		JLabel label_1 = new JLabel("Logged in as: ");
-		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_1.setBounds(0, 64, 366, 24);
-		this.getContentPane().add(label_1);
-
-		JLabel lblUser = new JLabel(myAuction.getNPO().getMyName());
-		lblUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUser.setBounds(376, 64, 392, 24);
-		this.getContentPane().add(lblUser);
-
-		tblItems = new JTable();
-		tblItems.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				selectedItem = tblItems.getSelectedRow();
-			}
-		});
-		tblItems.setShowVerticalLines(false);
-		tblItems.setShowHorizontalLines(false);
-		tblItems.setShowGrid(false);
-		tblItems.setModel(tblModel);
-		tblItems.getColumnModel().getColumn(0).setPreferredWidth(21);
-		tblItems.getColumnModel().getColumn(2).setPreferredWidth(160);
+		JLabel lblNewLabel_1 = new JLabel("Logged in as: " + myAuction.getNPO().getMyName());
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(detailsFont);
+		lblNewLabel_1.setBounds(10, 52, 764, 24);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(328, 95, 451, 282);
+		getContentPane().add(scrollPane);
+		
+				tblItems = new JTable();
+				scrollPane.setViewportView(tblItems);
+				tblItems.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						selectedItem = tblItems.getSelectedRow();
+						if (e.getClickCount() >= 2) {
+							displayItemInfo();
+						}
+					}
+				});
+				tblItems.setShowVerticalLines(false);
+				tblItems.setShowHorizontalLines(false);
+				tblItems.setShowGrid(false);
+				tblItems.setModel(tblModel);
+				tblItems.getColumnModel().getColumn(0).setPreferredWidth(21);
+				tblItems.getColumnModel().getColumn(2).setPreferredWidth(160);
 		tblItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tblItems.setBounds(328, 95, 451, 282);
-		getContentPane().add(tblItems);
 
 		JLabel lblNewLabel = new JLabel("Auction Information");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -132,15 +139,16 @@ public class AuctionEditGUI extends JDialog {
 		getContentPane().add(lblNewLabel);
 
 		lblInfo = new JLabel(auctionInfo);
-		lblInfo.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblInfo.setFont(detailsFont);
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setVerticalAlignment(SwingConstants.TOP);
-		lblInfo.setBounds(20, 117, 308, 125);
+		lblInfo.setBounds(10, 122, 308, 125);
 		getContentPane().add(lblInfo);
 
 		JButton btnAddItem = new JButton("Add New Item");
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				addItemMenu = new AddItemGUI(myAuction);
 				addItemMenu.setModal(true);
 				addItemMenu.setVisible(true);				
 				updateStatus();
@@ -154,7 +162,7 @@ public class AuctionEditGUI extends JDialog {
 		JButton btnRemoveItem = new JButton("Remove Selected Item");
 		btnRemoveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				removeItem(myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0)));
+				removeItem();
 			}
 		});
 		btnRemoveItem.setToolTipText("Click here to remove the last item highlighted in the list.");
@@ -181,12 +189,18 @@ public class AuctionEditGUI extends JDialog {
 		getContentPane().add(btnCancelAuction);
 		populateItems();
 	}
-
+	
+	/**
+	 * Loads and displays the auction date and number of items.
+	 */
 	private void populateAuctionInfo() {
-		auctionInfo = "<html>Scheduled:  " + myAuction.getAuctionDate().format(dateFormat) + "<br>"
+		auctionInfo = "<html>Scheduled:<br><br>" + myAuction.getAuctionDate().format(dateFormat) + "<br>"
 				+ "<br><br>You have " + myAuction.getMyItemList().size() + " items currently listed.</html>";
 	}
 
+	/**
+	 * Loads summary information about each item within the auction.
+	 */
 	private void populateItems() {
 		tblModel.setRowCount(0);
 		for (Item i : myAuction.getItemList()) {
@@ -195,37 +209,77 @@ public class AuctionEditGUI extends JDialog {
 		}
 	}
 
+	/**
+	 * Hides the window from view
+	 */
 	private void close() {
-		this.setVisible(false);
+		//this.setVisible(false);
+		this.dispose();
 	}
 
-	private void removeItem(Item theItem) {
-		String message = "<html>Are you sure you want to remove the following item?<br><br>Name: "
-				+ theItem.getMyItemName() + "<br>Condition: " + theItem.getMyCondition() + "<br>Size: "
-				+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
+	/**
+	 * Displays a confirmation message and then removes the item if confirmed.
+	 * @param theItem the item requested to remove
+	 */
+	private void removeItem() {
+		if (selectedItem != -1) {
+			Item theItem = myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0));
+			String message = "<html>Are you sure you want to remove the following item?<br><br>Name: "
+					+ theItem.getMyItemName() + "<br>Condition: " + theItem.getMyCondition() + "<br>Size: "
+					+ theItem.getMySize() + "<br>Minimum Bid: " + currency.format(theItem.getMyMinBid()) + "</html>";
 
-		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-//			myAuction.removeItem(theItem.getMyItemName());
-			JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
-			updateStatus();
+			if (JOptionPane.showConfirmDialog(this, message) == 0) {
+				int result = myAuction.removeItem(theItem);
+				if (result == 1)
+					JOptionPane.showMessageDialog(this, "Item has been successfully removed from Inventory!");
+				else if (result == 2)
+					JOptionPane.showMessageDialog(this, "Sorry, this item was not found in inventory."); //This should never occur with the GUI
+				else
+					JOptionPane.showMessageDialog(this, "Items can no longer be removed from this auction since its scheduled to commence in less than two days.");
+				selectedItem = -1;
+				updateStatus();
+			}
 		}
+		else
+			JOptionPane.showMessageDialog(this, "Please select an item to remove");
+
 
 	}
 	
+	/**
+	 * Loads the most current information for display to the user.
+	 */
 	private void updateStatus() {
 		populateAuctionInfo();
 		populateItems();
 		lblInfo.setText(auctionInfo);
 	}
 	
+	/**
+	 * Displays a confirmation message to the user and deletes the users auction if confirmed.
+	 */
 	private void cancelAuction() {
 		String message = "<html>This auction is scheduled for: " + myAuction.getAuctionDate().format(dateFormat)
 				       + "<br><br>You have " + myAuction.getMyItemList().size() + " items currently listed.<br><br>"
 				       + "Are you sure you want to CANCEL THIS AUCTION? (This operation CANNOT be undone)</html>";
 		
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1)
+			if (myCalendar.deleteAuction(myAuction.getNPO().getMyName()) == 1) {
 				JOptionPane.showMessageDialog(this, "Your auction has been successfully cancelled!");
+				close();
+			}
 		}
+	}
+	
+	/**
+	 * Provides a detailed view for one item selected within the list.
+	 */
+	private void displayItemInfo() {
+		Item curItem = myAuction.getItem((int)tblItems.getValueAt(selectedItem, 0));
+		selectedItemInfo = "<html>Detailed information for Item #" + curItem.getMyItemID() + "<br><br>Name: " + curItem.getItemName()
+			       + "<br>Description: " + curItem.getMyDescription() + "<br>Condition: " + curItem.getMyCondition()
+			       + "<br>Size: " + curItem.getMySize() + "<br>Donor: " + curItem.getMyDonor()
+			       + "<br>Minimum Bid: " + currency.format(curItem.getMyMinBid()) + "<br>Notes: " + curItem.getMyNotes() + "</html>";
+		JOptionPane.showMessageDialog(this, selectedItemInfo);
 	}
 }
