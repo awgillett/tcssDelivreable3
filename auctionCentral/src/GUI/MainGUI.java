@@ -145,6 +145,7 @@ public class MainGUI implements MouseListener{
 	public void preLoad()
 	{
 		userList.add(new Staff("cseiber", "Carl"));
+		userList.add(new NPO("seiber", "carl"));
 		userList.add(new Staff("lseiber", "Lindsey"));
 		
 		for (int i = 0; i < 26; i++)

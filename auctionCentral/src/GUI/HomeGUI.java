@@ -20,7 +20,11 @@ public class HomeGUI implements ActionListener{
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
 	private int baseX = 200;
 	private int baseY = 0;
-	NPO myNPO;
+	NPO startNPO;
+	Bidder startBidder;
+	Staff startStaff;
+	
+	NPOGUI startNPOGUI;
 
 	
 	private JTextField userText;
@@ -116,19 +120,22 @@ public class HomeGUI implements ActionListener{
 			System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			if(curUser.getUserType().equals("NPO")){
 				//go to NPOGUI
-				myNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
-				NPOGUI startNPOGUI = new NPOGUI(myNPO, myCalendar); 
-				//startNPOGUI.setvisible(true);
-//				editMenu = new AuctionEditGUI(myNPO, myCalendar);
-//				editMenu.setModal(true);
-//				editMenu.setVisible(true);
-//				updateStatus();
-				//startNPOGUI.  setVisible(true);
-				//startNPOGUI.;
+				startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
+				startNPOGUI = new NPOGUI(startNPO, myCalendar); 
+				startNPOGUI.setVisible(true);
+
 			}else if(curUser.getUserType().equals("Bidder")){
 				//go to BidderGUI
+				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
+				//startBidder = new Bidder(curUser.getMyUserName(),curUser.getMyName());
+				//Bidder BidderGUI = new Bidder(aBidder, myCalendar); 
+				//BidderGUI.setVisible(true);
 			}else{
 				//go to StaffGUI
+				startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());
+				//StaffGUI startStaff = new NPOGUI(startStaff, myCalendar);
+				//startNPOGUI.setModal(true);
+				//startStaff.setVisible(true);
 			}
 			
 			

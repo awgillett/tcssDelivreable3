@@ -131,7 +131,7 @@ public class NPOGUI extends JDialog{
 		btnEditAuction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editMenu = new AuctionEditGUI(curNPO, curCalendar);
-				editMenu.setModal(true);
+				//editMenu.setModal(true);
 				editMenu.setVisible(true);
 				updateStatus();
 			}
