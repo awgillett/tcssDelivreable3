@@ -12,7 +12,7 @@ import model.*;
 import model.Calendar;
 
 
-public class HomeGUI  extends JDialog{
+public class HomeGUI implements ActionListener{
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
@@ -118,7 +118,7 @@ public class HomeGUI  extends JDialog{
 				//go to NPOGUI
 				myNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
 				NPOGUI startNPOGUI = new NPOGUI(myNPO, myCalendar); 
-				startNPOGUI.setvisible(true);
+				//startNPOGUI.setvisible(true);
 //				editMenu = new AuctionEditGUI(myNPO, myCalendar);
 //				editMenu.setModal(true);
 //				editMenu.setVisible(true);
