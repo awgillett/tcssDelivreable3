@@ -21,7 +21,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 
 	
 	/**
-	 * Test method for {@link model.NPO#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateExactlyTwoDaysInFuture() {
@@ -32,7 +32,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.NPO#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateLessThanTwoDaysInFuture() {
@@ -43,7 +43,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.NPO#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateMoreThanTwoDaysInFuture() {
@@ -54,7 +54,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.NPO#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnNoAuctions() {
@@ -63,7 +63,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.NPO#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnMultipleAuctions() {
