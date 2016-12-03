@@ -150,7 +150,7 @@ public class AuctionTest {
 	 * Test method for {@link model.Auction#testRemoveItemWithNoItem()}.
 	 */
 	@Test
-	public void testRemoveItemWithNoItem() {
+	public void testRemoveItemWithNoItemInList() {
 		int itemNotFound = 2;
 		assertEquals(itemNotFound, theAuction.removeItem(lamp));
 	}
