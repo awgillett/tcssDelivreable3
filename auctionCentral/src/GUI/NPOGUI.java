@@ -17,12 +17,14 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 
-public class NPOGUI {
+public class NPOGUI extends JDialog{
 
 	private JFrame frame;
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
@@ -129,7 +131,7 @@ public class NPOGUI {
 		btnEditAuction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editMenu = new AuctionEditGUI(curNPO, curCalendar);
-				editMenu.setModal(true);
+				//editMenu.setModal(true);
 				editMenu.setVisible(true);
 				updateStatus();
 			}
@@ -192,6 +194,9 @@ public class NPOGUI {
 			btnEditAuction.setEnabled(true);
 			btnRequest.setEnabled(false);
 		}
+	}
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

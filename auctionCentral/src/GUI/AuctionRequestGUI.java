@@ -51,7 +51,7 @@ public class AuctionRequestGUI extends JDialog {
 	// private final JPanel contentPanel = new JPanel();
 	private Calendar myCalendar;
 	private NPO myNPO;
-	//JLabel lblDate;
+	// JLabel lblDate;
 	private JTextArea txtNotes;
 	private JTextArea txtInfo;
 	private JComboBox cboYear;
@@ -74,15 +74,15 @@ public class AuctionRequestGUI extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		try {
-//			AuctionRequestGUI dialog = new AuctionRequestGUI();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// public static void main(String[] args) {
+	// try {
+	// AuctionRequestGUI dialog = new AuctionRequestGUI();
+	// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	// dialog.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	/**
 	 * Create the dialog.
@@ -101,10 +101,10 @@ public class AuctionRequestGUI extends JDialog {
 		getContentPane().setLayout(null);
 		setBounds(100, 100, 800, 500);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		auctionDate = LocalDateTime.now();
 		now = auctionDate;
-		
+
 		JLabel label = new JLabel("Auction Central");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(mainFont);
@@ -123,7 +123,8 @@ public class AuctionRequestGUI extends JDialog {
 		lblNewLabel_1.setBounds(10, 52, 764, 24);
 		getContentPane().add(lblNewLabel_1);
 
-		JLabel lblPleaseSelectA = new JLabel("Please select a Date and time for your Auction (only the current valid range will be listed)");
+		JLabel lblPleaseSelectA = new JLabel(
+				"Please select a Date and time for your Auction (only the current valid range will be listed)");
 		lblPleaseSelectA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPleaseSelectA.setBounds(0, 110, 784, 24);
 		getContentPane().add(lblPleaseSelectA);
@@ -195,17 +196,17 @@ public class AuctionRequestGUI extends JDialog {
 				"5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM" }));
 		cboTime.setBounds(516, 139, 112, 20);
 		getContentPane().add(cboTime);
-		
+
 		JLabel lblNumberOfItems = new JLabel("Number of Items: ");
 		lblNumberOfItems.setBounds(66, 194, 126, 24);
 		lblNumberOfItems.setFont(detailsFont);
 		getContentPane().add(lblNumberOfItems);
-		
+
 		JLabel lblNewLabel = new JLabel("Comments:");
 		lblNewLabel.setBounds(109, 229, 83, 24);
 		lblNewLabel.setFont(detailsFont);
 		getContentPane().add(lblNewLabel);
-		
+
 		txtNotes = new JTextArea();
 		txtNotes.addKeyListener(new KeyAdapter() {
 			@Override
@@ -216,18 +217,18 @@ public class AuctionRequestGUI extends JDialog {
 		txtNotes.setText("");
 		txtNotes.setBounds(202, 229, 150, 168);
 		getContentPane().add(txtNotes);
-		
+
 		txtInfo = new JTextArea();
 		txtInfo.setText("");
 		txtInfo.setBounds(424, 229, 292, 168);
 		getContentPane().add(txtInfo);
-		
+
 		JLabel lblAuctionDetails = new JLabel("Auction Details");
 		lblAuctionDetails.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAuctionDetails.setBounds(424, 194, 292, 24);
 		lblAuctionDetails.setFont(detailsFont);
 		getContentPane().add(lblAuctionDetails);
-		
+
 		spnItems = new JSpinner();
 		spnItems.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -241,24 +242,24 @@ public class AuctionRequestGUI extends JDialog {
 
 	private void loadDate() {
 		try {
-		int year = (int) cboYear.getSelectedItem();
-		Month month = (Month) cboMonth.getSelectedItem();
-		int day = (int) cboDay.getSelectedItem();
-		int time = cboTime.getSelectedIndex();
-		auctionDate = LocalDateTime.of(year, month.getValue(), day, times[time][0], times[time][1]);
-		//lblDate.setText(auctionDate.format(dateFormat));
+			int year = (int) cboYear.getSelectedItem();
+			Month month = (Month) cboMonth.getSelectedItem();
+			int day = (int) cboDay.getSelectedItem();
+			int time = cboTime.getSelectedIndex();
+			auctionDate = LocalDateTime.of(year, month.getValue(), day, times[time][0], times[time][1]);
+			// lblDate.setText(auctionDate.format(dateFormat));
 		} catch (Exception e) {
-			//lblDate.setText("Your auction date will show here");
+			// lblDate.setText("Your auction date will show here");
 		}
 	}
-	
+
 	private void updateAuctionDetails() {
 		String auctionDetails = "Auction date requested:\n" + auctionDate.format(dateFormat)
-							  + "\n\nNumber of expected items:\n" + spnItems.getValue().toString()
-							  + "\n\nComments:\n" + txtNotes.getText();
+				+ "\n\nNumber of expected items:\n" + spnItems.getValue().toString() + "\n\nComments:\n"
+				+ txtNotes.getText();
 		txtInfo.setText(auctionDetails);
 	}
-	
+
 	private void validateAuction() {
 		if (auctionDate != now)
 			btnSubmit.setEnabled(true);
@@ -266,7 +267,8 @@ public class AuctionRequestGUI extends JDialog {
 			btnSubmit.setEnabled(false);
 	}
 
-	private void populateYear() {;
+	private void populateYear() {
+		;
 		LocalDate endOfYear = LocalDate.of(now.getYear(), 12, 31);
 		cboYear.addItem(now.getYear());
 		Period days = Period.between(now.toLocalDate(), endOfYear);
@@ -284,38 +286,50 @@ public class AuctionRequestGUI extends JDialog {
 
 	private void populateDays() {
 		cboDay.removeAllItems();
-		if (cboMonth.getSelectedIndex() == 0)
+		if (cboMonth.getSelectedIndex() == 0) {
 			for (int i = now.getDayOfMonth() + 7; i <= now.getMonth().maxLength(); i++)
 				cboDay.addItem(i);
-		else if (cboMonth.getSelectedIndex() == 1)
-			for (int i = now.plusDays(7).getDayOfMonth(); i <= now.plusDays(now.getMonth().maxLength())
-					.getDayOfMonth(); i++)
+		}
+		else if (cboMonth.getSelectedIndex() == 1) {
+			int daysLeft =  now.getDayOfMonth() - 1;
+			for (int i = 1; i <= daysLeft ; i++)
 				cboDay.addItem(i);
+		}
+
 	}
-	
+
 	private void submitAuctionRequest() {
 		int items = (int) spnItems.getValue();
-		
+
 		String message = "<html>You are about to request a new Auction for:<br>" + auctionDate.format(dateFormat)
 				+ "<br><br>Please confirm this request or cancel to submit with new information</html>";
 
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
-			boolean result = myCalendar.addAuction(myNPO, auctionDate, items, txtNotes.getText());
-			if (result) {
+			int result = myCalendar.addAuction(myNPO, auctionDate, items, txtNotes.getText());
+			if (result == 0) {
+				JOptionPane.showMessageDialog(this, "I am sorry but you can only have one auction scheduled at a time");
+				close();
+			} else if (result == 1) {
+				JOptionPane.showMessageDialog(this, "I am sorry but you cannot schedule later than 1 month out or earlier than"
+												+ "7 days out");
+			} else if (result == 2) {
+				JOptionPane.showMessageDialog(this, "I am sorry but we are currently not accepting new auctions please"
+												+ "try again later");
+			} else if (result == 3) {
+				JOptionPane.showMessageDialog(this, "I am sorry this day is full please choose another day");
+			} else if (result == 4){
 				JOptionPane.showMessageDialog(this, "Your auction was accepted! You can add items immediately.");
 				close();
 			}
-			else
-				JOptionPane.showMessageDialog(this, "Sorry, the chosen day is unavailable, please choose a new date.");
-
+			
 		}
 	}
-	
+
 	/**
 	 * Hides the window from view
 	 */
 	private void close() {
-		//this.setVisible(false);
+		// this.setVisible(false);
 		this.dispose();
 	}
 }
