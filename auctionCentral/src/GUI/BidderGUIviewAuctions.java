@@ -127,6 +127,10 @@ public class BidderGUIviewAuctions extends JDialog{
 		getContentPane().add(table);
 		
 	}
+	private void close() {
+		//this.setVisible(false);
+		this.dispose();
+	}
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 	}

@@ -160,6 +160,35 @@ public class Bidder extends User implements Serializable{
 	
 	/**
 	 * @author aaron
+	 * checks to make sure that the bid offer is a positive number
+	 * checks to make sure that the the bidder does not already have a bit for this item
+	 * @param myBid the Bid in question
+	 * @param itemToBidOn 
+	 * @return true if the bid is a positive number & does not already exist
+	 * @return false if the bid is negative or already exists
+	 */
+	public int addBidGUI(Calendar cal, Item itemToBidOn, double bidOffer) {
+		
+		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
+		
+		int bidAccepted = 1;
+		int bidBelowMinBid = 2;
+		int bidForItemAlreadyExists = 3;
+		int auctionHasStarted = 4;
+		
+		if(!cal.requestBid(newBid.getMyItemID())){
+			return auctionHasStarted;
+		}else if(!itemToBidOn.isValidBid(newBid.getMyBidAmount())){
+			return bidBelowMinBid;
+		}else if(getBid(newBid.getMyItemID()) != null){
+			return bidForItemAlreadyExists;
+		}else{
+			return bidAccepted;
+		}
+	}
+	
+	/**
+	 * @author aaron
 	 * adds the supplied bid to the bidders list of bids
 	 * @param newBid 
 	 * @param myBid the Bid to add
