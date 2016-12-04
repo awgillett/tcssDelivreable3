@@ -41,21 +41,21 @@ public class NPOGUI extends JDialog{
 	private JButton btnRequest;
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NPOGUI window = new NPOGUI(new NPO("Joey", "Joe"), new Calendar());
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					NPOGUI window = new NPOGUI(new NPO("Joey", "Joe"), new Calendar());
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
@@ -63,7 +63,7 @@ public class NPOGUI extends JDialog{
 	public NPOGUI(NPO theNPO, Calendar theCalendar) {
 		curNPO = theNPO;
 		curCalendar = theCalendar;
-		curCalendar.addAuction(curNPO, LocalDateTime.now().plusDays(15), 15, "");
+		//curCalendar.addAuction(curNPO, LocalDateTime.now().plusDays(15), 15, "");
 		loadAuctionOverview();
 		initialize();
 	}
@@ -74,7 +74,7 @@ public class NPOGUI extends JDialog{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setBackground(Color.BLUE);
 

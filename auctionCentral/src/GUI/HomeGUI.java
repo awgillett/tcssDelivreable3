@@ -120,8 +120,9 @@ public class HomeGUI implements ActionListener{
 			System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			if(curUser.getUserType().equals("NPO")){
 				//go to NPOGUI
-				startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
-				startNPOGUI = new NPOGUI(startNPO, myCalendar); 
+				//startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
+				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
+				startNPOGUI.setModal(true);
 				startNPOGUI.getFrame().setVisible(true);
 
 			}else if(curUser.getUserType().equals("Bidder")){
