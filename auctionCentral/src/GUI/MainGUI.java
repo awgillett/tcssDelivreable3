@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -25,7 +26,16 @@ import model.Staff;
 import model.User;
 import java.awt.GridLayout;
 
-public class MainGUI implements MouseListener{
+
+
+
+public class MainGUI{
+	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
+	int WINDOWHEIGHT = 500;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int screenHeight = ((int) screenSize.getHeight()/2) - WINDOWHEIGHT/2;
+	int screenWidth = ((int) screenSize.getWidth()/2) - WINDOWWIDTH/2;
+
 	
 	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
 	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
@@ -55,7 +65,7 @@ public class MainGUI implements MouseListener{
 	}
 	
 	private void addLoginPanel(){
-		HomeGUI Loginpanel = new HomeGUI(userList, myFrame);
+		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
 	
@@ -66,12 +76,10 @@ public class MainGUI implements MouseListener{
     private void setupFrame() { 
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setMinimumSize(new Dimension(myFrame.getWidth(), myFrame.getHeight()));
-        myFrame.setBounds(0, 0, 350, 200);
+        myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
         
-        //for debug
-        myFrame.addMouseListener(this);
     }
     
 
@@ -130,12 +138,12 @@ public class MainGUI implements MouseListener{
 			c.printStackTrace();
 			return;
 		}
-
 	}
 	
 	public void preLoad()
 	{
 		userList.add(new Staff("cseiber", "Carl"));
+		userList.add(new NPO("seiber", "carl"));
 		userList.add(new Staff("lseiber", "Lindsey"));
 		
 		for (int i = 0; i < 26; i++)
@@ -173,42 +181,6 @@ public class MainGUI implements MouseListener{
 				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
 			}
 		}
-		
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("X: " + e.getX());
-		System.out.println("Y: " + e.getY());
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
