@@ -121,9 +121,16 @@ public class HomeGUI implements ActionListener{
 			if(curUser.getUserType().equals("NPO")){
 				//go to NPOGUI
 				//startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
-				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar);
+//<<<<<<< HEAD
+//				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar);
+//				startNPOGUI.getFrame().setVisible(true);
+//				myFrame.dispose();
+//=======
+				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
+				startNPOGUI.setModal(true);
 				startNPOGUI.getFrame().setVisible(true);
 				myFrame.dispose();
+//>>>>>>> refs/heads/JesseBranch
 
 			}else if(curUser.getUserType().equals("Bidder")){
 				//go to BidderGUI
