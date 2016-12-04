@@ -66,6 +66,7 @@ public class MainGUI implements MouseListener{
 	
 	private void addLoginPanel(){
 		HomeGUI Loginpanel = new HomeGUI(userList, myFrame);
+		Loginpanel.setModal(true);
 		Loginpanel.startGUI();
 	}
 	
