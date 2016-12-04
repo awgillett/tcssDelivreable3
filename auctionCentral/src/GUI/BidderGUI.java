@@ -67,11 +67,19 @@ public class BidderGUI{
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static String loggedInAs = "You are signed in as: ";
 	
+
+	String clickInstructionsAucList = "Click on an auction from the list if you would like to browse its items.";
+//	String clickInstructionsAucList = "Click an Auction to see what items are up for bid.";
+	String clickInstructionsBidList = "Click a bid if you would like to remove it or view its details.";
+
+//	String clickInstructionsBidList = "Click a bid to view or edit the bid.";
+	
 	public Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	
 //	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
 	BidderGUIviewItems viewItems;
+	BidderGUIeditBid editBid;
 	
 	private JTable table;
 	private DefaultTableModel tblModelAuc = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
@@ -132,7 +140,7 @@ public class BidderGUI{
 	 */
 	private static void testBidderInit() {
 		
-		Bidder testBidder = new Bidder("userName","name","address","phone","email","payInfo");
+		Bidder testBidder = new Bidder("userName","Mr Bidder","address","phone","email","payInfo");
 		Calendar testCalendar = new Calendar();
 		NPO testNpoA = new NPO("NPOa", "goodwill");
 		NPO testNpoB = new NPO("NPOb", "st matthews");
@@ -202,27 +210,32 @@ public class BidderGUI{
 		lblYouAreSignedAs.setBounds(-1, 70, 782, 16);
 		myFrame.getContentPane().add(lblYouAreSignedAs);
 		
-		JLabel lblYourCurrentActive = new JLabel("Click an Auction to see what items are up for bid");
-		lblYourCurrentActive.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblYourCurrentActive.setFont(mainFont);
-		lblYourCurrentActive.setBounds(235, 125, 535, 16);
-		myFrame.getContentPane().add(lblYourCurrentActive);
+		//panel that holds the list instructions
+		JPanel listLabel = new JPanel();
+		listLabel.setBounds(0, 125, 782, 16);
+		myFrame.getContentPane().add(listLabel);
+		listLabel.setLayout(null);
 		
+		//list instructions for the auction list view
+		JLabel lblAuctionsList = new JLabel(clickInstructionsAucList);
+		lblAuctionsList.setBounds(0, 0, 782, 16);
+		listLabel.add(lblAuctionsList);
+		lblAuctionsList.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAuctionsList.setFont(mainFont);
 		
-
-		
-		JButton btnRemoveABid = new JButton("Edit Your Bids");
-		btnRemoveABid.setFont(mainFont);
-		btnRemoveABid.setBounds(12, 317, 150, 55);
-		myFrame.getContentPane().add(btnRemoveABid);
+		//list instructions for the bid list view
+		JLabel lblBidsList = new JLabel(clickInstructionsBidList);
+		lblBidsList.setBounds(0, 0, 782, 16);
+		lblBidsList.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBidsList.setFont(mainFont);
 		
 		JButton btnLogOut = new JButton("log out");
 		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(12, 385, 150, 55);
+		btnLogOut.setBounds(483, 385, 150, 55);
 		myFrame.getContentPane().add(btnLogOut);
 		
-		String bids = currentBidder.printBidsGUI(myCalendar);
-		System.out.println(bids);
+//		String bids = currentBidder.printBidsGUI(myCalendar);
+//		System.out.println(bids);
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
 		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -233,13 +246,13 @@ public class BidderGUI{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(235, 154, 535, 286);
+		scrollPane.setBounds(70, 154, 636, 218);
 		scrollPane.setBorder(border);
 		myFrame.getContentPane().add(scrollPane);
 		
 		
 		//here is the table
-		table = new JTable();
+//		table = new JTable();
 		table = new JTable(){
 			public boolean isCellEditable(int row, int column) {                
 				return false;               
@@ -257,15 +270,23 @@ public class BidderGUI{
 					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
 					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 					viewItems.setVisible(true);
+					
+
+					
 				}
 				
-//				if(currentTableMode == BID_TABLE){
-//					String npoName = (String) tblModelBid.getValueAt(table.getSelectedRow(), 0);
-//					Auction auc = myCalendar.getAuctionWithAucID(npoName);
-//					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
-//					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-//					viewItems.setVisible(true);
-//				}
+				if(currentTableMode == BID_TABLE){
+					int itemID = (int) tblModelBid.getValueAt(table.getSelectedRow(), 0);
+					Item item = myCalendar.getItem(itemID);
+					editBid = new BidderGUIeditBid(currentBidder, myCalendar, item);
+					editBid.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+					editBid.setVisible(true);
+					
+					
+					updates();
+//					populateTable();
+//					table.updateUI();
+				}
 			}
 		});
 		table.setUpdateSelectionOnSort(false);
@@ -296,11 +317,14 @@ public class BidderGUI{
 			public void actionPerformed(ActionEvent e) {
 				table.setModel(tblModelAuc);
 				currentTableMode = AUC_TABLE;
+				listLabel.remove(lblBidsList);
+				listLabel.add(lblAuctionsList);
+				listLabel.updateUI();
 				table.updateUI();
 			}
 		});
 		btnViewBids.setFont(mainFont);
-		btnViewBids.setBounds(12, 249, 150, 55);
+		btnViewBids.setBounds(321, 385, 150, 55);
 		myFrame.getContentPane().add(btnViewBids);
 		
 		JButton btnViewYourBids = new JButton("View Your Bids");
@@ -308,17 +332,20 @@ public class BidderGUI{
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(tblModelBid);
 				currentTableMode = BID_TABLE;
+				listLabel.remove(lblAuctionsList);
+				listLabel.add(lblBidsList);
+				listLabel.updateUI();
 				table.updateUI();
 			}
 		});
 		btnViewYourBids.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnViewYourBids.setBounds(12, 181, 150, 55);
+		btnViewYourBids.setBounds(159, 385, 150, 55);
 		myFrame.getContentPane().add(btnViewYourBids);
 		
 	}
-	private void runUpdates(){
-//		populateAuctions();
-		
+	private void updates(){
+		populateTable();
+		table.updateUI();
 	}
 	private void populateTable() {
 		

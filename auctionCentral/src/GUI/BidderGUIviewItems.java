@@ -44,7 +44,7 @@ import javax.swing.ScrollPaneConstants;
 
 
 public class BidderGUIviewItems extends JDialog{
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM d yyyy, hh:mm a");
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/d/yyyy, hh:mm a");
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
@@ -60,7 +60,8 @@ public class BidderGUIviewItems extends JDialog{
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	Font headingFont = new Font("Tahoma", Font.BOLD, 20);
 	private JTable table;
-	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Donor", "Description", "Minimum bid", "Your Bid"	});
+//	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Donor", "Description", "Minimum bid", "Your Bid"	});
+	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Minimum bid", "Your Bid"	});
 
 	BidderGUIaddBid addBidGUI;
 	
@@ -160,7 +161,9 @@ public class BidderGUIviewItems extends JDialog{
 			if(currentBidder.getBid(item.getMyItemID()) != null){
 							yourBid = currency.format(currentBidder.getBid(item.getMyItemID()).getMyBidAmount());
 			}
-			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), item.getMyDonor(), item.getMyDescription(), currency.format(item.getMyMinBid()), yourBid});
+//			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), item.getMyDonor(), item.getMyDescription(), currency.format(item.getMyMinBid()), yourBid});
+			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), currency.format(item.getMyMinBid()), yourBid});
+			
 		}
 	}
 	private void windowInits() {
