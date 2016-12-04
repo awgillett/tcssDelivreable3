@@ -336,21 +336,18 @@ public class RegisterGUI implements ActionListener {
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
-			addRegisterOptionButton();
 		}else if(UserType.equals("Staff")){
 			JLabel currentUser = new JLabel("You are registering as Staff");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
-			addRegisterOptionButton();
 		}else{
 			JLabel currentUser = new JLabel("You are registering as Bidder");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
-			addRegisterOptionButton();
 		}
-		//addRadioButton();
+//		addRadioButton();
 //>>>>>>> refs/heads/JesseBranch
 		addRegisterButton();
 		addCancelButton();
