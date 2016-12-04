@@ -122,6 +122,7 @@ public class HomeGUI implements ActionListener{
 				//go to NPOGUI
 				startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
 				startNPOGUI = new NPOGUI(startNPO, myCalendar); 
+				startNPOGUI.setModal(true);
 				startNPOGUI.getFrame().setVisible(true);
 
 			}else if(curUser.getUserType().equals("Bidder")){
