@@ -103,9 +103,7 @@ public class BidderGUI extends JDialog{
 
 		//this is for testing
 //		testBidderInit();
-//		load();
-		
-//		windowInits();
+
 		populateTable();
 		startGUI();
 	
