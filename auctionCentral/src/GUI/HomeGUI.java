@@ -127,7 +127,7 @@ public class HomeGUI implements ActionListener{
 //				myFrame.dispose();
 //=======
 				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
-				startNPOGUI.setModal(true);
+				startNPOGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startNPOGUI.getFrame().setVisible(true);
 				myFrame.dispose();
 //>>>>>>> refs/heads/JesseBranch

@@ -79,7 +79,7 @@ public class BidderGUI{
 //	BidderGUIaddBid addBidGUI;
 	BidderGUIviewAuctions viewAuctionsGUI;
 	BidderGUIviewItems viewItems;
-	BidderGUIeditBid editBid;
+	//BidderGUIeditBid editBid;
 	
 	private JTable table;
 	private DefaultTableModel tblModelAuc = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
