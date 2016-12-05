@@ -1,5 +1,7 @@
 package GUI;
 
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -37,6 +39,7 @@ public class StaffGUI extends JFrame {
 	// Class constants
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
+	public static final int ADDITIONAL_MONTHS_VIEWABLE = 3;
 
 	// Class fields
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
@@ -56,7 +59,7 @@ public class StaffGUI extends JFrame {
 	NPO testNPO1 = new NPO("Charity House", "Fillipa");
 	Auction myAuc1;
 	Auction myAuc2;
-	
+
 	private AuctionDetailsGUI details;
 
 	LocalDateTime today = LocalDateTime.now();
@@ -83,7 +86,7 @@ public class StaffGUI extends JFrame {
 		System.out.println(yesterday);
 		System.out.println(today);
 		System.out.println(tomorrow);
-		
+
 		initComponents();
 
 		pack();
@@ -122,8 +125,9 @@ public class StaffGUI extends JFrame {
 		// Create welcome header.
 		JPanel header = new JPanel();
 		header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
-
-		JLabel welcome = new JLabel("Staff View");
+		
+		JLabel welcome = new JLabel("<html>" + "Staff View" + "<br>" + "Logged in as " + curStaff.getMyUserName()
+				+ "<html>");
 		welcome.setFont(mainFont);
 		welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -132,7 +136,7 @@ public class StaffGUI extends JFrame {
 		login.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		header.add(welcome);
-		header.add(login);
+		//header.add(login);
 		myContentPane.add(header);
 	}
 
@@ -163,23 +167,35 @@ public class StaffGUI extends JFrame {
 		mnthYr.setVerticalAlignment(SwingConstants.CENTER);
 		mnthYr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		// Updates calendar to previous month.
+		int actualMonth = curCal.get(Calendar.MONTH);
+
+		// Buttons for navigating calendar.
+		JButton nextMonth = new JButton(">>>");
+		nextMonth.setFont(subMenuFont);
 		JButton prevMonth = new JButton("<<<");
 		prevMonth.setFont(subMenuFont);
+
+		// Updates calendar to previous month.
 		prevMonth.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				nextMonth.setEnabled(true);
 				curCal.add(Calendar.MONTH, -1);
 				updateMonth();
+				if (curCal.get(Calendar.MONTH) == actualMonth) {
+					prevMonth.setEnabled(false);
+				}
 			}
 		});
 
 		// Updates calendar to next month.
-		JButton nextMonth = new JButton(">>>");
-		nextMonth.setFont(subMenuFont);
 		nextMonth.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prevMonth.setEnabled(true);
 				curCal.add(Calendar.MONTH, +1);
 				updateMonth();
+				if (curCal.get(Calendar.MONTH) == ((actualMonth + ADDITIONAL_MONTHS_VIEWABLE) % actualMonth) - 1) {
+					nextMonth.setEnabled(false);
+				}
 			}
 		});
 		// nextMonth.setFont(subMenuFont);
@@ -190,8 +206,7 @@ public class StaffGUI extends JFrame {
 		calendarHeader.add(nextMonth);
 
 		// Days panel content.
-		String[] myDays = { "Sunday", "Monday", "Tuesday", 
-				"Wednesday", "Thursday", "Friday", "Saturday" };
+		String[] myDays = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 		for (int i = 0; i < 7; i++) {
 			JLabel temp = new JLabel(myDays[i]);
 			temp.setVerticalAlignment(SwingConstants.CENTER);
@@ -212,6 +227,8 @@ public class StaffGUI extends JFrame {
 		// Clear the slate for all new date buttons.
 		calendarDates.removeAll();
 		calendarDates.repaint();
+		int tomorrowDate = curCal.get(Calendar.DAY_OF_MONTH) + 1; // Tomorrow
+		System.out.println("Tomorrow = " + tomorrowDate);
 		curCal.set(Calendar.DAY_OF_MONTH, 1);
 
 		// calendarHeader content.
@@ -223,19 +240,20 @@ public class StaffGUI extends JFrame {
 
 		int curDayValue = curCal.get(Calendar.DAY_OF_WEEK) - 1;
 		int daysInMonth = curCal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		int curDate = curCal.get(Calendar.DAY_OF_MONTH);
+		int tempCurDate = curCal.get(Calendar.DAY_OF_MONTH);
 
-		System.out.println("Current Month: " + month + " Todays date " + curDate);
+		System.out
+				.println("Current Month: " + month + " Todays date " + tempCurDate + " Tomorrows date " + tomorrowDate);
 
 		// reduce date to # between 1-7
-		if (curDate > 7) {
-			curDate = curDate / 7;
+		if (tempCurDate > 6) {
+			tempCurDate = tempCurDate / 6;
 		}
 
 		// find start position for first day of month.
-		for (int j = 0; j < 7; j++) {
-			if (curDate / 1 != 1) {
-				curDate--;
+		for (int j = 0; j < 6; j++) {
+			if (tempCurDate / 1 != 1) {
+				tempCurDate--;
 				curDayValue--;
 			}
 		}
@@ -251,53 +269,56 @@ public class StaffGUI extends JFrame {
 			temp.setVisible(false);
 
 			if (j == curDayValue) {
-				buttonText = Integer.toString(curDate);
+				buttonText = Integer.toString(tempCurDate);
 				temp.setBackground(Color.GREEN);
 				// Iterate through auction list.
 				for (Auction a : myAuctionList) {
 					// Compare current month/day to scheduled auctions.
-					if (a.getAuctionDate().getYear() == year 
+					if (a.getAuctionDate().getYear() == year
 							&& a.getAuctionDate().getMonth().toString().equals(month.toUpperCase())
-								&& a.getAuctionDate().getDayOfMonth() == curDate) {
+							&& a.getAuctionDate().getDayOfMonth() == tempCurDate) {
 						// Date match found. Set labelNPO1 text.
 						if (labelNPO1 == null) {
 							labelNPO1 = a.getNPO().getMyUserName();
 							myAuc1 = a;
-							buttonText = "<html>" + Integer.toString(curDate) + "<br>" + ":" + labelNPO1 + "<html>";
+							buttonText = "<html>" + Integer.toString(tempCurDate) + "<br>" + ": " + labelNPO1
+									+ "<html>";
 							temp.setBackground(Color.YELLOW);
-							System.out.println(curDayValue);
-							// At least 1 auction scheduled. Button will open JDialog.
+							System.out.println(labelNPO1 + "***");
+							// At least 1 auction scheduled. Button will open
+							// JDialog.
 							temp.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
 									System.out.println("Press");
 									details = new AuctionDetailsGUI(myAuc1.getNPO(), null, myAuc1, null, theAucCal);
-									//details.setVisible(true);
+									// details.setModal(true);
 								}
 							});
-							
-						// 2nd date match. Set labelNPO2 text.
+
+							// 2nd date match. Set labelNPO2 text.
 						} else if (labelNPO1 != null) {
 							labelNPO2 = a.getNPO().getMyUserName();
 							myAuc2 = a;
-							buttonText = "<html>" + Integer.toString(curDate) + "<br>" + ":" + labelNPO1 
-									+ "<br>" + ":" + labelNPO2 + "<html>";
+							buttonText = "<html>" + Integer.toString(tempCurDate) + "<br>" + ": " + labelNPO1 + "<br>"
+									+ ":" + labelNPO2 + "<html>";
 							temp.setBackground(Color.RED);
-							System.out.println(curDayValue);
+							System.out.println(labelNPO2 + "~~~");
 							temp.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
 									System.out.println("Press");
-									details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2, theAucCal);
-									//details.setVisible(true);
+									details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2,
+											theAucCal);
+									// details.setVisible(true);
 								}
 							});
 						} // end else if
 					}
 				} // end for
-				
+
 				temp.setText(buttonText);
 				temp.setVisible(true);
 				curDayValue++;
-				curDate++;
+				tempCurDate++;
 				labelNPO1 = null;
 				labelNPO2 = null;
 			} // end if
@@ -306,14 +327,13 @@ public class StaffGUI extends JFrame {
 
 	private void testData() {
 
-		Auction test1 = new Auction(testNPO, tomorrow, 25, " ", 123456);
+		Auction test1 = new Auction(testNPO, yesterday, 25, " ", 123456);
 		Auction test2 = new Auction(testNPO1, tomorrow, 25, " ", 654321);
 		Auction test3 = new Auction(testNPO1, future, 25, " ", 654321);
 		myAuctionList.add(test1);
 		myAuctionList.add(test2);
 		myAuctionList.add(test3);
 	}
-
 
 	/**
 	 * Launch the application.
@@ -331,4 +351,3 @@ public class StaffGUI extends JFrame {
 		});
 	}
 }
-	

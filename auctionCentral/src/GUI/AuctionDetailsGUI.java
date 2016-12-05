@@ -56,8 +56,12 @@ public class AuctionDetailsGUI extends JDialog {
 		tabbedPane = new JTabbedPane();
 		String npoName1 = myNPO1.getMyUserName();
 		String npoName2 = myNPO2.getMyUserName();
+		System.out.println(npoName1 + " " + npoName2);
 		tabbedPane.addTab(npoName1, null, npoPanel1);
-		tabbedPane.addTab(npoName2, null, npoPanel2);
+		if (npoName2 != null) {
+			tabbedPane.addTab(npoName2, null, npoPanel2);
+		}
+		
 		
 		setContentPane(tabbedPane);
 		
