@@ -336,16 +336,19 @@ public class RegisterGUI implements ActionListener {
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
+			addRegisterOptionButton();
 		}else if(UserType.equals("Staff")){
 			JLabel currentUser = new JLabel("You are registering as Staff");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
+			addRegisterOptionButton();
 		}else{
 			JLabel currentUser = new JLabel("You are registering as Bidder");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
+			addRegisterOptionButton();
 		}
 //		addRadioButton();
 //>>>>>>> refs/heads/JesseBranch
@@ -385,7 +388,7 @@ public class RegisterGUI implements ActionListener {
 		contentPane.add(nameText);
 //>>>>>>> refs/heads/JesseBranch
 		nameText.setColumns(10);
-		nameText.setBounds(210, 143, 165, 20);
+		//nameText.setBounds(210, 143, 165, 20);
 		nameText.addFocusListener(new TextFieldActionListener());
 		contentPane.add(nameText);
 		
@@ -409,7 +412,7 @@ public class RegisterGUI implements ActionListener {
 //		registerButton.setBounds(124, 215, 154,23);
 //=======
 		registerButton.setBounds(baseX + 124, baseY + 215, 154,23);
-		contentPane.add(registerButton);
+		//contentPane.add(registerButton);
 		registerButton.setToolTipText("Click here to register.");
 //>>>>>>> refs/heads/JesseBranch
 		registerButton.setEnabled(false);
@@ -540,34 +543,34 @@ public class RegisterGUI implements ActionListener {
 //=======
 
 //>>>>>>> refs/heads/JesseBranch
-//		if(theEvent.getActionCommand().equals("NPO")
-//				|| theEvent.getActionCommand().equals("Staff")){
-//			
+		if(theEvent.getActionCommand().equals("NPO")
+				|| theEvent.getActionCommand().equals("Staff")){
+			
 //<<<<<<< HEAD
-//			UserType = theEvent.getActionCommand();
+			UserType = theEvent.getActionCommand();
 			
 //=======
-			if(theEvent.getActionCommand().equals("NPO")){
-				UserType = "NPO";
-			}else if(theEvent.getActionCommand().equals("Staff")){
-				UserType = "Staff";
+//			if(UserType.equals("NPO")){
+//				UserType = "NPO";
+//			}else if(theEvent.getActionCommand().equals("Staff")){
+//				UserType = "Staff";
 //			}
 //			else{
 //				UserType = 2;
 //			}
 			//myFrame.setBounds(0, 0, 700, 400);
 //>>>>>>> refs/heads/JesseBranch
-//	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
-//	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
-//			addStaffNPORegisterPanel();
-//			
-//			myFrame.repaint();
+	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+			addStaffNPORegisterPanel();
+			
+			myFrame.repaint();
 			
 	}else if (theEvent.getActionCommand().equals("Bidder")){
 //<<<<<<< HEAD
-//			UserType = theEvent.getActionCommand();
+			UserType = theEvent.getActionCommand();
 //=======
-			UserType = "Bidder";
+//			UserType = "Bidder";
 //>>>>>>> refs/heads/JesseBranch
 			addBidderRegisterPanel();
 //<<<<<<< HEAD
