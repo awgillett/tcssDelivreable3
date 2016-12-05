@@ -1,22 +1,11 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import model.User;
-
+import model.*;
 import javax.swing.JRadioButton;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -30,7 +19,6 @@ public class RegisterGUI implements ActionListener {
 	private static Font details = new Font("Tahoma", Font.PLAIN, 15);
 	private static Font welcome = new Font("Tahoma", Font.BOLD, 22);
 	private static Font subWelcome = new Font("Tahoma", Font.BOLD, 20);
-	
 	private int WINDOWWIDTH = 800;
 	private int WINDOWHEIGHT = 500;
 	private int baseX = 60;
@@ -38,7 +26,6 @@ public class RegisterGUI implements ActionListener {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
 	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
-
 
 	private JPanel contentPane;
 	private JTextField nameText;
@@ -48,141 +35,21 @@ public class RegisterGUI implements ActionListener {
 	private JTextField paymentText;
 	private JTextField emailText;
 	private JButton cancelButton, registerButton;
-	private int UserType = 0;
- 
-	
-	
+	private String UserType;
 	protected JFrame myFrame;
 	private ArrayList<User> userList = new ArrayList();
 
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RegisterGUI frame = new RegisterGUI();
-//					//frame.runTest();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
 	 * Create the frame.
 	 */
-	public RegisterGUI(JFrame theFrame, ArrayList<User> theUserList) {
-		myFrame = theFrame;
+	public RegisterGUI(ArrayList<User> theUserList) {
+		myFrame = new JFrame("Auction Central registration");;
 		userList = theUserList;
 		contentPane = new JPanel();
 		contentPane.setLayout(null);;
-		
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setBounds(100, 100, 450, 350);
-//		contentPane = new JPanel();
-//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		setContentPane(contentPane);
-//		contentPane.setLayout(null);
-//		
-//		
-//		JLabel label = new JLabel("You are register as: ");
-//		label.setFont( new Font("Tahoma", Font.PLAIN, 15));
-//		label.setBounds(4,13, 165,20);
-//		contentPane.add(label);
-//		
-//		JRadioButton staff = new JRadioButton("Staff");
-//		staff.setBounds(144,0,70,50);
-//		contentPane.add(staff);
-//		
-//		JRadioButton NPO = new JRadioButton("NPO");
-//		NPO.setBounds(224, 0, 50, 50);
-//		contentPane.add(NPO);
-//
-//		
-//		JRadioButton bidder = new JRadioButton("Bidder");
-//		bidder.setBounds(298, 0 , 100, 50);
-//		contentPane.add(bidder);
-//		
-//		JLabel label2 = new JLabel("Please enter the following information:");
-//		label2.setFont( new Font("Tahoma", Font.PLAIN, 15));
-//		label2.setBounds(14,50, 264,20);
-//		contentPane.add(label2);
-//		
-//		JLabel nameLabel = new JLabel("Name: ");
-//		nameLabel.setFont( new Font("Tahoma", Font.PLAIN, 15));
-//		nameLabel.setBounds(26, 94, 63, 14);
-//		contentPane.add(nameLabel);
-//		
-//		JLabel usernameLabel = new JLabel("Username: ");
-//		usernameLabel.setFont( new Font("Tahoma", Font.PLAIN, 15));
-//		usernameLabel.setBounds(26, 124, 84, 14);
-//		contentPane.add(usernameLabel);
-//		
-//		nameText = new JTextField();
-//		nameText.setBounds(110, 93, 165, 20);
-//		contentPane.add(nameText);
-//		nameText.setColumns(10);
-//		
-//		usernameText = new JTextField();
-//		usernameText.setColumns(10);
-//		usernameText.setBounds(110, 123, 165, 20);
-//		contentPane.add(usernameText);
-
-//		JButton registerButton = new JButton("Register");
-//		registerButton.setBounds(224, 277, 89, 23);
-//		contentPane.add(registerButton);
-//		registerButton.setEnabled(false);
-//		
-//		JButton cancelButton = new JButton("Cancel");
-//		cancelButton.setBounds(335, 277, 89, 23);
-//		contentPane.add(cancelButton);
-		
-//		phoneText = new JTextField();
-//		phoneText.setColumns(10);
-//		phoneText.setBounds(110, 179, 165, 20);
-//		contentPane.add(phoneText);
-//		
-//		JLabel phoneLabel = new JLabel("Phone #: ");
-//		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		phoneLabel.setBounds(25, 180, 84, 14);
-//		contentPane.add(phoneLabel);
-//		
-//		JLabel addressLabel = new JLabel("Address: ");
-//		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		addressLabel.setBounds(25, 150, 63, 14);
-//		contentPane.add(addressLabel);
-//		
-//		addressText = new JTextField();
-//		addressText.setColumns(10);
-//		addressText.setBounds(110, 149, 165, 20);
-//		contentPane.add(addressText);
-//		
-//		paymentText = new JTextField();
-//		paymentText.setColumns(10);
-//		paymentText.setBounds(110, 240, 165, 20);
-//		contentPane.add(paymentText);
-//		
-//		JLabel paymentLabel = new JLabel("Payment: ");
-//		paymentLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		paymentLabel.setBounds(26, 239, 84, 19);
-//		contentPane.add(paymentLabel);
-//		
-//		JLabel emailLabel = new JLabel("Email: ");
-//		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		emailLabel.setBounds(25, 211, 63, 14);
-//		contentPane.add(emailLabel);
-//		
-//		emailText = new JTextField();
-//		emailText.setColumns(10);
-//		emailText.setBounds(110, 210, 165, 20);
-//		contentPane.add(emailText);
 	}
 	
-	public void runTest(){
+	public void run(){
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
 		contentPane = new JPanel();
@@ -192,16 +59,13 @@ public class RegisterGUI implements ActionListener {
                 SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 		contentPane.setLayout(null);
 		
-		
-			
-		addRadioButton();
+		addRegisterOptionButton();
 		addRegisterButton();
 		addCancelButton();
-		
+		myFrame.setVisible(true);
 	}
 	
-	private void addRadioButton(){
-		
+	private void addRegisterOptionButton(){
 		JLabel lblWelcomeBanner = new JLabel(welcomeBanner);
 		lblWelcomeBanner.setFont(welcome);
 		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.LEFT);
@@ -218,11 +82,6 @@ public class RegisterGUI implements ActionListener {
 		Staff.setBounds(baseX + 80,baseY + 50,154,23);
 		Staff.setToolTipText("Click here to register as a Staff member.");
 		contentPane.add(Staff);
-		
-//		ButtonGroup group = new ButtonGroup();
-//		JRadioButton staff = new JRadioButton("Staff");
-//		staff.setBounds(244,0,70,50);
-//		contentPane.add(staff);
 		Staff.addActionListener(this);
 		
 		JButton NPO = new JButton("NPO");
@@ -230,27 +89,13 @@ public class RegisterGUI implements ActionListener {
 		NPO.setBounds(baseX + 260, baseY + 50, 154, 23);
 		NPO.setToolTipText("Click here to register as a Nonprofit Organization (NPO) contact person.");
 		contentPane.add(NPO);
-		//btnOK.setActionCommand("enable");
-		//btnOK.setEnabled(false);
-			
-//		JRadioButton NPO = new JRadioButton("NPO");
-//		NPO.setBounds(324, 0, 50, 50);
-//		contentPane.add(NPO);
 		NPO.addActionListener(this);
-
+		
 		JButton bidder = new JButton("Bidder");
 		bidder.setFont(details);
 		bidder.setBounds(baseX + 440, baseY + 50 , 154, 23);
 		bidder.setToolTipText("Click here to register as a Bidder.");
 		contentPane.add(bidder);
-		
-//		JRadioButton bidder = new JRadioButton("Bidder");
-//		bidder.setBounds(398, 0 , 100, 50);
-//		contentPane.add(bidder);
-		
-//		group.add(staff);
-//		group.add(NPO);
-//		group.add(bidder);
 		bidder.addActionListener(this);
 		
 	}
@@ -265,12 +110,7 @@ public class RegisterGUI implements ActionListener {
 		phoneText.setColumns(10);
 		phoneText.setBounds(baseX + 210, baseY + 229, 165, 20);
 		contentPane.add(phoneText);
-		
-//		JLabel currentUser = new JLabel("You are registering to be a Bidder");
-//		currentUser.setFont(details);
-//		currentUser.setBounds(240,13, 264,20);
-//		contentPane.add(currentUser);
-		
+
 		JLabel phoneLabel = new JLabel("Phone #: ");
 		phoneLabel.setFont(details);
 		phoneLabel.setBounds(baseX + 125, baseY + 230, 84, 14);
@@ -305,39 +145,33 @@ public class RegisterGUI implements ActionListener {
 		emailText.setColumns(10);
 		emailText.setBounds(baseX + 210, baseY + 260, 165, 20);		
 		contentPane.add(emailText);
-	
-//		JButton registerButton = new JButton("Register");
-//		registerButton.setBounds(224, 277, 89, 23);
-//		contentPane.add(registerButton);
-//		registerButton.setEnabled(false);
-//		
-//		JButton cancelButton = new JButton("Cancel");
-//		cancelButton.setBounds(335, 277, 89, 23);
-//		contentPane.add(cancelButton);
 	}
 	
 	private void addStaffNPORegisterPanel(){
 		
 		contentPane.removeAll();
-		if(UserType == 0){
+		if(UserType.equals("NPO")){
 			JLabel currentUser = new JLabel("You are registering as NPO");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
-		}else if(UserType == 1){
+			addRegisterOptionButton();
+		}else if(UserType.equals("Staff")){
 			JLabel currentUser = new JLabel("You are registering as Staff");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
+			addRegisterOptionButton();
 		}else{
 			JLabel currentUser = new JLabel("You are registering as Bidder");
 			currentUser.setFont(details);
 			currentUser.setBounds(baseX + 360,baseY + 13, 264,20);
 			contentPane.add(currentUser);
+			addRegisterOptionButton();
 		}
-		addRadioButton();
 		addRegisterButton();
 		addCancelButton();
+		
 		JLabel label2 = new JLabel("Please enter the following information:");
 		label2.setFont(details);
 		label2.setBounds(baseX + 125, baseY + 113, 300, 20);
@@ -357,31 +191,117 @@ public class RegisterGUI implements ActionListener {
 		nameText.setBounds(baseX + 210, baseY + 143, 165, 20);
 		contentPane.add(nameText);
 		nameText.setColumns(10);
+		nameText.addFocusListener(new TextFieldActionListener());
+		contentPane.add(nameText);
 		
 		usernameText = new JTextField();
 		usernameText.setColumns(10);
 		usernameText.setBounds(baseX + 210, baseY + 173, 165, 20);
 		contentPane.add(usernameText);
-
-		
 	}
 	
 	private void addRegisterButton(){
 		registerButton = new JButton("Register");
 		registerButton.setBounds(baseX + 124, baseY + 215, 154,23);
-		contentPane.add(registerButton);
 		registerButton.setToolTipText("Click here to register.");
 		registerButton.setEnabled(false);
-		
+		registerButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// re-check unfilled text field for the user
+				if(UserType.equals("NPO") || UserType.equals("Staff")){
+					if (usernameText.getText().equals("") || nameText.getText().equals("")){
+						JOptionPane.showMessageDialog(null, "ERROR: invalid field, please try again", "Error", 0);
+					} else {
+						checkAvailability(usernameText.getText());
+					}
+					
+				} else {
+					if (usernameText.getText().equals("") || nameText.getText().equals("")
+							|| addressText.getText().equals("") || phoneText.getText().equals("")
+							|| paymentText.getText().equals("") || emailText.getText().equals("")){
+						JOptionPane.showMessageDialog(null, "ERROR: invalid field, please try again", "Error", 0);						
+					} else {
+						checkAvailability(usernameText.getText());
+					}
+				}
+			}
+		});
+		contentPane.add(registerButton);
 	}
 	
+	private void confirmationPanel(){
+		int reply;
+		if (UserType.equals("NPO") || UserType.equals("Staff")){
+			
+			reply = JOptionPane.showConfirmDialog(null, "Please confirm your informations: "
+		    		+ "\n Your are registering as: " + UserType
+		    		+ "\n Name: " + nameText.getText()
+		    		+ "\n Username: " + usernameText.getText(), "Confirmation", JOptionPane.YES_NO_OPTION);
+		} else {
+			reply = JOptionPane.showConfirmDialog(null, "Please confirm your informations: "
+		    		+ "\n Your are registering as: " + UserType
+		    		+ "\n Name: " + nameText.getText()
+		    		+ "\n Username: " + usernameText.getText()
+		    		+ "\n Address: " + addressText.getText()
+		    		+ "\n Phone #: " + phoneText.getText()
+		    		+ "\n Email: " + emailText.getText()
+		    		+ "\n Payment Info.: " + paymentText.getText(), "Confirmation", JOptionPane.YES_NO_OPTION);
+		}
+        if (reply == JOptionPane.YES_OPTION) {
+          JOptionPane.showMessageDialog(myFrame, "You are done with your registration", "Congratulation", 1);
+          addUser();
+          myFrame.dispose();
+        }
+	}
+	
+	private void checkAvailability(String userName) {
+		for (User u : userList) {
+			if (u.getMyUserName().equals(userName)){
+				JOptionPane.showMessageDialog(null, "ERROR: user name is not available, please choose another name", "Error", 0);
+				return;
+			}
+		}
+		confirmationPanel();
+	}
+	
+	/**
+	 * this method add staff or NPO to user list
+	 */
+	private void addUser(){
+		if (UserType.equals("NPO")){
+			userList.add(new NPO(usernameText.getText(), nameText.getText()));
+		} else if (UserType.equals("Staff")){
+			userList.add(new Staff(usernameText.getText(), nameText.getText()));
+		} else {
+			User bidder = new Bidder(usernameText.getText(), nameText.getText(), addressText.getText(),
+					phoneText.getText(), emailText.getText(), paymentText.getText());
+			userList.add(bidder);
+		}
+	}
 	private void addCancelButton(){
-		
 		cancelButton = new JButton("Cancel");
 		cancelButton.setBounds(baseX + 305, baseY + 215, 154,23);
+        cancelButton.addActionListener(this);
 		contentPane.add(cancelButton);
 		cancelButton.setToolTipText("Click here to return to main menu.");
-		cancelButton.addActionListener(this);
+	}
+	
+	public class TextFieldActionListener implements FocusListener {
+
+		@Override
+		public void focusGained(FocusEvent theEvent) {
+			
+		}
+
+		@Override
+		public void focusLost(FocusEvent arg0) {
+			if (usernameText.getText().length() != 0 || nameText.getText().length() != 0){
+				registerButton.setEnabled(true);
+				myFrame.repaint();
+			}
+		}
 	}
 
 	@Override
@@ -389,30 +309,24 @@ public class RegisterGUI implements ActionListener {
 
 		if(theEvent.getActionCommand().equals("NPO")
 				|| theEvent.getActionCommand().equals("Staff")){
-			
-			if(theEvent.getActionCommand().equals("NPO")){
-				UserType = 0;
-			}else if(theEvent.getActionCommand().equals("Staff")){
-				UserType = 1;
-			}
-//			else{
-//				UserType = 2;
-//			}
-			//myFrame.setBounds(0, 0, 700, 400);
+			UserType = theEvent.getActionCommand();
 	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
 	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			addStaffNPORegisterPanel();
-			
 			myFrame.repaint();
-		} else if (theEvent.getActionCommand().equals("Bidder")){
-			UserType = 2;
+			
+	}else if (theEvent.getActionCommand().equals("Bidder")){
+
+			UserType = theEvent.getActionCommand();
+
 			addBidderRegisterPanel();
-			//myFrame.setBounds(0, 0, 700, 400);
+
 	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
 	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			myFrame.repaint();
 		}
 		if (theEvent.getActionCommand().equals("Cancel")){
+			myFrame.dispose();
 			contentPane.removeAll();
 			MainGUI Mainpanel = new MainGUI();
 			Mainpanel.start();
