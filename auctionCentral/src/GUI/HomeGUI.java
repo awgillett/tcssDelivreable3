@@ -36,9 +36,10 @@ public class HomeGUI implements ActionListener{
 	JLabel message = new JLabel();
 
 
-	public HomeGUI(ArrayList<User> theUserList, JFrame theFrame){
+	public HomeGUI(ArrayList<User> theUserList, JFrame theFrame, Calendar theCalendar){
 		userList = theUserList;
 		myFrame = theFrame;
+		myCalendar = theCalendar;
 		curUser = null;
 	}
 
@@ -100,9 +101,8 @@ public class HomeGUI implements ActionListener{
 			
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
-            	MainGUI.myFrame.getContentPane().removeAll();
-            	RegisterGUI RegisterPanel = new RegisterGUI(myFrame, userList);
-            	RegisterPanel.runTest();
+            	RegisterGUI RegisterPanel = new RegisterGUI(userList);
+            	RegisterPanel.run();
             }
         });
 	}
@@ -122,17 +122,24 @@ public class HomeGUI implements ActionListener{
 			if(curUser.getUserType().equals("NPO")){
 				//go to NPOGUI
 				//startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
+//<<<<<<< HEAD
+//				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar);
+//				startNPOGUI.getFrame().setVisible(true);
+//				myFrame.dispose();
+//=======
 				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
-				startNPOGUI.setModal(true);
+				startNPOGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startNPOGUI.getFrame().setVisible(true);
+				myFrame.dispose();
+//>>>>>>> refs/heads/JesseBranch
 
 			}else if(curUser.getUserType().equals("Bidder")){
 				//go to BidderGUI
-//				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
-				//startBidder = new Bidder(curUser.getMyUserName(),curUser.getMyName());
 				startBidderGUI = new BidderGUI((Bidder)curUser, myCalendar); 
-				startBidderGUI.setModal(true);
+				//startBidderGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startBidderGUI.getFrame().setVisible(true);
+				myFrame.dispose();
+				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			}else{
 				//go to StaffGUI
 				startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());

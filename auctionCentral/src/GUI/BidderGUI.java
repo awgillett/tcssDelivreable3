@@ -183,6 +183,7 @@ public class BidderGUI extends JDialog{
 				return false;               
 			};
 		};
+		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -205,11 +206,10 @@ public class BidderGUI extends JDialog{
 			}
 		});
 		table.setUpdateSelectionOnSort(false);
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setOpaque(false);
 		table.setFocusTraversalKeysEnabled(false);
 		table.setBorder(null);
-		table.setAutoscrolls(false);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setBackground(SystemColor.control);
 		scrollPane.setViewportView(table);

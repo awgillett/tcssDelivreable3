@@ -40,6 +40,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.ListSelectionModel;
 
 
 
@@ -154,6 +155,7 @@ public class BidderGUIviewItems extends JDialog{
 				return false;               
 			};
 		};
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.addMouseListener(new MouseAdapter() {
 
 			@Override
