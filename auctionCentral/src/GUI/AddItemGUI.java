@@ -296,7 +296,7 @@ public class AddItemGUI extends JDialog {
 	}
 	
 	private void addItemFail() {
-		JOptionPane.showMessageDialog(this, null, "Oops failed to add item, it appears you already have this item in inventory.", 0);
+		JOptionPane.showMessageDialog(this,"Oops failed to add item, it appears you already have this item in inventory.","Item add Error", 0);
 	}
 	
 	boolean tryParseDouble(String value) {  
