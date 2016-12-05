@@ -9,7 +9,7 @@ import java.util.*;
 
 import model.Auction;
 import model.AuctionDate;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 import model.Staff;
@@ -22,7 +22,7 @@ import model.User;
  */
 public class main {
 
-	protected static Calendar myCalendar = new Calendar();
+	protected static AuctionCalendar myCalendar = new AuctionCalendar();
 	Scanner sc = new Scanner(System.in);
 	private ArrayList<User> userList = new ArrayList();
 	User curUser = new User();
@@ -413,7 +413,7 @@ public class main {
 		try {
 			FileInputStream fileIn = new FileInputStream("./Calendar.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			myCalendar = (Calendar) in.readObject();
+			myCalendar = (AuctionCalendar) in.readObject();
 			in.close();
 			fileIn.close();
 		} catch (IOException i) {

@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 import model.Auction;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 import model.Staff;
 import model.User;
@@ -42,7 +42,7 @@ public class MainGUI implements MouseListener{
 	
 	protected static JFrame myFrame = new JFrame("Auction Central");
 
-	protected static Calendar myCalendar = new Calendar();
+	protected static AuctionCalendar myCalendar = new AuctionCalendar();
 
 	protected static ArrayList<User> userList = new ArrayList();
 

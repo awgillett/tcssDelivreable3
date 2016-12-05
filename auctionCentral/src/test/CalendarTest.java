@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Auction;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 
 /**
@@ -24,7 +24,7 @@ import model.NPO;
  */
 public class CalendarTest {
 
-	Calendar myCalendar;
+	AuctionCalendar myCalendar;
 	NPO a;
 	NPO b;
 	NPO c;
@@ -34,7 +34,7 @@ public class CalendarTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myCalendar = new Calendar();
+		myCalendar = new AuctionCalendar();
 		a = new NPO("NPOa", "a");
 		b = new NPO("NPOb", "b");
 		c = new NPO("NPOc", "c");
@@ -49,7 +49,7 @@ public class CalendarTest {
 
 
 	/**
-	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(model.Auction)}.
 	 */
 	@Test
 	public void testAddAuctionOnAlreadyTwoScheduledThatDay() {	
@@ -60,7 +60,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(model.Auction)}.
 	 */
 	@Test
 	public void testAddAuctionOnOneScheduledThatDay() {	
@@ -69,7 +69,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(model.Auction)}.
 	 */
 	@Test
 	public void testAddAuctionOnAlreadyTwentyFiveScheduled() {		
@@ -127,7 +127,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(model.Auction)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(model.Auction)}.
 	 */
 	@Test
 	public void testAddAuctionOnAddingWhenTwentyFourScheduled() {
@@ -218,7 +218,7 @@ public class CalendarTest {
 
 	//Carl Seiber Author of delete Auction Tests and method.
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testdeleteAuctionOnNoAuctionFoundWithNPO() {
@@ -231,7 +231,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testdeleteAuctionOnPastAuction() {
@@ -244,7 +244,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testdeleteAuctionOnAuctionScheduledInExactlyTwoDays() {
@@ -254,7 +254,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testdeleteAuctionOnAuctionScheduledInLessThanTwoDays() {
@@ -264,7 +264,7 @@ public class CalendarTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testdeleteAuctionOnAuctionScheduledInMoreThanTwoDays() {
@@ -275,7 +275,7 @@ public class CalendarTest {
 
 
 	/**
-	 * Test method for {@link model.Calendar#getAuctions(java.util.Date)}.
+	 * Test method for {@link model.AuctionCalendar#getAuctions(java.util.Date)}.
 	 */
 	@Test
 	public void testGetAuctions() {

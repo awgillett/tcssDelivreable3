@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import GUI.NPOGUI;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 import model.User;
 
@@ -26,13 +26,13 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	 //  3 - this day is full.
 	 //  4 - auction added.
 
-	Calendar theCalendar;
+	AuctionCalendar theCalendar;
 	NPO theNPO;
 	LocalDateTime date;
 	
 	@Before
 	public void setUp() throws Exception {
-		theCalendar = new Calendar();
+		theCalendar = new AuctionCalendar();
 		date = LocalDateTime.now().plusDays(10);
 		theNPO = new NPO("theNPO", "NPO");
 	}
@@ -49,7 +49,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void maxOneFutureAuctionOnNoAuctionsInFuture() {
@@ -58,7 +58,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void maxOneFutureAuctionOnOneAuctionInFuture() {
@@ -67,7 +67,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void maxOneFutureAuctionOnMoreThanOneAuctionInFuture() {
@@ -83,7 +83,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnOnePastAuctionLessThanOneYearAndOneDayAgo() {
@@ -96,7 +96,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnOnePastAuctionExactlyOneYearAndOneDayAgo() {
@@ -108,7 +108,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnMultiplePastAuctionLessThanOneYearAgo() {
@@ -122,7 +122,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnOnePastAuctionMoreThanOneYearAgo() {
@@ -134,7 +134,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnOnePastAuctionExactlyOneYearAgo() {
@@ -146,7 +146,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void NoNewAuctionsWithinOneYearofLastAuctionOnNoPastAuctions() {
@@ -160,7 +160,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwoAuctionInOneDayOnNoAuctionsScheduledForThatDay() {
@@ -169,7 +169,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwoAuctionInOneDayOnOneAuctionScheduledForThatDay() {
@@ -179,7 +179,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwoAuctionInOneDayOnTwoAuctionScheduledForThatDay() {
@@ -191,7 +191,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwoAuctionInOneDayOnMoreThanTwoAuctionScheduledForThatDay() {
@@ -211,7 +211,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwentyFiveAuctionsOnLessThanTwentyFourAuctionsScheduled() {
@@ -245,7 +245,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwentyFiveAuctionsOnExactlyTwentyFourAuctionsScheduled() {
@@ -285,7 +285,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwentyFiveAuctionsOnExactlyTwentyFiveAuctionsScheduled() {
@@ -325,7 +325,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void MaxTwentyFiveAuctionsOnMoreThanTwentyFiveAuctionsScheduled() {
@@ -371,7 +371,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionNoMoreThanOneMonthOutOnExactlyOneMonthInFuture() {
@@ -380,7 +380,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionNoMoreThanOneMonthOutOnLessThanOneMonthInFuture() {
@@ -389,7 +389,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionNoMoreThanOneMonthOutOnExactlyOneMonthAndOneDayInFuture() {
@@ -398,7 +398,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionNoMoreThanOneMonthOutOnMoreThanOneMonthAndOneDayInFuture() {
@@ -423,7 +423,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
   //*********************************************************************************************************
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnExactlyOneWeekInFuture() {
@@ -432,7 +432,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnGreaterThanOneWeekInFuture() {
@@ -441,7 +441,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnExactlySixDaysInFuture() {
@@ -450,7 +450,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnLessThanSixDaysInFuture() {
@@ -459,7 +459,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnSameDayasToday() {
@@ -468,7 +468,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#addAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#addAuction(java.lang.String)}.
 	 */
 	@Test
 	public void AuctionAtLeastOneWeekOutOnDateInPast() {

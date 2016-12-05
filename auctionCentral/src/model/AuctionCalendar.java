@@ -14,7 +14,7 @@ import java.time.Period;
  * @author Seiber, Tran, Gillet, Fitzgerald, Wiklanski
  * @version 11/14/2016
  */
-public class Calendar implements Serializable {
+public class AuctionCalendar implements Serializable {
 
 	private static final long serialVersionUID = -2370558377553764986L;
 
@@ -30,14 +30,14 @@ public class Calendar implements Serializable {
 	 * 
 	 * @param theAuction
 	 */
-	public Calendar(Collection<Auction> theAuction) {
+	public AuctionCalendar(Collection<Auction> theAuction) {
 		myAuctionList = theAuction;
 		nextAuctionID = 1;
 		maxNumberOfAuction = 25;
 		maxAuctionsPerDay = 2;
 	}
 
-	public Calendar() {
+	public AuctionCalendar() {
 		myAuctionList = new ArrayList<Auction>();
 		nextAuctionID = 1;
 		maxNumberOfAuction = 25;

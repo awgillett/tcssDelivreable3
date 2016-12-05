@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 
 import model.*;
-import model.Calendar;
+import model.AuctionCalendar;
 
 
 public class HomeGUI implements ActionListener{
@@ -28,7 +28,7 @@ public class HomeGUI implements ActionListener{
 
 	
 	private JTextField userText;
-	protected static Calendar myCalendar = new Calendar();
+	protected static AuctionCalendar myCalendar = new AuctionCalendar();
 	protected JFrame myFrame;
 	private ArrayList<User> userList = new ArrayList();
 	User curUser;

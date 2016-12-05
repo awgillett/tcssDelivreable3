@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 
 import javax.swing.JLabel;
@@ -49,7 +49,7 @@ import java.beans.PropertyChangeEvent;
 public class AuctionRequestGUI extends JDialog {
 
 	// private final JPanel contentPanel = new JPanel();
-	private Calendar myCalendar;
+	private AuctionCalendar myCalendar;
 	private NPO myNPO;
 	// JLabel lblDate;
 	private JTextArea txtNotes;
@@ -87,7 +87,7 @@ public class AuctionRequestGUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public AuctionRequestGUI(NPO theNPO, Calendar theCalendar) {
+	public AuctionRequestGUI(NPO theNPO, AuctionCalendar theCalendar) {
 		myCalendar = theCalendar;
 		myNPO = theNPO;
 		initializeGUI();

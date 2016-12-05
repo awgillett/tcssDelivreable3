@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 import model.Auction;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 import model.User;
@@ -40,7 +40,7 @@ public class BidderGUI{
 
 	protected JFrame myFrame = new JFrame();
 	
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static Bidder currentBidder;
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
@@ -69,7 +69,7 @@ public class BidderGUI{
 
 	}
 	
-	public BidderGUI(Bidder theBidder, Calendar theCalendar) {
+	public BidderGUI(Bidder theBidder, AuctionCalendar theCalendar) {
 		
 		currentBidder = theBidder;
 		myCalendar = theCalendar;
@@ -91,7 +91,7 @@ public class BidderGUI{
 	private static void testBidderInit() {
 		
 		Bidder testBidder = new Bidder("userName","name","address","phone","email","payInfo");
-		Calendar testCalendar = new Calendar();
+		AuctionCalendar testCalendar = new AuctionCalendar();
 		NPO testNpoA = new NPO("NPOa", "npoa");
 		NPO testNpoB = new NPO("NPOb", "npob");
 		

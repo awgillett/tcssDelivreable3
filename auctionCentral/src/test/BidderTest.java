@@ -12,7 +12,7 @@ import org.junit.Test;
 import model.Auction;
 import model.Bid;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 
@@ -20,7 +20,7 @@ public class BidderTest {
 	
 	Bidder theBidder;
 	Auction theAuction;
-	Calendar myCalendar;
+	AuctionCalendar myCalendar;
 	Item itemA;
 	Item itemB;
 	Bid bidA;
@@ -41,7 +41,7 @@ public class BidderTest {
 		theBidder = new Bidder("theBidderName", "Bidder", "theAddress", "thePhone", "theEmail", "thePaymentInfo");
 		theAuction = new Auction(a, LocalDateTime.now().plusDays(5), 1, "None", 1);
 		
-		myCalendar = new Calendar();	
+		myCalendar = new AuctionCalendar();	
 		itemA = new Item("itemA", "NPOA", "good", "small", "NOTE", "DESC", 10., 123);
 		itemB = new Item("itemB", "good", "small", 10.);
 		

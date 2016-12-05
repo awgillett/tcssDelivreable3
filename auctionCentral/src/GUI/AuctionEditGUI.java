@@ -6,7 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 import model.Auction;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 
@@ -38,7 +38,7 @@ import javax.swing.ScrollPaneConstants;
 
 public class AuctionEditGUI extends JDialog {
 
-	private Calendar myCalendar;
+	private AuctionCalendar myCalendar;
 	Auction myAuction;
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
 	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
@@ -74,7 +74,7 @@ public class AuctionEditGUI extends JDialog {
 	 * Initialize the GUI
 	 */
 	// public AuctionEditGUI(Auction theAuction) {
-	public AuctionEditGUI(NPO theNPO, Calendar theCalendar) {
+	public AuctionEditGUI(NPO theNPO, AuctionCalendar theCalendar) {
 		myCalendar = theCalendar;
 		myAuction = theCalendar.getAuction(theNPO);
 		selectedItemInfo = "";
