@@ -29,7 +29,11 @@ import java.awt.GridLayout;
 
 
 
-public class MainGUI implements MouseListener{
+//<<<<<<< HEAD
+public class MainGUI{
+//=======
+//public class MainGUI implements MouseListener{
+//>>>>>>> refs/heads/JesseBranch
 	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
 	int WINDOWHEIGHT = 500;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -65,7 +69,7 @@ public class MainGUI implements MouseListener{
 	}
 	
 	private void addLoginPanel(){
-		HomeGUI Loginpanel = new HomeGUI(userList, myFrame);
+		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
 	
@@ -80,8 +84,6 @@ public class MainGUI implements MouseListener{
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
         
-        //for debug
-        myFrame.addMouseListener(this);
     }
     
 
@@ -183,42 +185,45 @@ public class MainGUI implements MouseListener{
 				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
 			}
 		}
-		
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("X: " + e.getX());
-		System.out.println("Y: " + e.getY());
-
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+//<<<<<<< HEAD
+//=======
+//		
+//	}
+//
+//
+//	@Override
+//	public void mouseClicked(MouseEvent e) {
+//		System.out.println("X: " + e.getX());
+//		System.out.println("Y: " + e.getY());
+//
+//	}
+//
+//
+//	@Override
+//	public void mouseEntered(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//	@Override
+//	public void mouseExited(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//	@Override
+//	public void mousePressed(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//	@Override
+//	public void mouseReleased(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//>>>>>>> refs/heads/JesseBranch
 		
 	}
 
