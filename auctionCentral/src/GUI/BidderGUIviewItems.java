@@ -57,8 +57,16 @@ public class BidderGUIviewItems extends JDialog{
 	private static String welcomeBanner = "Add a bid to your account";
 	private static String loggedInAs = "You are signed in as: ";
 	
+//	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+//	Font mainHeaderFont = new Font("Tahoma", Font.BOLD, 22);
+//	Font headingFont = new Font("Tahoma", Font.BOLD, 20);
+	
+
 	Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
-	Font headingFont = new Font("Tahoma", Font.BOLD, 20);
+	Font subHeaderFont = new Font("Tahoma", Font.BOLD, 20);
+	Font headerFont = new Font("Tahoma", Font.BOLD, 22);
+	
+	
 	private JTable table;
 //	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Donor", "Description", "Minimum bid", "Your Bid"	});
 	DefaultTableModel tableOfItems = new DefaultTableModel(new Object[][] {},	new String[] {"Item number", "Item", "Minimum bid", "Your Bid"	});
@@ -78,24 +86,67 @@ public class BidderGUIviewItems extends JDialog{
 
 		
 	}
-	
-//	private String myItemName = "";
-//	private String myDonor = "";
-//	private String myCondition = "";
-//	private String mySize = "";
-//	private String myNotes = "";
-//	private String myDescription = "";
-//	private int myItemID;
-//	private double myMinBid;
 
 	public void startGUI(){
 		this.getContentPane().setLayout(null);
+		
+		this.setName("Auction Central");
+		this.setBounds(100, 100, 800, 500);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setBackground(SystemColor.control);
+		
 		windowInits();
 		populateItems();
 		
+//		//instructions
+//		JLabel lblClickAnItem = new JLabel("Click an item to bid to place a bid");
+//		lblClickAnItem.setFont(mainFont);
+//		lblClickAnItem.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblClickAnItem.setBounds(0, 125, 782, 16);
+//		getContentPane().add(lblClickAnItem);
+//		
+//		//main header
+//		JLabel lblItemsInAuc = new JLabel("Items on auction");
+//		lblItemsInAuc.setVerticalAlignment(SwingConstants.BOTTOM);
+//		lblItemsInAuc.setFont(headerFont);
+//		lblItemsInAuc.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblItemsInAuc.setBounds(0, 8, 782, 28);
+//		getContentPane().add(lblItemsInAuc);
+		
+				
+		// top banner area start
+		JLabel label_1 = new JLabel("Auction Central");
+		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(headerFont);
+		label_1.setBounds(0, 8, 782, 28);
+		getContentPane().add(label_1);
+		
+		JLabel lblWelcomeBanner = new JLabel("Browse the items on auction.");
+		lblWelcomeBanner.setFont(subHeaderFont);
+		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeBanner.setBounds(168, 42, 447, 25);
+		this.getContentPane().add(lblWelcomeBanner);
+		
+		JLabel lblEnterABid = new JLabel("Click on an item to view more details and make a bid.");
+		lblEnterABid.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnterABid.setFont(mainFont);
+		lblEnterABid.setBounds(217, 125, 348, 19);
+		getContentPane().add(lblEnterABid);
+		
+		JLabel label_2 = new JLabel("You are signed in as: " + currentBidder.getMyName());
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setFont(mainFont);
+		label_2.setBounds(184, 70, 414, 19);
+		getContentPane().add(label_2);
+		// top banner area end	
+
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(58, 76, 659, 270);
+		scrollPane.setBounds(154, 154, 474, 218);
+		scrollPane.setBorder(border);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable(){
@@ -108,11 +159,12 @@ public class BidderGUIviewItems extends JDialog{
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				int ItemID = (int) tableOfItems.getValueAt(table.getSelectedRow(), 0);
-				
 				addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar, ItemID);
-								
 				addBidGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				addBidGUI.setVisible(true);
+				
+				populateItems();
+				table.updateUI();
 	
 			}
 		});
@@ -122,37 +174,21 @@ public class BidderGUIviewItems extends JDialog{
 		scrollPane.setViewportView(table);
 		table.setModel(tableOfItems);
 		
-		JLabel lblClickAnItem = new JLabel("Click an item to bid to place a bid");
-		lblClickAnItem.setFont(mainFont);
-		lblClickAnItem.setHorizontalAlignment(SwingConstants.LEFT);
-		lblClickAnItem.setBounds(58, 47, 299, 16);
-		getContentPane().add(lblClickAnItem);
-		
-		JLabel lblNewLabel = new JLabel("Items on auction");
-		lblNewLabel.setFont(headingFont);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(58, 13, 443, 21);
-		getContentPane().add(lblNewLabel);
+
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
 			}
 		});
-		btnBack.setBounds(620, 359, 97, 25);
+		btnBack.setBounds(478, 384, 150, 55);
 		getContentPane().add(btnBack);
 		table.getColumnModel().getColumn(0).setPreferredWidth(108);
 		
 		
-		
-		this.setName("Auction Central");
-		this.setBounds(100, 100, 800, 500);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setBackground(SystemColor.control);
-		
-//		String bids = currentBidder.printBidsGUI(myCalendar);
-		
+
 	}
 	private void populateItems() {
 		tableOfItems.setRowCount(0);
@@ -161,15 +197,11 @@ public class BidderGUIviewItems extends JDialog{
 			if(currentBidder.getBid(item.getMyItemID()) != null){
 							yourBid = currency.format(currentBidder.getBid(item.getMyItemID()).getMyBidAmount());
 			}
-//			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), item.getMyDonor(), item.getMyDescription(), currency.format(item.getMyMinBid()), yourBid});
 			tableOfItems.addRow(new Object[] { item.getMyItemID(),item.getMyItemName(), currency.format(item.getMyMinBid()), yourBid});
 			
 		}
 	}
 	private void windowInits() {
-		
-//		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
-//		addBidGUI.setVisible(false);
 		
 	}
 	private void close() {

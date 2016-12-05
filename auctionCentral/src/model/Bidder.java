@@ -139,21 +139,32 @@ public class Bidder extends User implements Serializable{
 	 */
 	public int addBid(Calendar cal, Item itemToBidOn, double bidOffer) {
 		
-		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
+//		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
 		
 		int bidAccepted = 1;
 		int bidBelowMinBid = 2;
 		int bidForItemAlreadyExists = 3;
 		int auctionHasStarted = 4;
 		
-		if(!cal.requestBid(newBid.getMyItemID())){
+//		if(!cal.requestBid(newBid.getMyItemID())){
+//			return auctionHasStarted;
+//		}else if(!itemToBidOn.isValidBid(newBid.getMyBidAmount())){
+//			return bidBelowMinBid;
+//		}else if(getBid(newBid.getMyItemID()) != null){
+//			return bidForItemAlreadyExists;
+//		}else{
+//			placeBid(newBid);
+//			return bidAccepted;
+//		}
+		
+		if(!cal.requestBid(itemToBidOn.getMyItemID())){
 			return auctionHasStarted;
-		}else if(!itemToBidOn.isValidBid(newBid.getMyBidAmount())){
+		}else if(!itemToBidOn.isValidBid(bidOffer)){
 			return bidBelowMinBid;
-		}else if(getBid(newBid.getMyItemID()) != null){
+		}else if(getBid(itemToBidOn.getMyItemID()) != null){
 			return bidForItemAlreadyExists;
 		}else{
-			placeBid(newBid);
+			placeBid(createBid(bidOffer, itemToBidOn, cal));
 			return bidAccepted;
 		}
 	}
@@ -169,18 +180,16 @@ public class Bidder extends User implements Serializable{
 	 */
 	public int addBidGUI(Calendar cal, Item itemToBidOn, double bidOffer) {
 		
-		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
-		
 		int bidAccepted = 1;
 		int bidBelowMinBid = 2;
 		int bidForItemAlreadyExists = 3;
 		int auctionHasStarted = 4;
 		
-		if(!cal.requestBid(newBid.getMyItemID())){
+		if(!cal.requestBid(itemToBidOn.getMyItemID())){
 			return auctionHasStarted;
-		}else if(!itemToBidOn.isValidBid(newBid.getMyBidAmount())){
+		}else if(!itemToBidOn.isValidBid(bidOffer)){
 			return bidBelowMinBid;
-		}else if(getBid(newBid.getMyItemID()) != null){
+		}else if(getBid(itemToBidOn.getMyItemID()) != null){
 			return bidForItemAlreadyExists;
 		}else{
 			return bidAccepted;

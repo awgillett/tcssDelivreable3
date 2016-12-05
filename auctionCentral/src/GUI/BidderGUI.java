@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,7 +52,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.text.NumberFormat;
 
-public class BidderGUI{
+public class BidderGUI extends JDialog{
 	protected static final int BID_TABLE = 1;
 	protected static final int AUC_TABLE = 0;
 	public int currentTableMode = AUC_TABLE;
@@ -59,8 +60,7 @@ public class BidderGUI{
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
-	protected JFrame myFrame = new JFrame();
-	
+	private JFrame myFrame;
 	static Calendar myCalendar = null;
 	static Bidder currentBidder = null;
 	
@@ -68,45 +68,33 @@ public class BidderGUI{
 	private static String loggedInAs = "You are signed in as: ";
 	
 
-	String clickInstructionsAucList = "Click on an auction from the list if you would like to browse its items.";
-//	String clickInstructionsAucList = "Click an Auction to see what items are up for bid.";
-	String clickInstructionsBidList = "Click a bid if you would like to remove it or view its details.";
+	private String clickInstructionsAucList = "Click on an auction from the list if you would like to browse its items.";
+	private String clickInstructionsBidList = "Click a bid if you would like to remove it or view its details.";
 
-//	String clickInstructionsBidList = "Click a bid to view or edit the bid.";
-	
 	public Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
+	Font mainHeaderFont = new Font("Tahoma", Font.BOLD, 22);
 	
-//	BidderGUIaddBid addBidGUI;
-	BidderGUIviewAuctions viewAuctionsGUI;
-	BidderGUIviewItems viewItems;
-	BidderGUIeditBid editBid;
+	private BidderGUIviewItems viewItems;
+	private BidderGUIeditBid editBid;
 	
 	private JTable table;
 	private DefaultTableModel tblModelAuc = new DefaultTableModel(new Object[][] {}, new String[] { "Organization", "Number of Items", "Date of Auction" });
 	private DefaultTableModel tblModelBid = new DefaultTableModel(new Object[][] {}, new String[] { "Item Number", "Item", "Minimum Bid", "Your Bid" });
-//	private DefaultTableModel tblModel;
-	private int selectedAuctionRow;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable(){
 
-			@Override
-			public void run() {
-				try {
-					
-					
-					
-					BidderGUI bidderWindow = new BidderGUI(currentBidder, myCalendar);
-					bidderWindow.myFrame.setVisible(true);
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-		});
-
-	}
+	
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable(){
+//			@Override
+//			public void run() {
+//				try {
+//					BidderGUI bidderWindow = new BidderGUI(currentBidder, myCalendar);
+//					bidderWindow.myFrame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 	
 	public BidderGUI(Bidder theBidder, Calendar theCalendar) {
 		
@@ -114,23 +102,185 @@ public class BidderGUI{
 		myCalendar = theCalendar;
 
 		//this is for testing
-		testBidderInit();
+//		testBidderInit();
 //		load();
 		
-		windowInits();
+//		windowInits();
+		populateTable();
 		startGUI();
 	
 
 		
 	}
 
-	private void windowInits() {
+	public void startGUI(){
+
+		myFrame = new JFrame();
+		myFrame.getContentPane().setLayout(null);
+		myFrame.setName("Auction Central");
+		myFrame.setBounds(100, 100, 800, 500);
+		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-//		addBidGUI = new BidderGUIaddBid(currentBidder, myCalendar);
-		viewAuctionsGUI = new BidderGUIviewAuctions(currentBidder, myCalendar);
-//		addBidGUI.setVisible(false);
-		viewAuctionsGUI.setVisible(false);
+		JLabel lblWelcomeBanner = new JLabel("Auction Central");
+		lblWelcomeBanner.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblWelcomeBanner.setFont(mainHeaderFont);
+		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeBanner.setBounds(0, 8, 782, 28);
+		myFrame.getContentPane().add(lblWelcomeBanner);
 		
+		
+		JLabel lblYouAreSignedAs = new JLabel(loggedInAs + currentBidder.getMyName());
+		lblYouAreSignedAs.setFont(mainFont);
+		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.CENTER);
+		lblYouAreSignedAs.setBounds(289, 70, 205, 19);
+		myFrame.getContentPane().add(lblYouAreSignedAs);
+		
+		//panel that holds the list instructions
+		JPanel listLabel = new JPanel();
+		listLabel.setBounds(0, 125, 782, 16);
+		myFrame.getContentPane().add(listLabel);
+		listLabel.setLayout(null);
+		
+		//list instructions for the auction list view
+		JLabel lblAuctionsList = new JLabel(clickInstructionsAucList);
+		lblAuctionsList.setBounds(0, 0, 782, 16);
+		listLabel.add(lblAuctionsList);
+		lblAuctionsList.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAuctionsList.setFont(mainFont);
+		
+		//list instructions for the bid list view
+		JLabel lblBidsList = new JLabel(clickInstructionsBidList);
+		lblBidsList.setBounds(0, 0, 782, 16);
+		lblBidsList.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBidsList.setFont(mainFont);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				myFrame.dispose();
+				System.exit(0);
+			}
+		});
+		btnLogOut.setFont(mainFont);
+		btnLogOut.setBounds(478, 385, 150, 55);
+		myFrame.getContentPane().add(btnLogOut);
+		
+		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
+		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcomeToThe.setBounds(217, 42, 349, 25);
+		myFrame.getContentPane().add(lblWelcomeToThe);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(null);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(154, 154, 474, 218);
+		scrollPane.setBorder(border);
+		myFrame.getContentPane().add(scrollPane);
+		
+		
+		//here is the table
+		table = new JTable(){
+			public boolean isCellEditable(int row, int column) {                
+				return false;               
+			};
+		};
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				if(currentTableMode == AUC_TABLE){
+					String npoName = (String) tblModelAuc.getValueAt(table.getSelectedRow(), 0);
+					Auction auc = myCalendar.getAuctionWithAucID(npoName);
+					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
+					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+					viewItems.setVisible(true);
+					updates();
+				}
+				if(currentTableMode == BID_TABLE){
+					int itemID = (int) tblModelBid.getValueAt(table.getSelectedRow(), 0);
+					Item item = myCalendar.getItem(itemID);
+					editBid = new BidderGUIeditBid(currentBidder, myCalendar, item);
+					editBid.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+					editBid.setVisible(true);
+					updates();
+				}
+			}
+		});
+		table.setUpdateSelectionOnSort(false);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setOpaque(false);
+		table.setFocusTraversalKeysEnabled(false);
+		table.setBorder(null);
+		table.setAutoscrolls(false);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setBackground(SystemColor.control);
+		scrollPane.setViewportView(table);
+		table.setShowVerticalLines(false);
+		table.setShowGrid(false);
+		table.setModel(tblModelAuc);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(110);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.setBorder(border);
+		table.setAlignmentY(SwingConstants.CENTER);
+		
+		JButton btnViewBids = new JButton("View Auctions");
+		btnViewBids.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(tblModelAuc);
+				currentTableMode = AUC_TABLE;
+				listLabel.remove(lblBidsList);
+				listLabel.add(lblAuctionsList);
+				listLabel.updateUI();
+				table.updateUI();
+			}
+		});
+		btnViewBids.setFont(mainFont);
+		btnViewBids.setBounds(316, 385, 150, 55);
+		myFrame.getContentPane().add(btnViewBids);
+		
+		JButton btnViewYourBids = new JButton("View Your Bids");
+		btnViewYourBids.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(tblModelBid);
+				currentTableMode = BID_TABLE;
+				listLabel.remove(lblAuctionsList);
+				listLabel.add(lblBidsList);
+				listLabel.updateUI();
+				table.updateUI();
+			}
+		});
+		btnViewYourBids.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnViewYourBids.setBounds(154, 385, 150, 55);
+		myFrame.getContentPane().add(btnViewYourBids);
+		
+	}
+	private void updates(){
+		populateTable();
+		table.updateUI();
+	}
+	private void populateTable() {
+			tblModelBid.setRowCount(0);
+			for(Bid bid : currentBidder.getMyBids()){
+				Item ThisItem = myCalendar.getItem(bid.getMyItemID());
+				String bidAmount = currency.format(currentBidder.getBid(ThisItem.getMyItemID()).getMyBidAmount());
+				String minBid = currency.format(ThisItem.getMyMinBid());
+				
+				tblModelBid.addRow(new Object[] { ThisItem.getMyItemID(), ThisItem.getItemName() , minBid, bidAmount});
+			}
+			
+
+			tblModelAuc.setRowCount(0);
+			for (Auction auc : myCalendar.getAllAuctions()) {
+				tblModelAuc.addRow(new Object[] { auc.getNPOname().getMyName(), auc.getMyItemList().size(), auc.getAuctionDate().format(dateFormat)});
+			}
+
+	}
+	public JFrame getFrame() {
+		return myFrame;
 	}
 
 	/**
@@ -181,212 +331,5 @@ public class BidderGUI{
 		
 		myCalendar = testCalendar;
 		currentBidder = testBidder;
-	}
-
-	public void startGUI(){
-		
-		populateTable();
-		
-
-		
-		myFrame.getContentPane().setLayout(null);
-		myFrame.setName("Auction Central");
-		myFrame.setBounds(100, 100, 800, 500);
-		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		myFrame.setVisible(true);
-		
-		
-		
-		JLabel lblWelcomeBanner = new JLabel("Auction Central");
-		lblWelcomeBanner.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblWelcomeBanner.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblWelcomeBanner.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcomeBanner.setBounds(-1, 8, 782, 28);
-		myFrame.getContentPane().add(lblWelcomeBanner);
-		
-		JLabel lblYouAreSignedAs = new JLabel(loggedInAs + currentBidder.getMyName());
-		lblYouAreSignedAs.setFont(mainFont);
-		lblYouAreSignedAs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblYouAreSignedAs.setBounds(-1, 70, 782, 16);
-		myFrame.getContentPane().add(lblYouAreSignedAs);
-		
-		//panel that holds the list instructions
-		JPanel listLabel = new JPanel();
-		listLabel.setBounds(0, 125, 782, 16);
-		myFrame.getContentPane().add(listLabel);
-		listLabel.setLayout(null);
-		
-		//list instructions for the auction list view
-		JLabel lblAuctionsList = new JLabel(clickInstructionsAucList);
-		lblAuctionsList.setBounds(0, 0, 782, 16);
-		listLabel.add(lblAuctionsList);
-		lblAuctionsList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAuctionsList.setFont(mainFont);
-		
-		//list instructions for the bid list view
-		JLabel lblBidsList = new JLabel(clickInstructionsBidList);
-		lblBidsList.setBounds(0, 0, 782, 16);
-		lblBidsList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBidsList.setFont(mainFont);
-		
-		JButton btnLogOut = new JButton("log out");
-		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(483, 385, 150, 55);
-		myFrame.getContentPane().add(btnLogOut);
-		
-//		String bids = currentBidder.printBidsGUI(myCalendar);
-//		System.out.println(bids);
-		
-		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
-		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcomeToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcomeToThe.setBounds(-1, 42, 782, 16);
-		myFrame.getContentPane().add(lblWelcomeToThe);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportBorder(null);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(70, 154, 636, 218);
-		scrollPane.setBorder(border);
-		myFrame.getContentPane().add(scrollPane);
-		
-		
-		//here is the table
-//		table = new JTable();
-		table = new JTable(){
-			public boolean isCellEditable(int row, int column) {                
-				return false;               
-			};
-		};
-		
-		table.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				
-				if(currentTableMode == AUC_TABLE){
-					String npoName = (String) tblModelAuc.getValueAt(table.getSelectedRow(), 0);
-					Auction auc = myCalendar.getAuctionWithAucID(npoName);
-					viewItems = new BidderGUIviewItems(currentBidder, myCalendar, auc);
-					viewItems.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-					viewItems.setVisible(true);
-					
-
-					
-				}
-				
-				if(currentTableMode == BID_TABLE){
-					int itemID = (int) tblModelBid.getValueAt(table.getSelectedRow(), 0);
-					Item item = myCalendar.getItem(itemID);
-					editBid = new BidderGUIeditBid(currentBidder, myCalendar, item);
-					editBid.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-					editBid.setVisible(true);
-					
-					
-					updates();
-//					populateTable();
-//					table.updateUI();
-				}
-			}
-		});
-		table.setUpdateSelectionOnSort(false);
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setOpaque(false);
-		table.setFocusTraversalKeysEnabled(false);
-		table.setBorder(null);
-		table.setAutoscrolls(false);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setBackground(SystemColor.control);
-		scrollPane.setViewportView(table);
-		table.setShowVerticalLines(false);
-		table.setShowGrid(false);
-		table.setModel(tblModelAuc);
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(1).setPreferredWidth(110);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.setBorder(border);
-		table.setAlignmentY(SwingConstants.CENTER);
-		
-		
-		
-		JButton btnViewBids = new JButton("View Auctions");
-		btnViewBids.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				table.setModel(tblModelAuc);
-				currentTableMode = AUC_TABLE;
-				listLabel.remove(lblBidsList);
-				listLabel.add(lblAuctionsList);
-				listLabel.updateUI();
-				table.updateUI();
-			}
-		});
-		btnViewBids.setFont(mainFont);
-		btnViewBids.setBounds(321, 385, 150, 55);
-		myFrame.getContentPane().add(btnViewBids);
-		
-		JButton btnViewYourBids = new JButton("View Your Bids");
-		btnViewYourBids.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				table.setModel(tblModelBid);
-				currentTableMode = BID_TABLE;
-				listLabel.remove(lblAuctionsList);
-				listLabel.add(lblBidsList);
-				listLabel.updateUI();
-				table.updateUI();
-			}
-		});
-		btnViewYourBids.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnViewYourBids.setBounds(159, 385, 150, 55);
-		myFrame.getContentPane().add(btnViewYourBids);
-		
-	}
-	private void updates(){
-		populateTable();
-		table.updateUI();
-	}
-	private void populateTable() {
-		
-
-			tblModelBid.setRowCount(0);
-			for(Bid bid : currentBidder.getMyBids()){
-				Item ThisItem = myCalendar.getItem(bid.getMyItemID());
-				String bidAmount = currency.format(currentBidder.getBid(ThisItem.getMyItemID()).getMyBidAmount());
-				String minBid = currency.format(ThisItem.getMyMinBid());
-				
-				tblModelBid.addRow(new Object[] { ThisItem.getMyItemID(), ThisItem.getItemName() , minBid, bidAmount});
-			}
-			
-
-			tblModelAuc.setRowCount(0);
-			for (Auction auc : myCalendar.getAllAuctions()) {
-				tblModelAuc.addRow(new Object[] { auc.getNPOname().getMyName(), auc.getMyItemList().size(), auc.getAuctionDate().format(dateFormat)});
-			}
-
-	}
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-	
-	private void load() {
-		
-		currentBidder = new Bidder("userName","name","address","phone","email","payInfo");
-		try {
-			FileInputStream fileIn = new FileInputStream("./Calendar.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			myCalendar = (Calendar) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (IOException i) {
-			i.printStackTrace();
-			return;
-		} catch (ClassNotFoundException c) {
-			System.out.println("Calendar class not found");
-			c.printStackTrace();
-			return;
-		}
-
 	}
 }
