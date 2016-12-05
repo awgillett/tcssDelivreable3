@@ -307,16 +307,16 @@ public class AuctionRequestGUI extends JDialog {
 		if (JOptionPane.showConfirmDialog(this, message) == 0) {
 			int result = myCalendar.addAuction(myNPO, auctionDate, items, txtNotes.getText());
 			if (result == 0) {
-				JOptionPane.showMessageDialog(this, "I am sorry but you can only have one auction scheduled at a time");
+				JOptionPane.showMessageDialog(this, "I am sorry but you can only have one auction scheduled at a time", "Auction not added", 0);
 				close();
 			} else if (result == 1) {
 				JOptionPane.showMessageDialog(this, "I am sorry but you cannot schedule later than 1 month out or earlier than"
-												+ "7 days out");
+												+ "7 days out", "Auction not added", 0);
 			} else if (result == 2) {
 				JOptionPane.showMessageDialog(this, "I am sorry but we are currently not accepting new auctions please"
-												+ "try again later");
+												+ "try again later", "Auction not added", 0);
 			} else if (result == 3) {
-				JOptionPane.showMessageDialog(this, "I am sorry this day is full please choose another day");
+				JOptionPane.showMessageDialog(this, "I am sorry this day is full please choose another day", "Auction not added", 0);
 			} else if (result == 4){
 				JOptionPane.showMessageDialog(this, "Your auction was accepted! You can add items immediately.");
 				close();
