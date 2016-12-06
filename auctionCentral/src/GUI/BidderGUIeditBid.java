@@ -126,7 +126,7 @@ public class BidderGUIeditBid extends JDialog{
 			}
 		});
 		btnRemoveBid.setFont(mainFont);
-		btnRemoveBid.setBounds(316, 384, 150, 55);
+		btnRemoveBid.setBounds(314, 418, 154, 23);
 		btnRemoveBid.setEnabled(true);
 		this.getContentPane().add(btnRemoveBid);
 		
@@ -137,7 +137,7 @@ public class BidderGUIeditBid extends JDialog{
 			}
 		});
 		button.setFont(mainFont);
-		button.setBounds(478, 384, 150, 55);
+		button.setBounds(474, 418, 154, 23);
 		getContentPane().add(button);
 		
 		JScrollPane scrollPane = new JScrollPane();

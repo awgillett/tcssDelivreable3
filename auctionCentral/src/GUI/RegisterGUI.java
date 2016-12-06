@@ -55,8 +55,9 @@ public class RegisterGUI implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		myFrame.setContentPane(contentPane);
-        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
-                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+		myFrame.setLocation(100,100);
+//        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+//                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 		contentPane.setLayout(null);
 		
 		addRegisterOptionButton();
@@ -310,8 +311,9 @@ public class RegisterGUI implements ActionListener {
 		if(theEvent.getActionCommand().equals("NPO")
 				|| theEvent.getActionCommand().equals("Staff")){
 			UserType = theEvent.getActionCommand();
-	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
-	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+			myFrame.setLocation(100,100);
+//	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+//	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			addStaffNPORegisterPanel();
 			myFrame.repaint();
 			
@@ -320,9 +322,9 @@ public class RegisterGUI implements ActionListener {
 			UserType = theEvent.getActionCommand();
 
 			addBidderRegisterPanel();
-
-	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
-	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+			myFrame.setLocation(100,100);
+//	        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+//	                SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
 			myFrame.repaint();
 		}
 		if (theEvent.getActionCommand().equals("Cancel")){

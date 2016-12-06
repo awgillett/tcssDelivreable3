@@ -76,7 +76,8 @@ public class MainGUI{
 	
 	private void addLoginPanel(){
 		file = new JFileChooser();
-		openSavedFile();
+		if (userList.size() == 0)
+			openSavedFile();
 		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
@@ -89,8 +90,9 @@ public class MainGUI{
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setMinimumSize(new Dimension(myFrame.getWidth(), myFrame.getHeight()));
         myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
-        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
-                    SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+        myFrame.setLocation(100,100);
+//        myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
+//                    SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
         myFrame.addWindowListener(new WindowAdapter() {
         	@Override public void windowClosing(WindowEvent e) {
         		saveFile();
@@ -103,7 +105,7 @@ public class MainGUI{
 	
 	private void save() {
 		try {
-			FileOutputStream fileOut = new FileOutputStream(calFileName);
+			FileOutputStream fileOut = new FileOutputStream(calFileName + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(myCalendar);
 			out.close();
@@ -114,7 +116,7 @@ public class MainGUI{
 		}
 
 		try {
-			FileOutputStream fileOut2 = new FileOutputStream(userFileName);
+			FileOutputStream fileOut2 = new FileOutputStream(userFileName + ".ser");
 			ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
 			out2.writeObject(userList);
 			out2.close();
@@ -298,11 +300,11 @@ public class MainGUI{
 	
 	private void saveFile() {
 		file.setFileFilter(new FileNameExtensionFilter("ser file","ser"));
-		int result = file.showOpenDialog(myFrame);
+		int result = file.showSaveDialog(myFrame);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = file.getSelectedFile();
             userFileName = selectedFile.getAbsolutePath();
-            file.showOpenDialog(myFrame);
+            file.showSaveDialog(myFrame);
             selectedFile = file.getSelectedFile();
             calFileName = selectedFile.getAbsolutePath();
             save();

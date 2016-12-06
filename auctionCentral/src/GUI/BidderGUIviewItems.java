@@ -185,7 +185,7 @@ public class BidderGUIviewItems extends JDialog{
 				close();
 			}
 		});
-		btnBack.setBounds(478, 384, 150, 55);
+		btnBack.setBounds(474, 418, 154, 23);
 		getContentPane().add(btnBack);
 		table.getColumnModel().getColumn(0).setPreferredWidth(108);
 		

@@ -175,7 +175,7 @@ public class BidderGUI extends JDialog{
 			}
 		});
 		btnLogOut.setFont(mainFont);
-		btnLogOut.setBounds(478, 385, 150, 55);
+		btnLogOut.setBounds(474, 418, 154, 23);
 		myFrame.getContentPane().add(btnLogOut);
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the bidder main menu");
@@ -252,7 +252,7 @@ public class BidderGUI extends JDialog{
 			}
 		});
 		btnViewBids.setFont(mainFont);
-		btnViewBids.setBounds(316, 385, 150, 55);
+		btnViewBids.setBounds(314, 418, 154, 23);
 		myFrame.getContentPane().add(btnViewBids);
 		
 		JButton btnViewYourBids = new JButton("View Your Bids");
@@ -267,7 +267,7 @@ public class BidderGUI extends JDialog{
 			}
 		});
 		btnViewYourBids.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnViewYourBids.setBounds(154, 385, 150, 55);
+		btnViewYourBids.setBounds(154, 418, 154, 23);
 		myFrame.getContentPane().add(btnViewYourBids);
 		
 	}

@@ -118,7 +118,7 @@ public class BidderGUIaddBid extends JDialog{
 			}
 		});
 		btnAddABid.setFont(mainFont);
-		btnAddABid.setBounds(316, 384, 150, 56);
+		btnAddABid.setBounds(314, 418, 154, 23);
 		btnAddABid.setEnabled(true);
 		this.getContentPane().add(btnAddABid);
 		
@@ -139,7 +139,7 @@ public class BidderGUIaddBid extends JDialog{
 			}
 		});
 		button.setFont(mainFont);
-		button.setBounds(478, 384, 150, 55);
+		button.setBounds(474, 418, 154, 23);
 		getContentPane().add(button);
 		
 		
