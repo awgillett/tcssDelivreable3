@@ -279,7 +279,8 @@ public class NPOGUI extends JDialog{
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				System.exit(0);
+				MainGUI.myFrame.setVisible(true);
+				//System.exit(0);
 			}
 		});
 		btnLogOut.setBounds(551, 379, 154, 23);
