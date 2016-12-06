@@ -19,7 +19,7 @@ public class AuctionCalendar implements Serializable {
 	private static final long serialVersionUID = -2370558377553764986L;
 
 	// assume 1 month in future is 30 days in future.
-	private static final int TOTAL_NUMBER_OF_AUCTION_ALLOWED = 60;
+	public static final int TOTAL_NUMBER_OF_AUCTION_ALLOWED = 60;
 	private Collection<Auction> myAuctionList;
 	private int nextAuctionID;
 	private int maxNumberOfAuction;

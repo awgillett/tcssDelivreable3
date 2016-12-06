@@ -27,7 +27,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Staff;
 import model.User;
@@ -137,17 +141,32 @@ public class StaffGUI extends JFrame {
 		welcome.setFont(mainFont);
 		welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size());
-		//totalScheduled.setFont(subMenuFont);
-		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size() + "               ");
+		totalScheduled.setFont(subMenuFont);
+		totalScheduled.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		JLabel possibleScheduled = new JLabel("Number of Auctions Allowed");
-		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JLabel possibleScheduled = new JLabel("               Number of Auctions Allowed");
+		possibleScheduled.setFont(subMenuFont);
+		possibleScheduled.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		
+		SpinnerNumberModel spinModel = new SpinnerNumberModel(25, myAuctionList.size(), AuctionCalendar.TOTAL_NUMBER_OF_AUCTION_ALLOWED, 1);
+		JSpinner chooseAllowableAuc = new JSpinner(spinModel);
+		chooseAllowableAuc.addChangeListener(new ChangeListener() {      
+			  public void stateChanged(ChangeEvent e) {
+			    theAucCal.setMaxNumberOfAuction((int)chooseAllowableAuc.getValue());
+			    System.out.println((int)chooseAllowableAuc.getValue());
+			  }
+			});
 
-		header.add(welcome);
+		JLabel spacer1 = new JLabel();
+		JLabel spacer2 = new JLabel();
+		
 		header.add(totalScheduled);
+		//header.add(spacer2);
+		header.add(welcome);
 		header.add(possibleScheduled);
+		header.add(chooseAllowableAuc);
 		myContentPane.add(header);
 	}
 
@@ -185,6 +204,7 @@ public class StaffGUI extends JFrame {
 		nextMonth.setFont(subMenuFont);
 		JButton prevMonth = new JButton("<<<");
 		prevMonth.setFont(subMenuFont);
+		prevMonth.setEnabled(false);
 
 		// Updates calendar to previous month.
 		prevMonth.addActionListener(new ActionListener() {
