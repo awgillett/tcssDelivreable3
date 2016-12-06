@@ -281,7 +281,7 @@ public class SubmitAnAuctionRequestAcceptanceTest {
 			}
 		}
 		
-		assertEquals(4, theCalendar.addAuction(theNPO, date, 0, ""));
+		assertEquals(4, theCalendar.addAuction(theNPO, date.plusDays(10), 0, ""));
 	}
 	
 	/**
