@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 //import java.util.Calendar;
 import java.util.Scanner;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Staff;
 /**
  * The StaffUI class creates the user interface for the AuctionCenral user
@@ -15,7 +15,7 @@ import model.Staff;
 public class StaffUI {
 
 	static Staff curStaff;
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static Scanner sc = new Scanner(System.in);
 	static int choice;
 	static int EXIT = 1765456165;
@@ -27,7 +27,7 @@ public class StaffUI {
      * @param theUser
      * @param theCalendar
      */
-	public static void welcomeScreen(Staff theUser, Calendar theCalendar) {
+	public static void welcomeScreen(Staff theUser, AuctionCalendar theCalendar) {
 		choice = 0;
 		curStaff = theUser;
 		myCalendar = theCalendar;

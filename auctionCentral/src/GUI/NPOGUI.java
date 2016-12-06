@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import model.Auction;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 import java.awt.Color;
 import javax.swing.JTextArea;
@@ -30,7 +30,7 @@ public class NPOGUI extends JDialog{
 	private Font mainFont = new Font("Tahoma", Font.BOLD, 22);
 	private Font subMenuFont = new Font("Tahoma", Font.BOLD, 20);
 	private Font detailsFont = new Font("Tahoma", Font.PLAIN, 15);
-	static Calendar curCalendar;
+	static AuctionCalendar curCalendar;
 	private Auction curAuction;
 	private AuctionEditGUI editMenu;
 	private AuctionRequestGUI requestMenu;
@@ -60,7 +60,7 @@ public class NPOGUI extends JDialog{
 	/**
 	 * Create the application.
 	 */
-	public NPOGUI(NPO theNPO, Calendar theCalendar) {
+	public NPOGUI(NPO theNPO, AuctionCalendar theCalendar) {
 		curNPO = theNPO;
 		curCalendar = theCalendar;
 		//curCalendar.addAuction(curNPO, LocalDateTime.now().plusDays(15), 15, "");

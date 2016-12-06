@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import model.Auction;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 import model.User;
@@ -51,7 +51,7 @@ public class BidderGUIviewItems extends JDialog{
 
 //	protected JFrame myFrame = new JFrame();
 	
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static Bidder currentBidder;
 	static Auction myAuction;
 	
@@ -74,7 +74,7 @@ public class BidderGUIviewItems extends JDialog{
 
 	BidderGUIaddBid addBidGUI;
 	
-	public BidderGUIviewItems(Bidder theBidder, Calendar theCalendar, Auction theAuction) {
+	public BidderGUIviewItems(Bidder theBidder, AuctionCalendar theCalendar, Auction theAuction) {
 		
 		currentBidder = theBidder;
 		myCalendar = theCalendar;

@@ -16,13 +16,13 @@ import model.Bidder;
  * @version 11/14/2016
  */
 
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 
 public class BidderUI {
 	
 	static Bidder currentBidder;
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static Scanner sc = new Scanner(System.in);
 	static int choice;
 	static int EXIT = 1765456165;
@@ -36,7 +36,7 @@ public class BidderUI {
 	 * @param bidder the bidder that is logged into the system
 	 * @param theCalendar the system calendar
 	 */
-	public static void welcomeScreen(Bidder bidder, Calendar theCalendar){
+	public static void welcomeScreen(Bidder bidder, AuctionCalendar theCalendar){
 		
 		choice = 0;
 		currentBidder = bidder;

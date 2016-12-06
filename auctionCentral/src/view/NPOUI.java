@@ -3,7 +3,7 @@ package view;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 import model.Staff;
@@ -14,7 +14,7 @@ import model.Staff;
  */
 public class NPOUI {
 
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static NPO curNPO;
 	static Scanner sc = new Scanner(System.in);
 	static int choice;
@@ -27,7 +27,7 @@ public class NPOUI {
      * @param theUser
      * @param theCalendar
      */
-	public static void welcomeScreen(NPO theUser, Calendar theCalendar) {
+	public static void welcomeScreen(NPO theUser, AuctionCalendar theCalendar) {
 		choice = 0;
 		curNPO = theUser;
 		myCalendar = theCalendar;

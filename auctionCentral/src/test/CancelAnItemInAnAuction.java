@@ -10,14 +10,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Auction;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 
 public class CancelAnItemInAnAuction {
     
 	NPO theNPO;
-	Calendar theCalendar;
+	AuctionCalendar theCalendar;
 	Auction theAuction;
 	LocalDate Today;
 	int Month;
@@ -26,7 +26,7 @@ public class CancelAnItemInAnAuction {
 	
 	@Before
 	public void setUp() throws Exception {
-		theCalendar = new Calendar();
+		theCalendar = new AuctionCalendar();
 		LocalDateTime date = LocalDateTime.now().plusDays(10);
 		theNPO = new NPO("theNPO", "NPO");
 		theCalendar.addAuction(theNPO, date, 0, "");

@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import model.Auction;
 import model.Bid;
 import model.Bidder;
-import model.Calendar;
+import model.AuctionCalendar;
 import model.Item;
 import model.NPO;
 import model.User;
@@ -55,7 +55,7 @@ public class BidderGUIaddBid extends JDialog{
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
-	static Calendar myCalendar;
+	static AuctionCalendar myCalendar;
 	static Bidder currentBidder;
 	static Item theItem;
 
@@ -68,7 +68,7 @@ public class BidderGUIaddBid extends JDialog{
 	private JTextArea itemInfo;
 	private JScrollPane scrollPane;
 	
-	public BidderGUIaddBid(Bidder theBidder, Calendar theCalendar, int itemID) {
+	public BidderGUIaddBid(Bidder theBidder, AuctionCalendar theCalendar, int itemID) {
 		
 		currentBidder = theBidder;
 		myCalendar = theCalendar;

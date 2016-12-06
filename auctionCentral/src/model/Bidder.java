@@ -137,7 +137,7 @@ public class Bidder extends User implements Serializable{
 	 * @return true if the bid is a positive number & does not already exist
 	 * @return false if the bid is negative or already exists
 	 */
-	public int addBid(Calendar cal, Item itemToBidOn, double bidOffer) {
+	public int addBid(AuctionCalendar cal, Item itemToBidOn, double bidOffer) {
 		
 //		Bid newBid = createBid(bidOffer, itemToBidOn, cal);
 		
@@ -178,7 +178,7 @@ public class Bidder extends User implements Serializable{
 	 * @return true if the bid is a positive number & does not already exist
 	 * @return false if the bid is negative or already exists
 	 */
-	public int addBidGUI(Calendar cal, Item itemToBidOn, double bidOffer) {
+	public int addBidGUI(AuctionCalendar cal, Item itemToBidOn, double bidOffer) {
 		
 		int bidAccepted = 1;
 		int bidBelowMinBid = 2;
@@ -224,7 +224,7 @@ public class Bidder extends User implements Serializable{
 	 * @return 2 if the bid is found but may not be canceled do to the date of the auction
 	 * @return 3 if the bid does not exist
 	 */
-	public int bidRemovalRequest(int itemID, Calendar myCalendar){
+	public int bidRemovalRequest(int itemID, AuctionCalendar myCalendar){
 		int bidFoundAndRemovable = 1;
 		int bidFoundButNotRemovable = 2;
 		int bidNotFound = 3;
@@ -303,7 +303,7 @@ public class Bidder extends User implements Serializable{
 	 * @param myCalendar 
 	 * @return str 
 	 */
-	public String printBids(Calendar myCalendar){
+	public String printBids(AuctionCalendar myCalendar){
 		StringBuilder str = new StringBuilder();
 		myCalendar.getAllAuctions();
 		str.append("\n\tItem Number: \tYour Bid:");
@@ -321,7 +321,7 @@ public class Bidder extends User implements Serializable{
 	 * @param myCalendar the system calendar
 	 * @return getItemToBidOn the item for the supplied ID or null if it does not exist
 	 */
-	public Item getItemToBidOn(int itemID, Calendar myCalendar) {
+	public Item getItemToBidOn(int itemID, AuctionCalendar myCalendar) {
 		
 		return myCalendar.getItem(itemID);
 	}
@@ -334,7 +334,7 @@ public class Bidder extends User implements Serializable{
 	 * @param myCalendar the calendar
 	 * @return new Bid Object
 	 */
-	public Bid createBid(double bidOffer, Item itemToBidOn, Calendar myCalendar) {
+	public Bid createBid(double bidOffer, Item itemToBidOn, AuctionCalendar myCalendar) {
 		
 		return new Bid(getMyUserName(), itemToBidOn.getMyItemID(), bidOffer, myCalendar.getAuction(itemToBidOn.getMyItemID()).getMyID());
 
@@ -347,7 +347,7 @@ public class Bidder extends User implements Serializable{
 	 * @param myCalendar
 	 * @return String of all of the bidders current bids
 	 */
-	public String printBidsGUI(Calendar myCalendar) {
+	public String printBidsGUI(AuctionCalendar myCalendar) {
 		StringBuilder str = new StringBuilder();
 		str.append("Item ID\t");
 		str.append("Item name\t");

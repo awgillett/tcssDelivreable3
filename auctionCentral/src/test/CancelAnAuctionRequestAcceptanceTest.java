@@ -7,21 +7,21 @@ import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Calendar;
+import model.AuctionCalendar;
 import model.NPO;
 
 public class CancelAnAuctionRequestAcceptanceTest {
 
-	Calendar theCalendar;
+	AuctionCalendar theCalendar;
 	
 	@Before
 	public void setUp() throws Exception {
-		theCalendar = new Calendar();
+		theCalendar = new AuctionCalendar();
 	}
 
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateExactlyTwoDaysInFuture() {
@@ -32,7 +32,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateLessThanTwoDaysInFuture() {
@@ -43,7 +43,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnDateMoreThanTwoDaysInFuture() {
@@ -54,7 +54,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnNoAuctions() {
@@ -63,7 +63,7 @@ public class CancelAnAuctionRequestAcceptanceTest {
 	}
 	
 	/**
-	 * Test method for {@link model.Calendar#deleteAuction(java.lang.String)}.
+	 * Test method for {@link model.AuctionCalendar#deleteAuction(java.lang.String)}.
 	 */
 	@Test
 	public void testCannotCancelAuctionWithinTwoDaysOnMultipleAuctions() {
