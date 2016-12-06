@@ -26,6 +26,7 @@ public class HomeGUI implements ActionListener{
 	
 	NPOGUI startNPOGUI;
 	BidderGUI startBidderGUI;
+	StaffGUI startStaffGUI;
 
 	
 	private JTextField userText;
@@ -138,6 +139,7 @@ public class HomeGUI implements ActionListener{
 			}else if(curUser.getUserType().equals("Bidder")){
 				//go to BidderGUI
 				startBidderGUI = new BidderGUI((Bidder)curUser, myCalendar); 
+				startBidderGUI.setModal(true);
 				//startBidderGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startBidderGUI.getFrame().setVisible(true);
 				userText.setText("");
@@ -146,7 +148,15 @@ public class HomeGUI implements ActionListener{
 //				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			}else{
 				//go to StaffGUI
-				startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());
+				//startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());
+
+				startStaffGUI = new StaffGUI((Staff)curUser, myCalendar); 
+				//startBidderGUI.setModal(true);
+				startStaffGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+				startStaffGUI.setVisible(true);
+				userText.setText("");
+				curUser = null;
+				myFrame.setVisible(false);
 				//StaffGUI startStaff = new NPOGUI(startStaff, myCalendar);
 				//startNPOGUI.setModal(true);
 				//startStaff.setVisible(true);

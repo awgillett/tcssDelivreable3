@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,7 +36,7 @@ import model.Auction;
 import model.AuctionCalendar;
 import model.NPO;
 
-public class StaffGUI extends JFrame {
+public class StaffGUI extends JDialog{
 
 	// Class constants
 	public static final int WIDTH = 800;
@@ -78,14 +79,14 @@ public class StaffGUI extends JFrame {
 	 * GUI constructor
 	 */
 	public StaffGUI(Staff theStaff, AuctionCalendar theAuctionCalendar) {
-		super("Auction Central");
+		//super("Auction Central");
 		curStaff = theStaff;
 		theAucCal = theAuctionCalendar;
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(minimumSize);
 
-		testData();
+		//testData();
 		myAuctionList = new ArrayList(theAucCal.getAllAuctions());
 		
 
@@ -118,7 +119,8 @@ public class StaffGUI extends JFrame {
 		logout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				System.exit(0);
+				MainGUI.myFrame.setVisible(true);
+				//System.exit(0);
 			}
 		});
 		myContentPane.add(logout);
@@ -346,16 +348,16 @@ public class StaffGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StaffGUI window = new StaffGUI(new Staff("Dracula", "Vlad"), new AuctionCalendar());
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					StaffGUI window = new StaffGUI(new Staff("Dracula", "Vlad"), new AuctionCalendar());
+//					window.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }
