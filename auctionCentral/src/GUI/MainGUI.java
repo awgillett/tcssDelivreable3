@@ -1,11 +1,7 @@
 package GUI;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -19,7 +15,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.Auction;
@@ -28,23 +23,15 @@ import model.AuctionCalendar;
 import model.NPO;
 import model.Staff;
 import model.User;
-import java.awt.GridLayout;
 
-
-
-
-//<<<<<<< HEAD
 public class MainGUI{
-//=======
-//public class MainGUI implements MouseListener{
-//>>>>>>> refs/heads/JesseBranch
+
 	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
 	int WINDOWHEIGHT = 500;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int screenHeight = ((int) screenSize.getHeight()/2) - WINDOWHEIGHT/2;
 	int screenWidth = ((int) screenSize.getWidth()/2) - WINDOWWIDTH/2;
 
-	
 	private static final Toolkit KIT = Toolkit.getDefaultToolkit();
 	private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
 	
@@ -66,7 +53,7 @@ public class MainGUI{
 
 	}
 	
-	
+
 	public void start(){
 		setupFrame();
 		addLoginPanel();
@@ -101,8 +88,6 @@ public class MainGUI{
         
     }
     
-
-	
 	private void save() {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(calFileName + ".ser");
@@ -206,82 +191,6 @@ public class MainGUI{
 				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
 			}
 		}
-		
-		
-//		for (int i = 0; i < 26; i++)
-//		{
-//			char ch;
-//
-//			ch = (char) ((i) + 'a');
-//			userList.add(new NPO("NPO" + ch, Character.toString(ch)));
-//			userList.add(new Bidder("Bidder" + ch, Character.toString(ch), "111-1234", "123 Avenue", ch + "@hotmail.com", "CC 12345678"));
-//		}
-//		
-//		int count = 20;
-//		int month = 11;
-//		for ( User u : userList)
-//		{
-//			if (u.getUserType().equals("NPO"))
-//			{
-//				myCalendar.addAuction((NPO) u, LocalDateTime.of(2016, month, count, 12, 00), 0, "");
-//				if (count >= 30)
-//				{
-//					count = 0;
-//					month = 12;
-//				}
-//				count++;
-//			}
-//		}
-//		
-//		for (Auction a : myCalendar.getAllAuctions())
-//		{
-//			for (int i = 0; i < 10; i++)
-//			{
-//				char ch;
-//
-//				ch = (char) ((i) + 'a');
-//				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
-//			}
-//		}
-//<<<<<<< HEAD
-//=======
-//		
-//	}
-//
-//
-//	@Override
-//	public void mouseClicked(MouseEvent e) {
-//		System.out.println("X: " + e.getX());
-//		System.out.println("Y: " + e.getY());
-//
-//	}
-//
-//
-//	@Override
-//	public void mouseEntered(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//
-//	@Override
-//	public void mouseExited(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//
-//	@Override
-//	public void mousePressed(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//
-//	@Override
-//	public void mouseReleased(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//>>>>>>> refs/heads/JesseBranch
 		
 	}
 	

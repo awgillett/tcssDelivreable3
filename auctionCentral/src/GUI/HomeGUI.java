@@ -11,7 +11,6 @@ import javax.swing.JDialog;
 import model.*;
 import model.AuctionCalendar;
 
-
 public class HomeGUI implements ActionListener{
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
@@ -108,7 +107,6 @@ public class HomeGUI implements ActionListener{
         });
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		for(User user : userList){
@@ -121,26 +119,19 @@ public class HomeGUI implements ActionListener{
 		if (curUser != null){
 			System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			if(curUser.getUserType().equals("NPO")){
-				//go to NPOGUI
-				//startNPO = new NPO(curUser.getMyUserName(),curUser.getMyName());
-//<<<<<<< HEAD
-//				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar);
-//				startNPOGUI.getFrame().setVisible(true);
-//				myFrame.dispose();
-//=======
+				//go to BidderGUI
 				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
 				startNPOGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startNPOGUI.getFrame().setVisible(true);
 				userText.setText("");
 				curUser = null;
 				myFrame.setVisible(false);
-//>>>>>>> refs/heads/JesseBranch
 
 			}else if(curUser.getUserType().equals("Bidder")){
 				//go to BidderGUI
 				startBidderGUI = new BidderGUI((Bidder)curUser, myCalendar); 
-				startBidderGUI.setModal(true);
-				//startBidderGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+				//startBidderGUI.setModal(true);
+				startBidderGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startBidderGUI.getFrame().setVisible(true);
 				userText.setText("");
 				curUser = null;
@@ -148,8 +139,6 @@ public class HomeGUI implements ActionListener{
 //				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			}else{
 				//go to StaffGUI
-				//startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());
-
 				startStaffGUI = new StaffGUI((Staff)curUser, myCalendar); 
 				//startBidderGUI.setModal(true);
 				startStaffGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -157,19 +146,12 @@ public class HomeGUI implements ActionListener{
 				userText.setText("");
 				curUser = null;
 				myFrame.setVisible(false);
-				//StaffGUI startStaff = new NPOGUI(startStaff, myCalendar);
-				//startNPOGUI.setModal(true);
-				//startStaff.setVisible(true);
 			}
-			
-			
 		} else{
 			JOptionPane.showMessageDialog(null, "username doesn't exist, please try again");
 			System.out.println("username doesn't exist, please try again");
 			message.setText("Please try again");
 			userText.setText("");
 		}
-		
 	}
-
 }

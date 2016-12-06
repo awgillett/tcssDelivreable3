@@ -98,7 +98,6 @@ public class RegisterGUI implements ActionListener {
 		bidder.setToolTipText("Click here to register as a Bidder.");
 		contentPane.add(bidder);
 		bidder.addActionListener(this);
-		
 	}
 	
 	private void addBidderRegisterPanel(){
@@ -268,7 +267,7 @@ public class RegisterGUI implements ActionListener {
 	}
 	
 	/**
-	 * this method add staff or NPO to user list
+	 * This method adds staff or NPO to user list
 	 */
 	private void addUser(){
 		if (UserType.equals("NPO")){
