@@ -41,6 +41,7 @@ public class NPOGUI extends JDialog{
 	private JButton btnRequest;
 	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEEE, MMMM" + " d yyyy, hh:mm a");
 
+//<<<<<<< HEAD
 //	/**
 //	 * Launch the application.
 //	 */
@@ -56,6 +57,23 @@ public class NPOGUI extends JDialog{
 //			}
 //		});
 //	}
+//=======
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					NPOGUI window = new NPOGUI(new NPO("Joey", "Joe"), new AuctionCalendar());
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+//>>>>>>> refs/heads/PatrickBranch
 
 	/**
 	 * Create the application.

@@ -291,6 +291,7 @@ public class AuctionCalendar implements Serializable {
 		}
 		return null;
 	}
+//<<<<<<< HEAD
 
 	public Auction getAuctionWithAucID(String npoName){
 		Auction auction = null;
@@ -303,4 +304,7 @@ public class AuctionCalendar implements Serializable {
 		return auction;
 	}
 
+//=======
+//
+//>>>>>>> refs/heads/PatrickBranch
 }

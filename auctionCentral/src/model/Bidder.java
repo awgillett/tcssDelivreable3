@@ -340,6 +340,7 @@ public class Bidder extends User implements Serializable{
 
 		
 	}
+//<<<<<<< HEAD
 	/**
 	 * @author aaron
 	 * Prints a string showing all of the bidders bids. 
@@ -348,6 +349,11 @@ public class Bidder extends User implements Serializable{
 	 * @return String of all of the bidders current bids
 	 */
 	public String printBidsGUI(AuctionCalendar myCalendar) {
+//=======
+//
+//	public String printBidsGUI(AuctionCalendar myCalendar) {
+//		
+//>>>>>>> refs/heads/PatrickBranch
 		StringBuilder str = new StringBuilder();
 		str.append("Item ID\t");
 		str.append("Item name\t");

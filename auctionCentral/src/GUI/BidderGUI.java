@@ -60,9 +60,20 @@ public class BidderGUI extends JDialog{
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 	Border border = BorderFactory.createEmptyBorder( 0, 0, 0, 0 );
 
+//<<<<<<< HEAD
 	private JFrame myFrame;
 	static AuctionCalendar myCalendar = null;
 	static Bidder currentBidder = null;
+//=======
+
+//public class BidderGUI{
+//	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM"			+ " d yyyy, hh:mm a");
+//
+//	protected JFrame myFrame = new JFrame();
+//	
+//	static AuctionCalendar myCalendar;
+//	static Bidder currentBidder;
+//>>>>>>> refs/heads/PatrickBranch
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
 	private static String loggedInAs = "You are signed in as: ";
@@ -74,6 +85,7 @@ public class BidderGUI extends JDialog{
 	public Font mainFont = new Font("Tahoma", Font.PLAIN, 15);
 	Font mainHeaderFont = new Font("Tahoma", Font.BOLD, 22);
 	
+//<<<<<<< HEAD
 	private BidderGUIviewItems viewItems;
 	private BidderGUIeditBid editBid;
 	
@@ -96,6 +108,8 @@ public class BidderGUI extends JDialog{
 //		});
 //	}
 	
+//=======
+//>>>>>>> refs/heads/PatrickBranch
 	public BidderGUI(Bidder theBidder, AuctionCalendar theCalendar) {
 		
 		currentBidder = theBidder;
@@ -288,12 +302,19 @@ public class BidderGUI extends JDialog{
 	 */
 	private static void testBidderInit() {
 		
+//<<<<<<< HEAD
 		Bidder testBidder = new Bidder("userName","Mr Bidder","address","phone","email","payInfo");
 		AuctionCalendar testCalendar = new AuctionCalendar();
 		NPO testNpoA = new NPO("NPOa", "goodwill");
 		NPO testNpoB = new NPO("NPOb", "st matthews");
 		NPO testNpoC = new NPO("NPOc", "compassion int");
 		NPO testNpoD = new NPO("NPOd", "red cross");
+//=======
+//		Bidder testBidder = new Bidder("userName","name","address","phone","email","payInfo");
+//		AuctionCalendar testCalendar = new AuctionCalendar();
+//		NPO testNpoA = new NPO("NPOa", "npoa");
+//		NPO testNpoB = new NPO("NPOb", "npob");
+//>>>>>>> refs/heads/PatrickBranch
 		
 		Auction testAuctionA = new Auction(testNpoA, LocalDateTime.now().plusDays(7), 10, "Notes", 1);
 		Auction testAuctionB = new Auction(testNpoB, LocalDateTime.now().plusDays(10), 10, "Notes", 1);
