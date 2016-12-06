@@ -140,9 +140,14 @@ public class StaffGUI extends JFrame {
 		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size());
 		//totalScheduled.setFont(subMenuFont);
 		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		JLabel possibleScheduled = new JLabel("Number of Auctions Allowed");
+		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 
 		header.add(welcome);
 		header.add(totalScheduled);
+		header.add(possibleScheduled);
 		myContentPane.add(header);
 	}
 
