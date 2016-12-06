@@ -130,7 +130,9 @@ public class HomeGUI implements ActionListener{
 				startNPOGUI = new NPOGUI((NPO)curUser, myCalendar); 
 				startNPOGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startNPOGUI.getFrame().setVisible(true);
-				myFrame.dispose();
+				userText.setText("");
+				curUser = null;
+				myFrame.setVisible(false);
 //>>>>>>> refs/heads/JesseBranch
 
 			}else if(curUser.getUserType().equals("Bidder")){
@@ -138,8 +140,10 @@ public class HomeGUI implements ActionListener{
 				startBidderGUI = new BidderGUI((Bidder)curUser, myCalendar); 
 				//startBidderGUI.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				startBidderGUI.getFrame().setVisible(true);
-				myFrame.dispose();
-				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
+				userText.setText("");
+				curUser = null;
+				myFrame.setVisible(false);
+//				System.out.println(curUser.getMyUserName() + " is logged in as " + curUser.getUserType());
 			}else{
 				//go to StaffGUI
 				startStaff = new Staff(curUser.getMyUserName(),curUser.getMyName());

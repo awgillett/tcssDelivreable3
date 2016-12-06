@@ -170,7 +170,8 @@ public class BidderGUI extends JDialog{
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				myFrame.dispose();
-				System.exit(0);
+				MainGUI.myFrame.setVisible(true);
+//				System.exit(0);
 			}
 		});
 		btnLogOut.setFont(mainFont);
