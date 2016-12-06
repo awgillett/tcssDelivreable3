@@ -44,7 +44,7 @@ public class CancelAnItemInAnAuction {
 	 * Test method for {@link model.Auction#testRemoveItemBeforeTwoDayDeadline()}.
 	 */
 	@Test 
-	public void testRemoveItemBeforeTwoDayDeadline() {
+	public void testNoItemMayBeRemovedLessThan2DaysRemoveItemBeforeTwoDayDeadline() {
 		int removedItem = 1;
 		theAuction.addItem(painting);
 		theAuction.addItem(lamp);
@@ -54,7 +54,7 @@ public class CancelAnItemInAnAuction {
 	 * Test method for {@link model.Auction#testRemoveItemAfterTwoDayDeadline()}.
 	 */
 	@Test
-	public void testRemoveItemAfterTwoDayDeadline() {
+	public void testNoItemMayBeRemovedLessThan2DaysRemoveItemAfterTwoDayDeadline() {
 		LocalDate Today = LocalDateTime.now().toLocalDate();
 		int OneDayOut = Today.getDayOfMonth()+1;
 		int tooLateDate = 3;
@@ -67,7 +67,7 @@ public class CancelAnItemInAnAuction {
 	 * Test method for {@link model.Auction#testRemoveItemOnTwoDayDeadline()}.
 	 */
 	@Test
-	public void testRemoveItemOnTwoDayDeadline() {
+	public void testNoItemMayBeRemovedLessThan2DaysRemoveItemOnTwoDayDeadline() {
 		LocalDate Today = LocalDateTime.now().toLocalDate();
 		int TwoDaysOut = Today.getDayOfMonth()+2;
 		int removedItem = 1;
@@ -80,7 +80,7 @@ public class CancelAnItemInAnAuction {
 	 * Test method for {@link model.Auction#testRemoveItemOnTwoDayDeadline()}.
 	 */
 	@Test
-	public void testRemoveItemThatDoesNotExist() {
+	public void testNoItemMayBeRemovedLessThan2DaysRemoveItemThatDoesNotExist() {
 		int itemNotFound = 2;
 		theAuction.addItem(painting);
 		assertEquals(itemNotFound, theAuction.removeItem(lamp));
@@ -89,7 +89,7 @@ public class CancelAnItemInAnAuction {
 	 * Test method for {@link model.Auction#testRemoveItemWithNoItem()}.
 	 */
 	@Test
-	public void testRemoveItemWithNoItemInList() {
+	public void testNoItemMayBeRemovedLessThan2DaysRemoveItemWithNoItemInList() {
 		int itemNotFound = 2;
 		assertEquals(itemNotFound, theAuction.removeItem(lamp));
 	}
