@@ -313,9 +313,9 @@ public class NPOGUI extends JDialog{
 			auctionInfo = "You have no upcoming auctions.";
 		} else {
 			curAuction = curCalendar.getAuction(curNPO);
-			curAuction.addItem("Car", "Dr Phil", "Good", "Medium", "No Notes", "Honda Civic", 1000);
-			curAuction.addItem("Calculator", "Dr Phill", "Good", "Medium", "No Notes", "TI NSpire CAS", 40);
-			curAuction.addItem("Football", "Sherman", "Good", "Medium", "No Notes", "Seahawks signed football", 40);
+//			curAuction.addItem("Car", "Dr Phil", "Good", "Medium", "No Notes", "Honda Civic", 1000);
+//			curAuction.addItem("Calculator", "Dr Phill", "Good", "Medium", "No Notes", "TI NSpire CAS", 40);
+//			curAuction.addItem("Football", "Sherman", "Good", "Medium", "No Notes", "Seahawks signed football", 40);
 			auctionInfo = "<html>Auction Overview:<br>" + "Auction Date: "
 					+ curAuction.getAuctionDate().format(dateFormat) + "<br>" + "You have "
 					+ curAuction.getMyItemList().size() + " items currently listed in this auction.</html>";

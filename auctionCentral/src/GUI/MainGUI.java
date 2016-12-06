@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.Auction;
 import model.Bidder;
@@ -51,7 +54,7 @@ public class MainGUI{
 
 	protected static ArrayList<User> userList = new ArrayList();
 	
-	private String fileName = "";
+	private String userFileName = "", calFileName = "";
 
 	private JFileChooser file;
 
@@ -67,13 +70,13 @@ public class MainGUI{
 	public void start(){
 		setupFrame();
 		addLoginPanel();
-		openSavedFile();
 		myFrame.setVisible(true);
 
 	}
 	
 	private void addLoginPanel(){
 		file = new JFileChooser();
+		openSavedFile();
 		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
@@ -88,14 +91,19 @@ public class MainGUI{
         myFrame.setBounds(0, 0, WINDOWWIDTH, WINDOWHEIGHT);
         myFrame.setLocation(SCREEN_SIZE.width / 2 - myFrame.getWidth() / 2,
                     SCREEN_SIZE.height / 2 - myFrame.getHeight() / 2);
+        myFrame.addWindowListener(new WindowAdapter() {
+        	@Override public void windowClosing(WindowEvent e) {
+        		saveFile();
+        	}
+        });
         
     }
     
 
 	
-	private void saveAndExit() {
+	private void save() {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("./Calendar.ser");
+			FileOutputStream fileOut = new FileOutputStream(calFileName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(myCalendar);
 			out.close();
@@ -106,7 +114,7 @@ public class MainGUI{
 		}
 
 		try {
-			FileOutputStream fileOut2 = new FileOutputStream("./Users.ser");
+			FileOutputStream fileOut2 = new FileOutputStream(userFileName);
 			ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
 			out2.writeObject(userList);
 			out2.close();
@@ -118,23 +126,23 @@ public class MainGUI{
 	}
 	
 	private void load() {
-//		try {
-//			FileInputStream fileIn = new FileInputStream("./Calendar.ser");
-//			ObjectInputStream in = new ObjectInputStream(fileIn);
-//			myCalendar = (Calendar) in.readObject();
-//			in.close();
-//			fileIn.close();
-//		} catch (IOException i) {
-//			i.printStackTrace();
-//			return;
-//		} catch (ClassNotFoundException c) {
-//			System.out.println("Calendar class not found");
-//			c.printStackTrace();
-//			return;
-//		}
+		try {
+			FileInputStream fileIn = new FileInputStream(calFileName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			myCalendar = (AuctionCalendar) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Calendar class not found");
+			c.printStackTrace();
+			return;
+		}
 
 		try {
-			FileInputStream fileIn = new FileInputStream(fileName);
+			FileInputStream fileIn = new FileInputStream(userFileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			userList = (ArrayList<User>) in.readObject();
 			in.close();
@@ -182,6 +190,17 @@ public class MainGUI{
 					year = LocalDateTime.now().getYear();
 				}
 				count++;
+			}
+		}
+		
+		for (Auction a : myCalendar.getAllAuctions())
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				char ch;
+
+				ch = (char) ((i) + 'a');
+				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
 			}
 		}
 		
@@ -264,12 +283,30 @@ public class MainGUI{
 	}
 	
 	private void openSavedFile() {
+		file.setFileFilter(new FileNameExtensionFilter("ser file","ser"));
 		int result = file.showOpenDialog(myFrame);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = file.getSelectedFile();
-            fileName = selectedFile.getAbsolutePath();
+            userFileName = selectedFile.getAbsolutePath();
+            file.showOpenDialog(myFrame);
+            selectedFile = file.getSelectedFile();
+            calFileName = selectedFile.getAbsolutePath();
+            load();
 		} else
 			preLoad();
+	}
+	
+	private void saveFile() {
+		file.setFileFilter(new FileNameExtensionFilter("ser file","ser"));
+		int result = file.showOpenDialog(myFrame);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = file.getSelectedFile();
+            userFileName = selectedFile.getAbsolutePath();
+            file.showOpenDialog(myFrame);
+            selectedFile = file.getSelectedFile();
+            calFileName = selectedFile.getAbsolutePath();
+            save();
+		}
 	}
 
 }
