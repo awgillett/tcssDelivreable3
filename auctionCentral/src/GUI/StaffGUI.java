@@ -326,8 +326,7 @@ public class StaffGUI extends JDialog{
 							temp.setBackground(Color.RED);
 							temp.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
-									//details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2,
-											theAucCal);
+									//details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2, theAucCal);
 									// details.setVisible(true);
 								}
 							});
