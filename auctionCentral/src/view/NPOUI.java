@@ -181,7 +181,7 @@ public class NPOUI {
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
-				if (myCalendar.addAuction(curNPO, auctionDate, items, notes))
+				if (myCalendar.addAuction(curNPO, auctionDate, items, notes) == 3)
 					auctionCreatedScreen();
 				else
 				{
@@ -322,7 +322,7 @@ public class NPOUI {
 		System.out.println("");
 		System.out.println("What Item would you like to remove, please selllect the item you wnt to remove? ");
 		//need to use a button to ad the item.
-		Item itemToRemove = itemRemove;
+		Item itemToRemove = null;
 		System.out.println("are you sure you want to remove " + itemToRemove + "? ");
 		
 		while (choice != 1 && choice != 2 && choice != 3 && choice != EXIT) {

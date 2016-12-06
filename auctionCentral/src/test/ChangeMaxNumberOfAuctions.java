@@ -27,36 +27,6 @@ public class ChangeMaxNumberOfAuctions {
 	
 	
 	@Test
-	public void testIsValidMaxNumberOfAuctionOnNegativeValue(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(-1));
-	}
-	
-	@Test
-	public void testIsValidMaxNumberOfAuctionOnZero(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(0));
-	}
-	
-	@Test
-	public void testIsValidMaxNumberOfAuctionOnLessThanCurrentMaxNumberOfAuction(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(20));
-	}
-	
-	@Test
-	public void testIsValidMaxNumberOfAuctionOnEqualToCurrentMaxNumberOfAuction(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(myCalendar.getMaxNumberOfAuction()));
-	}
-	
-	@Test
-	public void testIsValidMaxNumberOfAuctionOnMoreThanTotalNumberOfAuctionInOneMonth(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(70));
-	}
-	
-	@Test
-	public void testIsValidMaxNumberOfAuctionOnLessThanTotalNumberOfAuctionInOneMonth(){
-		assertTrue(myCalendar.isValidMaxNumberOfAuction(50));
-	}
-	
-	@Test
 	public void testChangeMaxNumberOfAuctionOnMaxValueChanged(){
 		ArrayList<User> userList = new ArrayList();
 		NPO theNPO = new NPO("er", "e");

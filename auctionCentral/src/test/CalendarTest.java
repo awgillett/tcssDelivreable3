@@ -197,12 +197,12 @@ public class CalendarTest {
 	
 	@Test
 	public void testIsValidMaxNumberOfAuctionOnLessThanCurrentMaxNumberOfAuction(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(20));
+		assertTrue(myCalendar.isValidMaxNumberOfAuction(20));
 	}
 	
 	@Test
 	public void testIsValidMaxNumberOfAuctionOnEqualToCurrentMaxNumberOfAuction(){
-		assertFalse(myCalendar.isValidMaxNumberOfAuction(myCalendar.getMaxNumberOfAuction()));
+		assertTrue(myCalendar.isValidMaxNumberOfAuction(myCalendar.getMaxNumberOfAuction()));
 	}
 	
 	@Test
