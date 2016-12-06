@@ -28,7 +28,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Staff;
 import model.User;
@@ -85,15 +89,11 @@ public class StaffGUI extends JDialog{
 
 		//setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(minimumSize);
+		this.setResizable(false);
 
 		//testData();
 		myAuctionList = new ArrayList(theAucCal.getAllAuctions());
 		
-
-		System.out.println(yesterday);
-		System.out.println(today);
-		System.out.println(tomorrow);
-
 		initComponents();
 
 		pack();
@@ -139,17 +139,32 @@ public class StaffGUI extends JDialog{
 		welcome.setFont(mainFont);
 		welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size());
-		//totalScheduled.setFont(subMenuFont);
-		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size() + "               ");
+		totalScheduled.setFont(subMenuFont);
+		totalScheduled.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		JLabel possibleScheduled = new JLabel("Number of Auctions Allowed");
-		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JLabel possibleScheduled = new JLabel("               Number of Auctions Allowed");
+		possibleScheduled.setFont(subMenuFont);
+		possibleScheduled.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		
+		SpinnerNumberModel spinModel = new SpinnerNumberModel(25, myAuctionList.size(), AuctionCalendar.TOTAL_NUMBER_OF_AUCTION_ALLOWED, 1);
+		JSpinner chooseAllowableAuc = new JSpinner(spinModel);
+		chooseAllowableAuc.addChangeListener(new ChangeListener() {      
+			  public void stateChanged(ChangeEvent e) {
+			    theAucCal.setMaxNumberOfAuction((int)chooseAllowableAuc.getValue());
+			    //System.out.println((int)chooseAllowableAuc.getValue());
+			  }
+			});
 
-		header.add(welcome);
+		JLabel spacer1 = new JLabel();
+		JLabel spacer2 = new JLabel();
+		
 		header.add(totalScheduled);
+		//header.add(spacer2);
+		header.add(welcome);
 		header.add(possibleScheduled);
+		header.add(chooseAllowableAuc);
 		myContentPane.add(header);
 	}
 
@@ -187,6 +202,7 @@ public class StaffGUI extends JDialog{
 		nextMonth.setFont(subMenuFont);
 		JButton prevMonth = new JButton("<<<");
 		prevMonth.setFont(subMenuFont);
+		prevMonth.setEnabled(false);
 
 		// Updates calendar to previous month.
 		prevMonth.addActionListener(new ActionListener() {
@@ -240,8 +256,7 @@ public class StaffGUI extends JDialog{
 		// Clear the slate for all new date buttons.
 		calendarDates.removeAll();
 		calendarDates.repaint();
-		int tomorrowDate = curCal.get(Calendar.DAY_OF_MONTH) + 1; // Tomorrow
-		System.out.println("Tomorrow = " + tomorrowDate);
+		int tomorrowDate = curCal.get(Calendar.DAY_OF_MONTH) + 1; // Tomorrow\
 		curCal.set(Calendar.DAY_OF_MONTH, 1);
 
 		// calendarHeader content.
@@ -295,13 +310,9 @@ public class StaffGUI extends JDialog{
 							buttonText = "<html>" + Integer.toString(tempCurDate) + "<br>" + ": " + labelNPO1
 									+ "<html>";
 							temp.setBackground(Color.YELLOW);
-							System.out.println(labelNPO1 + "***");
-							// At least 1 auction scheduled. Button will open
-							// JDialog.
 							temp.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
-									System.out.println("Press");
-									details = new AuctionDetailsGUI(myAuc1.getNPO(), null, myAuc1, null, theAucCal);
+									//details = new AuctionDetailsGUI(myAuc1.getNPO(), null, myAuc1, null, theAucCal);
 									// details.setModal(true);
 								}
 							});
@@ -313,12 +324,9 @@ public class StaffGUI extends JDialog{
 							buttonText = "<html>" + Integer.toString(tempCurDate) + "<br>" + ": " + labelNPO1 + "<br>"
 									+ ":" + labelNPO2 + "<html>";
 							temp.setBackground(Color.RED);
-							System.out.println(labelNPO2 + "~~~");
 							temp.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
-									System.out.println("Press");
-									details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2,
-											theAucCal);
+									//details = new AuctionDetailsGUI(myAuc1.getNPO(), myAuc2.getNPO(), myAuc1, myAuc2, theAucCal);
 									// details.setVisible(true);
 								}
 							});
