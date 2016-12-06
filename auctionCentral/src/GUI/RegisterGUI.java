@@ -12,7 +12,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
+/* The RegisterGUI allows the user to register as an NPO, Staff, or Bidder
+ * @author Tran, Wiklanski
+ * @version 12/5/2016
+ */
 public class RegisterGUI implements ActionListener {
 	
 	private static String welcomeBanner = "Welcome to Auction Central";

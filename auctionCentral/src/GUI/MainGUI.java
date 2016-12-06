@@ -23,7 +23,10 @@ import model.AuctionCalendar;
 import model.NPO;
 import model.Staff;
 import model.User;
-
+/* The MainGUI creates the home screen and files
+ * @author Tran, Wiklanski
+ * @version 12/5/2016
+ */
 public class MainGUI{
 
 	int WINDOWWIDTH = 801; //I made this 701 because 700 caused an issue not sure why yet
@@ -53,7 +56,6 @@ public class MainGUI{
 
 	}
 	
-
 	public void start(){
 		setupFrame();
 		addLoginPanel();
@@ -220,5 +222,4 @@ public class MainGUI{
             save();
 		}
 	}
-
 }

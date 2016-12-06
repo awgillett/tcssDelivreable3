@@ -7,10 +7,12 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
-
 import model.*;
 import model.AuctionCalendar;
-
+/* The HomeGUI holds the welcome menu that asks the user to login or register
+ * @author Tran, Wiklanski
+ * @version 12/5/2016
+ */
 public class HomeGUI implements ActionListener{
 	
 	private static String welcomeBanner = "Welcome to Auction Central";
