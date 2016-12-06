@@ -251,7 +251,7 @@ public class RegisterGUI implements ActionListener {
 		    		+ "\n Payment Info.: " + paymentText.getText(), "Confirmation", JOptionPane.YES_NO_OPTION);
 		}
         if (reply == JOptionPane.YES_OPTION) {
-          JOptionPane.showMessageDialog(myFrame, "You are done with your registration", "Congratulation", 1);
+          JOptionPane.showMessageDialog(myFrame, "You are now registered as " + UserType , "Congratulation", 1);
           addUser();
           myFrame.dispose();
         }
