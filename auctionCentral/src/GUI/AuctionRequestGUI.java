@@ -314,7 +314,7 @@ public class AuctionRequestGUI extends JDialog {
 												+ "7 days out", "Auction not added", 0);
 			} else if (result == 2) {
 				JOptionPane.showMessageDialog(this, "I am sorry but we are currently not accepting new auctions please"
-												+ "try again later", "Auction not added", 0);
+												+ " try again later", "Auction not added", 0);
 			} else if (result == 3) {
 				JOptionPane.showMessageDialog(this, "I am sorry this day is full please choose another day", "Auction not added", 0);
 			} else if (result == 4){
