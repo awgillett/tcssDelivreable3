@@ -238,13 +238,13 @@ public class RegisterGUI implements ActionListener {
 		int reply;
 		if (UserType.equals("NPO") || UserType.equals("Staff")){
 			
-			reply = JOptionPane.showConfirmDialog(null, "Please confirm your informations: "
-		    		+ "\n Your are registering as: " + UserType
+			reply = JOptionPane.showConfirmDialog(null, "Please confirm your information: "
+		    		+ "\n You are registering as: " + UserType
 		    		+ "\n Name: " + nameText.getText()
 		    		+ "\n Username: " + usernameText.getText(), "Confirmation", JOptionPane.YES_NO_OPTION);
 		} else {
-			reply = JOptionPane.showConfirmDialog(null, "Please confirm your informations: "
-		    		+ "\n Your are registering as: " + UserType
+			reply = JOptionPane.showConfirmDialog(null, "Please confirm your information: "
+		    		+ "\n You are registering as: " + UserType
 		    		+ "\n Name: " + nameText.getText()
 		    		+ "\n Username: " + usernameText.getText()
 		    		+ "\n Address: " + addressText.getText()
