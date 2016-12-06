@@ -64,7 +64,7 @@ public class HomeGUI implements ActionListener{
 	
 	private void addTextBox(){
 		userText = new JTextField(20);
-		userText.setBounds(baseX + 110, baseY + 85, 160, 25);
+		userText.setBounds(baseX + 110, baseY + 85, 244, 25);
 		
 		myFrame.getContentPane().add(userText);
 		userText.addActionListener(this);
