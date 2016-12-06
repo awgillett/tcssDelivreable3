@@ -89,6 +89,7 @@ public class StaffGUI extends JDialog{
 
 		//setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(minimumSize);
+		this.setResizable(false);
 
 		//testData();
 		myAuctionList = new ArrayList(theAucCal.getAllAuctions());
