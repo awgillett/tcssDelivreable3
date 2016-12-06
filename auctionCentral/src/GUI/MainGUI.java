@@ -170,6 +170,7 @@ public class MainGUI{
 			char ch;
 			ch = (char) ((i) + 'a');
 			userList.add(new NPO("NPO" + ch, Character.toString(ch)));
+			userList.add(new Bidder("Bidder" + ch, Character.toString(ch), "", "", "", ""));
 		}
 		
 		int count = LocalDateTime.now().plusDays(7).getDayOfMonth();
