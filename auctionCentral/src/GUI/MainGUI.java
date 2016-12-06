@@ -59,7 +59,6 @@ public class MainGUI{
 	
 	MainGUI GUI = new MainGUI();
 	
-	GUI.preLoad();
 	GUI.start();
 
 	}
@@ -68,12 +67,13 @@ public class MainGUI{
 	public void start(){
 		setupFrame();
 		addLoginPanel();
+		openSavedFile();
 		myFrame.setVisible(true);
 
 	}
 	
 	private void addLoginPanel(){
-		JFileChooser file = new JFileChooser();
+		file = new JFileChooser();
 		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
@@ -268,7 +268,8 @@ public class MainGUI{
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = file.getSelectedFile();
             fileName = selectedFile.getAbsolutePath();
-		}
+		} else
+			preLoad();
 	}
 
 }
