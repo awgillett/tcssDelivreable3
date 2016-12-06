@@ -274,34 +274,4 @@ public class CalendarTest {
 	}
 
 
-	/**
-	 * Test method for {@link model.AuctionCalendar#getAuctions(java.util.Date)}.
-	 */
-	@Test
-	public void testGetAuctions() {
-		
-//		ArrayList<Auction> ary = new ArrayList<Auction>();
-//		Auction theAuction = new Auction(a, 3);
-//		ary.add(theAuction);
-//		Auction theNextAuction = new Auction(b, 3);
-//		ary.add(theNextAuction);
-//		Auction theLastAuction = new Auction(c, 3);
-//		ary.add(theLastAuction);
-//		
-//		Collection<Auction> control = ary;
-//		
-//		myCalendar.addAuction(theAuction);
-//		myCalendar.addAuction(theNextAuction);
-//		myCalendar.addAuction(theLastAuction);
-//		
-//		Collection<Auction> auctions = myCalendar.getAuctions();
-//		
-//		assertNotNull(auctions);
-//		assertEquals(auctions.size(), control.size());
-//		assertTrue(auctions.containsAll(control));
-//		assertTrue(control.containsAll(auctions));
-		
-	}
-
-
 }
