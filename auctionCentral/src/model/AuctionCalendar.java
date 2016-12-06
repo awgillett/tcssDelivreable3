@@ -57,7 +57,7 @@ public class AuctionCalendar implements Serializable {
 			return false;
 		} else if (theNumber > TOTAL_NUMBER_OF_AUCTION_ALLOWED) {
 			return false;
-		} else if (theNumber <= maxNumberOfAuction) {
+		} else if (theNumber <= getAllAuctions().size()) {
 			return false;
 		} else {
 			return true;
