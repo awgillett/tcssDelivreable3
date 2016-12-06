@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -57,15 +58,19 @@ public class StaffGUI extends JFrame {
 	private String buttonText;
 	NPO testNPO = new NPO("A+ Charity", "Jose");
 	NPO testNPO1 = new NPO("Charity House", "Fillipa");
+	NPO testNPO3 = new NPO("OK Charity", "Tran");
 	Auction myAuc1;
 	Auction myAuc2;
 
 	private AuctionDetailsGUI details;
 
 	LocalDateTime today = LocalDateTime.now();
-	LocalDateTime tomorrow = today.plus(1, ChronoUnit.DAYS);
+	LocalDateTime tomorrow = today.plusDays(2);
 	LocalDateTime yesterday = tomorrow.minusDays(2);
-	LocalDateTime future = today.plus(10, ChronoUnit.DAYS);
+	LocalDateTime future1 = today.plusDays(10);
+	LocalDateTime future2 = today.plusDays(20);
+	LocalDateTime future3 = today.plusDays(30);
+	LocalDateTime future4 = today.plusDays(40);
 
 	Collection<Auction> myAuctionList;
 
@@ -80,8 +85,9 @@ public class StaffGUI extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(minimumSize);
 
-		myAuctionList = new ArrayList(theAucCal.getAllAuctions());
 		testData();
+		myAuctionList = new ArrayList(theAucCal.getAllAuctions());
+		
 
 		System.out.println(yesterday);
 		System.out.println(today);
@@ -124,19 +130,19 @@ public class StaffGUI extends JFrame {
 	private void createHeader() {
 		// Create welcome header.
 		JPanel header = new JPanel();
-		header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+		header.setLayout(new FlowLayout());
 		
 		JLabel welcome = new JLabel("<html>" + "Staff View" + "<br>" + "Logged in as " + curStaff.getMyUserName()
 				+ "<html>");
 		welcome.setFont(mainFont);
 		welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JLabel login = new JLabel("Logged in as " + curStaff.getMyUserName());
-		login.setFont(subMenuFont);
-		login.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JLabel totalScheduled = new JLabel("Total Auctions Scheduled: " + myAuctionList.size());
+		//totalScheduled.setFont(subMenuFont);
+		totalScheduled.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		header.add(welcome);
-		//header.add(login);
+		header.add(totalScheduled);
 		myContentPane.add(header);
 	}
 
@@ -242,10 +248,8 @@ public class StaffGUI extends JFrame {
 		int daysInMonth = curCal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int tempCurDate = curCal.get(Calendar.DAY_OF_MONTH);
 
-		System.out
-				.println("Current Month: " + month + " Todays date " + tempCurDate + " Tomorrows date " + tomorrowDate);
-
-		// reduce date to # between 1-7
+		
+		// reduce date to # between 0-6
 		if (tempCurDate > 6) {
 			tempCurDate = tempCurDate / 6;
 		}
@@ -326,13 +330,12 @@ public class StaffGUI extends JFrame {
 	}
 
 	private void testData() {
-
-		Auction test1 = new Auction(testNPO, yesterday, 25, " ", 123456);
-		Auction test2 = new Auction(testNPO1, tomorrow, 25, " ", 654321);
-		Auction test3 = new Auction(testNPO1, future, 25, " ", 654321);
-		myAuctionList.add(test1);
-		myAuctionList.add(test2);
-		myAuctionList.add(test3);
+		theAucCal.addAuction(testNPO, yesterday, 25, " ");
+		theAucCal.addAuction(testNPO, today, 25, " ");
+		theAucCal.addAuction(testNPO, future2, 25, " ");
+		theAucCal.addAuction(testNPO1, future2, 25, " ");
+		theAucCal.addAuction(testNPO3, future1, 25, " ");
+		theAucCal.addAuction(testNPO1, future4, 25, " ");
 	}
 
 	/**
