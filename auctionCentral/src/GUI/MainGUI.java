@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -49,7 +50,10 @@ public class MainGUI{
 	protected static AuctionCalendar myCalendar = new AuctionCalendar();
 
 	protected static ArrayList<User> userList = new ArrayList();
+	
+	private String fileName = "";
 
+	private JFileChooser file;
 
 	public static void main(String[] args) {
 	
@@ -69,6 +73,7 @@ public class MainGUI{
 	}
 	
 	private void addLoginPanel(){
+		JFileChooser file = new JFileChooser();
 		HomeGUI Loginpanel = new HomeGUI(userList, myFrame, myCalendar);
 		Loginpanel.startGUI();
 	}
@@ -129,7 +134,7 @@ public class MainGUI{
 //		}
 
 		try {
-			FileInputStream fileIn = new FileInputStream("./Users.ser");
+			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			userList = (ArrayList<User>) in.readObject();
 			in.close();
@@ -150,41 +155,72 @@ public class MainGUI{
 		userList.add(new NPO("seiber", "carl"));
 		userList.add(new Staff("lseiber", "Lindsey"));
 		
-		for (int i = 0; i < 26; i++)
+		for (int i = 0; i < 50; i++)
 		{
 			char ch;
-
 			ch = (char) ((i) + 'a');
 			userList.add(new NPO("NPO" + ch, Character.toString(ch)));
-			userList.add(new Bidder("Bidder" + ch, Character.toString(ch), "111-1234", "123 Avenue", ch + "@hotmail.com", "CC 12345678"));
 		}
 		
-		int count = 20;
-		int month = 11;
+		int count = LocalDateTime.now().plusDays(7).getDayOfMonth();
+		int month = LocalDateTime.now().getMonthValue();
+		int year = LocalDateTime.now().getYear();
 		for ( User u : userList)
 		{
 			if (u.getUserType().equals("NPO"))
 			{
-				myCalendar.addAuction((NPO) u, LocalDateTime.of(2016, month, count, 12, 00), 0, "");
-				if (count >= 30)
+				myCalendar.addAuction((NPO) u, LocalDateTime.of(year, month, count, 12, 00), 0, "");
+				if (count >= 31)
 				{
 					count = 0;
-					month = 12;
+					month = 1;
+					year = LocalDateTime.now().plusYears(1).getYear();
+				} else if (count <= LocalDateTime.now().minusDays(1).getDayOfMonth())
+				{
+					count = LocalDateTime.now().plusDays(7).getDayOfMonth();
+					month = LocalDateTime.now().getMonthValue();;
+					year = LocalDateTime.now().getYear();
 				}
 				count++;
 			}
 		}
 		
-		for (Auction a : myCalendar.getAllAuctions())
-		{
-			for (int i = 0; i < 10; i++)
-			{
-				char ch;
-
-				ch = (char) ((i) + 'a');
-				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
-			}
-		}
+		
+//		for (int i = 0; i < 26; i++)
+//		{
+//			char ch;
+//
+//			ch = (char) ((i) + 'a');
+//			userList.add(new NPO("NPO" + ch, Character.toString(ch)));
+//			userList.add(new Bidder("Bidder" + ch, Character.toString(ch), "111-1234", "123 Avenue", ch + "@hotmail.com", "CC 12345678"));
+//		}
+//		
+//		int count = 20;
+//		int month = 11;
+//		for ( User u : userList)
+//		{
+//			if (u.getUserType().equals("NPO"))
+//			{
+//				myCalendar.addAuction((NPO) u, LocalDateTime.of(2016, month, count, 12, 00), 0, "");
+//				if (count >= 30)
+//				{
+//					count = 0;
+//					month = 12;
+//				}
+//				count++;
+//			}
+//		}
+//		
+//		for (Auction a : myCalendar.getAllAuctions())
+//		{
+//			for (int i = 0; i < 10; i++)
+//			{
+//				char ch;
+//
+//				ch = (char) ((i) + 'a');
+//				a.addItem("Item" + ch, "", "good", "small", "", "", 25);
+//			}
+//		}
 //<<<<<<< HEAD
 //=======
 //		
@@ -225,6 +261,14 @@ public class MainGUI{
 //		// TODO Auto-generated method stub
 //>>>>>>> refs/heads/JesseBranch
 		
+	}
+	
+	private void openSavedFile() {
+		int result = file.showOpenDialog(myFrame);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = file.getSelectedFile();
+            fileName = selectedFile.getAbsolutePath();
+		}
 	}
 
 }
